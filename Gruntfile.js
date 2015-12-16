@@ -1,5 +1,6 @@
 // Generated on 2015-12-16 using generator-angular 0.15.1
 'use strict';
+// Testing Git Pull override of local branch commit***************
 
 // # Globbing
 // for performance reasons we're only matching one level down:
