@@ -8,7 +8,7 @@
  * Controller of the pegasysApp
  */
 angular.module('pegasysApp')
-  .controller('MainCtrl', function () {
+  .controller('MacsMainCtrl', function () {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
