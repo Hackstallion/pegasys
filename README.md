@@ -1,31 +1,22 @@
-# pegasys
+# Node Catapult - Angular - B
 
-This project was generated with the [Angular Full-Stack Generator](https://github.com/DaftMonk/generator-angular-fullstack) version 3.1.1.
+A boilerplate starter project that includes Node, Express, Browserify, and Angular:
+
+* Minimal - Understand everything.
+* Efficient - Great defaults for development and production.
+* Rapid - Get started immediately.
 
 ## Getting Started
 
-### Prerequisites
+```
+$ git clone https://github.com/dYale/node-catapult-angular-B my-project
+$ cd my-project
+$ npm install
+$ npm start
+```
 
-- [Git](https://git-scm.com/)
-- [Node.js and npm](nodejs.org) Node ^4.2.3, npm ^2.14.7
-- [Bower](bower.io) (`npm install --global bower`)
-- [Grunt](http://gruntjs.com/) (`npm install --global grunt-cli`)
-- [MongoDB](https://www.mongodb.org/) - Keep a running daemon with `mongod`
+Now visit [localhost:4000](http://localhost:4000/)
 
-### Developing
+## Browserify Middleware
 
-1. Run `npm install` to install server dependencies.
-
-2. Run `bower install` to install front-end dependencies.
-
-3. Run `mongod` in a separate shell to keep an instance of the MongoDB Daemon running
-
-4. Run `grunt serve` to start the development server. It should automatically open the client in your browser when ready.
-
-## Build & development
-
-Run `grunt build` for building and `grunt serve` for preview.
-
-## Testing
-
-Running `npm test` will run the unit tests with karma.
+The most notable part of this app is [browserify-middleware](https://github.com/ForbesLindesay/browserify-middleware). This package allows for increased modularity, reduction of necessary code, and cleaner repositories.
