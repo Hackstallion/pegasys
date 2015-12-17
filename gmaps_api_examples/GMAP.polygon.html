@@ -33,14 +33,27 @@ function initMap() {
   var routePoints;
   renderer.addListener('directions_changed',function(e){
     routePoints = renderer.getDirections().routes[0].overview_path;
-    console.log(calcPolygon(routePoints));
+    /*var routePolygon = new google.maps.Polygon({
+      paths: calcPolygon(routePoints),
+      map: map
+    });
+    console.log(routePolygon);
+   */ 
+    calcPolygon(routePoints).forEach(function(point,index){
+      window['marker'+index] = new google.maps.Marker({
+            position: point,
+            map: map,
+            title: index.toString(),
+            draggable: false 
+      });
+    });
   });
 
   function calcPolygon (routePath){
     // routePath is an array of LatLng objects
     var outbound = [];
     var inbound = [];
-    var distance = 0.0080441;
+    var distance = 0.008;
     /*SIMPLIFIED polygon blobbing:
 
       For each point, determine the slope of the line between it and
@@ -51,7 +64,7 @@ function initMap() {
 
       Latitude and Longitude don't translate exactly into distance,
       so I'm simplifying the math by rounding 1/2 a mile to 
-      0.0080441.
+      0.008.
 
       For the end point, repeat the same angle. 
 
@@ -62,20 +75,22 @@ function initMap() {
       //a and b are LatLng objects.
       var aPair = [a.lat(),a.lng()];
       var bPair = [b.lat(),b.lng()];
-      var dX = aPair[0]-bPair[0];
-      var dY = aPair[1]-bPair[1];
-      return dX ? dY/dX : undefined;
+      var dX = bPair[0]-aPair[0];
+      var dY = bPair[1]-aPair[1];
+      return dX ? dY / dX : undefined;
     }
     var getNewPoints = function (point,invSlope){
       var pair = [point.lat(),point.lng()];
       if (invSlope){
-        var outReturnX = pair[0] + (distance/Math.sqrt(invSlope+1));
-        var outReturnY = pair[1] + (distance/Math.sqrt(invSlope+1)) * invSlope;
-        var inReturnX = pair[0] - (distance/Math.sqrt(invSlope+1));
-        var inReturnY = pair[1] - (distance/Math.sqrt(invSlope+1)) * invSlope;
-      }
-      //handle the edge case of a vertical slope
-      else {
+        var xVal = .01/Math.sqrt((invSlope * invSlope) + 1);
+        console.log(xVal);
+        var yVal = xVal * invSlope;
+        console.log(yVal);
+        var outReturnX = pair[0] + xVal;
+        var outReturnY = pair[1] + yVal;
+        var inReturnX = pair[0] - xVal;
+        var inReturnY = pair[1] - yVal;
+      } else {
         var outReturnX = pair[0] + distance;
         var outReturnY = pair[1];
         var inReturnX = pair[0] - distance;
@@ -98,7 +113,7 @@ function initMap() {
 }
     </script>
     <script async defer
-      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE&libraries=places&callback=initMap">
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE&libraries=places,geometry&callback=initMap">
     </script>
   </body>
 </html>
