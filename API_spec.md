@@ -46,7 +46,12 @@ POST /api/profile => update user's profile. Requires user to be logged in,
 
                      body: {profile object}
 
-GET /api/profile => return user's profile object. Must be logged in.
+GET /api/profile => return user's profile object and whether they are a driver. Must be logged in.
+
+                    body: {driver: boolean,
+                           profile: {},
+                           matchRequests: [int,int...],
+                           mailbox: ['string1','string2'..:]}
 
 POST /api/match => If user is a rider : add rider.id to driver.matchRequests.
                    If user is a driver : remove rider.id from driver.matchRequests,
