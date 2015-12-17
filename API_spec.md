@@ -1,10 +1,10 @@
-All API calls should return JSON 
+All API calls should return JSON
 
 POST /api/login => log in as rider or driver, redirect to signup if account doesn't exist.
                    Redirect to route selection page. Default to rider.
                    PHASE 1: handle log in and driver vs rider with a cookies.
 
-                   
+
                    body: {driver: boolean (optional),
                           username: 'username',
                           password: 'password'}
@@ -21,17 +21,17 @@ GET /api/switch => switch user.driver to the opposite. Requires login.
 
 POST /api/endpoints => set user obect to rider in database, and add start and end points.
                        requires user to be logged in.
-              
+
                    body: {startPoint: [lat,long],
                           endPoint: [lat,long]}
 
 POST /api/route => set user object to driver in database and add route array (array of many arrays)
                    and route bounds (array of 4 arrays). Requires user to be logged in.
-            
+
                    body : {route:[[lat,long],[lat,long]...]
                            bounds: [[lat,long],[lat,long],[lat,long],[lat,long]] }
 
-GET /api/drivers => send array of all user objects where driver = true and 
+GET /api/drivers => send array of all user objects where driver = true and
                      matched = 0. Omit startPoint and endPoint if set.
                      Requires rider to be logged in.
                      PHASE 2: filter drivers based on rider's start/end points
@@ -58,19 +58,20 @@ POST /api/match => If user is a rider : add rider.id to driver.matchRequests.
                          to_id: integer}
 
 POST /api/message => Add a string to another user's mailbox. Must be logged in.
-                 
+
                    body: {from_id: integer,
                           to_id: integer,
                           text: string (must not be blank)}
 
 user {
   id : integer > 1,
+  driver: boolean (default 0)
   matched: integer (default 0)
   username: string,
   password: string/hash,
   startPoint : array [lat,long] (may be blank),
   endPoint : array [lat,long] (may be blank),
-  route : array [[lat,long],[lat,long]....],
+  route : array [[lat,long],[lat,long]....] (may be blank),
   bounds : array [[lat,long],[lat,long]...],
   matchRequests : [int,int...],
   profile : {profile as described below},
