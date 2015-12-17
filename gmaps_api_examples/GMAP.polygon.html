@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css">
+      html, body { height: 100%; margin: 0; padding: 0; }
+      #map { height: 100%; }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="text/javascript">
+
+var map;
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    center: {lat: 30.2932637, lng: -97.7571322},
+    zoom: 10
+  });
+  var startPosition = new google.maps.LatLng(30.3564111,-97.7404042);
+  var endPosition = new google.maps.LatLng(30.2689996,-97.7428731);
+  var service = new google.maps.DirectionsService();
+  var renderer = new google.maps.DirectionsRenderer({
+    draggable: true,
+    map: map
+  });
+  service.route({
+    origin: startPosition,
+    destination: endPosition,
+    travelMode: 'DRIVING'
+    },function(result){
+      renderer.setDirections(result);
+  });
+  var routePoints;
+  renderer.addListener('directions_changed',function(e){
+    routePoints = renderer.getDirections().routes[0].overview_path;
+    console.log(calcPolygon(routePoints));
+  });
+
+  function calcPolygon (routePath){
+    // routePath is an array of LatLng objects
+    var outbound = [];
+    var inbound = [];
+    var distance = 0.0080441;
+    /*SIMPLIFIED polygon blobbing:
+
+      For each point, determine the slope of the line between it and
+      the next point. Reverse the slope to draw a perpendicular line
+      1/2 mile in each direction.
+
+      Vertical is an edge case since slope = divide/0 error.
+
+      Latitude and Longitude don't translate exactly into distance,
+      so I'm simplifying the math by rounding 1/2 a mile to 
+      0.0080441.
+
+      For the end point, repeat the same angle. 
+
+      Reverse the inbound array, concatenate them, and draw a polygon.
+      */
+    //helper function
+    var getSlope = function(a,b){
+      //a and b are LatLng objects.
+      var aPair = [a.lat(),a.lng()];
+      var bPair = [b.lat(),b.lng()];
+      var dX = aPair[0]-bPair[0];
+      var dY = aPair[1]-bPair[1];
+      return dX ? dY/dX : undefined;
+    }
+    var getNewPoints = function (point,invSlope){
+      var pair = [point.lat(),point.lng()];
+      if (invSlope){
+        var outReturnX = pair[0] + (distance/Math.sqrt(invSlope+1));
+        var outReturnY = pair[1] + (distance/Math.sqrt(invSlope+1)) * invSlope;
+        var inReturnX = pair[0] - (distance/Math.sqrt(invSlope+1));
+        var inReturnY = pair[1] - (distance/Math.sqrt(invSlope+1)) * invSlope;
+      }
+      //handle the edge case of a vertical slope
+      else {
+        var outReturnX = pair[0] + distance;
+        var outReturnY = pair[1];
+        var inReturnX = pair[0] - distance;
+        var inReturnY = pair[1];
+      }
+      var outboundPoint = new google.maps.LatLng(outReturnX,outReturnY);
+      var inboundPoint = new google.maps.LatLng(inReturnX,inReturnY);
+      return [outboundPoint,inboundPoint]
+    }
+    for (var i=0;i<routePath.length-1;i++){
+      var slope = getSlope(routePath[i],routePath[i+1]);
+      var inverseSlope = slope / -1;
+      var coords = getNewPoints(routePath[i],inverseSlope);
+      outbound.push(coords[0]);
+      inbound.push(coords[1]);
+    }
+    return outbound.concat(inbound.reverse());
+  }
+
+}
+    </script>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE&libraries=places&callback=initMap">
+    </script>
+  </body>
+</html>
