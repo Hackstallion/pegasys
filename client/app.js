@@ -15,6 +15,8 @@ angular.module('myApp', [
     'ngRoute',
     'ngSanitize',
     'ngTouch',
+    'pegasys.services',
+    'pegasys.database'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -34,7 +36,7 @@ angular.module('myApp', [
   });
 
 //define the application module
-var app = require('angular').module('myApp',['pegasys.services','pegasys.database']);
+var app = require('angular').module('myApp');
 
 /*
 when we inject a controller/factory/directive we use the format found below:

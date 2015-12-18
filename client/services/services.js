@@ -21,28 +21,7 @@ angular.module('pegasys.services', [])
     })
   };
 
-  return {getRequest,
-          postRequest
+  return {getRequest: getRequest,
+          postRequest: postRequest
         };
 })
-
-.factory('Auth', function ($http, $location, $window) {
-
-
-  var isAuth = function () {
-    return !!$window.localStorage.getItem('com.shortly');
-  };
-
-  var signout = function () {
-    $window.localStorage.removeItem('com.shortly');
-    $location.path('/signin');
-  };
-
-
-  return {
-    signin: signin,
-    signup: signup,
-    isAuth: isAuth,
-    signout: signout
-  };
-});
