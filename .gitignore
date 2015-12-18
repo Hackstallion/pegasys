@@ -1,2 +1,5 @@
 node_modules/
 bower_components/
+local.0/
+local.ns/
+mongod.lock/
