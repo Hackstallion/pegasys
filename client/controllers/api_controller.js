@@ -2,6 +2,7 @@ angular.module('pegasys.database', ['pegasys.services'])
 
 .controller('DBController', function ($scope, $location, DB) {
   $scope.drivers=[];
+  $scope.user={};
   // Your code here
   /*
 For reference only:

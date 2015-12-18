@@ -3,7 +3,12 @@ h1{
 	font-family: sans-serif;
 }
 
+.input {
+  margin-bottom: 30px;
+}
+
 .btn{
+  margin-top: 30px;
   background: #639FDE;
   border-radius: 28px;
   font-family: sans-serif;

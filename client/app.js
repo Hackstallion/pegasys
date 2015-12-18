@@ -30,8 +30,13 @@ angular.module('myApp', [
         controller: 'AboutCtrl',
         controllerAs: 'about'
       })
+      .when('/login', {
+        templateUrl: 'views/login.html',
+        controller: 'LoginCtrl',
+        controllerAs: 'login'
+      })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/login'
       });
   });
 
@@ -45,4 +50,5 @@ when we inject a controller/factory/directive we use the format found below:
 
 app.controller('MainCtrl', require('./src/main.js'));
 app.controller('AboutCtrl', require('./src/about.js'));
+app.controller('LoginCtrl',require('./src/login.js'));
 
