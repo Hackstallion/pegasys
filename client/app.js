@@ -1,54 +1,50 @@
-'use strict';
-var angular = require('angular')
-              require('angular-route');
-              require('angular-animate');
-              require('angular-cookies');
-              require('angular-sanitize');
-              require('angular-touch');
-              require('angular-resource');
-
-
 angular.module('myApp', [
-    'ngAnimate',
-    'ngCookies',
-    'ngResource',
+    // 'ngAnimate',
+    //'ngCookies',
+    // 'ngResource',
     'ngRoute',
-    'ngSanitize',
-    'ngTouch',
+    // 'ngSanitize',
+    // 'ngTouch',
     'pegasys.services',
-    'pegasys.database'
+    'pegasys.database',
+    'pegasys.about',
+    'pegasys.login',
+    'pegasys.main',
+    'pegasys.mapview',
   ])
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl',
-        controllerAs: 'main'
+        controller: 'MainController',
       })
       .when('/about', {
         templateUrl: 'views/about.html',
-        controller: 'AboutCtrl',
-        controllerAs: 'about'
+        controller: 'AboutController',
       })
       .when('/login', {
         templateUrl: 'views/login.html',
-        controller: 'LoginCtrl',
-        controllerAs: 'login'
+        controller: 'LoginController',
       })
+      .when('/mapview', {
+        templateUrl: 'views/mapview.html',
+        controller: 'MapController',
+      })    
       .otherwise({
         redirectTo: '/login'
       });
   });
 
 //define the application module
-var app = require('angular').module('myApp');
+/*var app = require('angular').module('myApp');
 
 /*
 when we inject a controller/factory/directive we use the format found below:
     app.factory(), app.directive(), app.controller() etc,.
 */
-
-app.controller('MainCtrl', require('./src/main.js'));
-app.controller('AboutCtrl', require('./src/about.js'));
-app.controller('LoginCtrl',require('./src/login.js'));
+/*
+app.controller('MainController', require('./src/main.js'));
+app.controller('AboutController', require('./src/about.js'));
+app.controller('LoginController',require('./src/login.js'));
+app.controller('MapCtrl',require('./src/mapview.js'));*/
 

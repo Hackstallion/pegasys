@@ -25,3 +25,7 @@ angular.module('pegasys.services', [])
           postRequest: postRequest
         };
 })
+.factory('Main', function(){return true})
+.factory('Login',function(){return true})
+.factory('About',function(){return true})
+.factory('Mapview',function(){return true})
