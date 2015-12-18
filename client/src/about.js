@@ -1,5 +1,4 @@
-'use strict';
-
-  module.exports = function($scope,$http) {
+angular.module('pegasys.about',[])
+  .controller('AboutController', function($scope,$http,About) {
     $scope.header = 'I am ready to be built!';	
-  };
+  });
