@@ -28,8 +28,8 @@ angular.module('myApp', [
       })
       .when('/mapview', {
         templateUrl: 'views/mapview.html',
-        controller: 'MapController',
-      })    
+        controller: 'MapviewController',
+      })
       .otherwise({
         redirectTo: '/login'
       });

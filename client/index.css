@@ -28,3 +28,5 @@ h1{
 	text-align: center;
 	border-radius: 2px;
 }
+
+.angular-google-map-container { height: 400px; }
