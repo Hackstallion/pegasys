@@ -6,9 +6,9 @@ var app = express();
 app.use(express.static('client/'));
 
 //browersify which injects all dependencies into index.html
-// var shared = ['angular'];
-// app.get('/js/vendor-bundle.js', browserify(shared));
-// app.get('/js/app-bundle.js', browserify('./client/app.js', { external: shared }));
+var shared = ['angular'];
+app.get('/js/vendor-bundle.js', browserify(shared));
+app.get('/js/app-bundle.js', browserify('./client/app.js', { external: shared }));
 
 
 var port = process.env.PORT || 4000;
