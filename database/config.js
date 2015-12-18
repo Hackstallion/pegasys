@@ -1,7 +1,9 @@
 
 var mongoose = require('mongoose');
+module.exports.users = Users;
+
 if (!process.env.PORT) {mongoose.connect('mongodb://localhost:27017/Users')}
-else mongoose.connect('mongodb://someMadeupURL')
+else mongoose.connect('mongodb://hackstallion:hackstallion@ds043082.mongolab.com:43082/pegasys-ride-share')
 
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
@@ -24,11 +26,10 @@ var usersSchema = mongoose.Schema({
     inbox: Array,
     sent: Array
   });
+
 var Users = mongoose.model('Users',usersSchema);
 
-/******* FROM VIDEO TUTORIAL ********/
 
-//good to have the following in a routes file
 app.get('/Users', function(req, res) {
     mongoose.model('Users').find(function(err, users) {
         if (err) {
