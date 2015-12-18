@@ -1,11 +1,11 @@
-<div class="jumbotron" ng-controller="DBController">
+<div class="jumbotron" ng-controller="LoginController">
   <h1>{{welcome}}</h1>
   <form ng-submit='$scope.postRequest("/login",$scope.user)'>
   <input type='text' placeholder='username' ng-model='$scope.user.username'/>
   <input class="input" type='password' placeholder='password' ng-model='$scope.user.password' />
   <div>
-  <a class='btn' href='/#/login'>{{buttonText}}</a>
+  <button class='btn' type='submit'>{{buttonText}}</a>
   </div>
   </form>
-  <span>{{$scope.user.password}}</span>
+  <span>{{$scope.user}}</span>
 </div>
