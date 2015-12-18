@@ -7,16 +7,24 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     });
   })
   .controller('MapviewController', function($log,$scope,Mapview,uiGmapGoogleMapApi) {
-      var events = {
-        places_changed: function (searchBox) {}
+      var startPoint = [];
+      var endPoint = [];
+      var startEvents = {
+        places_changed: function (searchBox) {
+          var loc = searchBox.getPlaces()[0].geometry.location;
+          startPoint = [loc.lat(),loc.lng()];
+        }
       }
-      $scope.startSearchBox = {events:events,template:'startSearchBox.tpl.html'}
-      $scope.endSearchBox = {events:events,template:'endSearchBox.tpl.html'}
-    //uiGmapGoogleMapApi.then(function(maps) {
+      var endEvents = {
+        places_changed: function (searchBox) {
+          var loc = searchBox.getPlaces()[0].geometry.location;
+          endPoint = [loc.lat(),loc.lng()];
+        }
+      }
+      $scope.startSearchBox = {events:startEvents,template:'startSearchBox.tpl.html'}
+      $scope.endSearchBox = {events:endEvents,template:'endSearchBox.tpl.html'}
 
       $scope.isDriver = true; //We'll ultimately pull this from the cookie
-      $scope.startPointString = '' //This will go to the Google Places API
-      $scope.endPointString = '' //This will go to the Google Places API
       $scope.welcome = 'Enter Your Route';
 
       $scope.map = {
