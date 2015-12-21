@@ -10,6 +10,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     var startPoint = [];
     var endPoint = [];
     var routeArray = [];
+    var bounds = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
     $scope.renderer = null;
@@ -20,6 +21,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         var loc = searchBox.getPlaces()[0].geometry.location;
         startPoint = [loc.lat(),loc.lng()];
         $scope.submitPoints();
+        searchBox.setBounds($scope.getBounds());
       }
     }
     var endEvents = {
@@ -27,6 +29,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         var loc = searchBox.getPlaces()[0].geometry.location;
         endPoint = [loc.lat(),loc.lng()];
         $scope.submitPoints();
+        searchBox.setBounds($scope.getBounds());
       }
     }
     $scope.map = {
@@ -46,10 +49,10 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     }
 
     $scope.saveInfo = function(){
-      if ($scope.isDriver && routeArray.length){
+      if ($scope.isDriver && bounds && routeArray.length){
         DB.postRequest('route',{
           route: routeArray,
-          bounds: {} //fill me in!
+          bounds: bounds
         });
       }
       else if (startPoint.length && endPoint.length){
@@ -64,6 +67,9 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
+        $scope.getBounds = function(){
+          return map.getBounds();
+        }
         $scope.submitPoints = function (){
           if ($scope.startMarker instanceof maps.Marker && $scope.startMarker instanceof maps.Marker){
             $scope.startMarker.setMap(null);
@@ -88,6 +94,10 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                   renderer.setDirections(result);
                   routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                     return [coord.lat(),coord.lng()]
+                  });
+                  bounds = new maps.LatLngBounds();
+                  renderer.getDirections().routes[0].overview_path.forEach(function(point){
+                    bounds.extend(point);
                   });
               });
             }
