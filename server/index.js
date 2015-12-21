@@ -1,8 +1,20 @@
 var browserify = require('browserify-middleware')
 var db = require('../database/config.js')
 var express = require('express');
+var bodyparser = require('body-parser');
 var app = express();
 
+app.post('/api/endpoints',bodyparser.json(),function(req,res){
+  console.log(req.body);
+  res.status(201);
+  res.end();
+});
+
+app.post('/api/route',bodyparser.json(),function(req,res){
+  console.log(req.body);
+  res.status(201);
+  res.end();
+});
 //route to your index.html
 app.use(express.static('client/'));
 
