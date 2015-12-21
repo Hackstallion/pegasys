@@ -29,4 +29,17 @@ h1{
 	border-radius: 2px;
 }
 
-.angular-google-map-container { height: 400px; }
+.angular-google-map-container { 
+  height: 400px; 
+  width: 400px;
+  border-style: solid;
+  border-color: black;
+  border-width: 3px;
+  margin: auto;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.driverCheckBox {
+  margin: 5px;
+}
