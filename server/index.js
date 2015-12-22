@@ -1,4 +1,4 @@
-var browserify = require('browserify-middleware')
+// var browserify = require('browserify-middleware')
 var db = require('../database/config.js')
 var express = require('express');
 var app = express();
@@ -7,10 +7,12 @@ var app = express();
 app.use(express.static('client/'));
 
 //browersify which injects all dependencies into index.html
-var shared = ['angular'];
-app.get('/js/vendor-bundle.js', browserify(shared));
-app.get('/js/app-bundle.js', browserify('./client/app.js', { external: shared }));
+// var shared = ['angular'];
+// app.get('/js/vendor-bundle.js', browserify(shared));
+// app.get('/js/app-bundle.js', browserify('./client/app.js', { external: shared }));
 
+// configure our server with all the middleware and routing
+require('./db_interface(middleware).js')(app, express);
 
 var port = process.env.PORT || 4000;
 
