@@ -108,13 +108,13 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     position: new maps.LatLng(startPoint[0],startPoint[1]),
                     map: map,
                     title: 'Start',
-                    draggable: true
+                    draggable: false
               });
               $scope.endMarker = new maps.Marker({
                     position: new maps.LatLng(endPoint[0],endPoint[1]),
                     map: map,
                     title: 'End',
-                    draggable: true
+                    draggable: false
               });
               var newBounds = new maps.LatLngBounds();
               newBounds.extend($scope.startMarker.getPosition())
