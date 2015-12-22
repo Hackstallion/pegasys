@@ -31,6 +31,6 @@ var Users = mongoose.model('Users',usersSchema);
 
 // Users.collection.insert ({"sample3": "test3"});
 
-//BOTH MODEL AND CONNECTION NEED TO BE EXPORTED TO SERVER
+//MODEL AND CONNECTION NEED TO BE EXPORTED TO CONTROLLERS AND SERVER, RESPECTIVELY
 module.exports.users = Users;
 module.exports.db = db;

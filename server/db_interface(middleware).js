@@ -34,7 +34,8 @@ module.exports = function (app, express) {
     // app.use(helpers.errorLogger);
     // app.use(helpers.errorHandler);
 
-  require('login/loginRoutes.js')(loginRouter);
+  require('./login/loginRoutes.js')(loginRouter);
+  require('./signup/signupRoutes.js')(signUpRouter);
 };
 
 
