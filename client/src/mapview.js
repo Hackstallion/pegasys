@@ -83,7 +83,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
             if ($scope.isDriver){
               var service = new maps.DirectionsService();
               var renderer = $scope.renderer = new maps.DirectionsRenderer({
-                draggable: true,
+                draggable: false,
                 map: map
               });
               service.route({
