@@ -1,4 +1,4 @@
-// var Login = require('../databse/config.js');//Not sure if this is needed
+var Login = require('../../database/config.js');//Not sure if this is needed
 
 module.exports = {
 	checkUser : function (req, res, next) {

@@ -4,7 +4,7 @@ var express = require('express');
 var app = express();
 
 //route to your index.html
-app.use(express.static('client/'));
+app.use(express.static('../client/index.html'));
 
 //browersify which injects all dependencies into index.html
 // var shared = ['angular'];
