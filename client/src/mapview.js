@@ -99,6 +99,8 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                   renderer.getDirections().routes[0].overview_path.forEach(function(point){
                     bounds.extend(point);
                   });
+                  bounds = bounds.toString();
+                  bounds = new maps.LatLngBounds(bounds);
               });
             }
             else {
@@ -106,13 +108,13 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     position: new maps.LatLng(startPoint[0],startPoint[1]),
                     map: map,
                     title: 'Start',
-                    draggable: false 
+                    draggable: true
               });
               $scope.endMarker = new maps.Marker({
                     position: new maps.LatLng(endPoint[0],endPoint[1]),
                     map: map,
                     title: 'End',
-                    draggable: false 
+                    draggable: true
               });
               var newBounds = new maps.LatLngBounds();
               newBounds.extend($scope.startMarker.getPosition())
