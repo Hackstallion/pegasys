@@ -1,7 +1,7 @@
-// var Login = require('../databse/config.js');//Not sure if this is needed
+// var Sent = require('../databse/config.js');
 
 module.exports = {
-	checkUser : function (req, res, next) {
+	checkUser = function (req, res, next) {
 		Users.find(function(err, user) {
 			console.log('req.body', req.body)
 			if(req.body.username === user.username && req.body.password === user.password) {
@@ -11,5 +11,3 @@ module.exports = {
 		next();
 	}
 }
-
-//Not worrying about tokens or hashed passwords until phase 2 

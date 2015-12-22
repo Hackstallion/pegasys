@@ -1,10 +1,11 @@
-var bodyParse = require('body-parser');
+var bodyParser = require('body-parser');
 var morgan = require('morgan');
-// var app = express();
+var express = require('express')
+var app = express();
 
 
 
-model.exports = function (app, express) {
+module.exports = function (app, express) {
 	var loginRouter = express.Router();
 	var signUpRouter = express.Router();
 	var driverSwitchRouter = express.Router();
@@ -16,15 +17,14 @@ model.exports = function (app, express) {
 	var inboxRouter = express.Router();
 	var sentRouter = express.Router();
 
-})
 
 
 app.use(morgan('dev'));
 app.use(bodyParser.json());
 app.use(express.static(__dirname + '/../../client'));
 
-app.use('/api/users', userRouter); // use user router for all user request
-app.use('/api/links', linkRouter); // user link router for link request
+// app.use('/api/users', userRouter); // use user router for all user request
+// app.use('/api/links', linkRouter); // user link router for link request
 app.use('/api/login',loginRouter);
 app.use('api/signup', signUpRouter);
 app.use('api/driver', driverSwitchRouter);
@@ -38,4 +38,9 @@ app.use('api/sent-messages', sentRouter);
   // app.use(helpers.errorLogger);
   // app.use(helpers.errorHandler);
 
-require('../login/loginRoutes.js')(loginRouter);
+require('./login/loginRoutes.js')(loginRouter);
+// require('../sent/sentRoutes.js')(sentRouter);
+
+}
+
+
