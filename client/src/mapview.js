@@ -11,6 +11,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     var endPoint = [];
     var routeArray = [];
     var bounds = null;
+    $scope.route = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
     $scope.renderer = null;
@@ -73,10 +74,16 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         $scope.submitPoints = function (){
           if ($scope.startMarker instanceof maps.Marker && $scope.startMarker instanceof maps.Marker){
             $scope.startMarker.setMap(null);
+            maps.event.removeListener(startListener);
+            $scope.startMarker = null;
             $scope.endMarker.setMap(null);
+            maps.event.removeListener(endListener);
+            $scope.endMarker = null;
+
           }
           if ($scope.renderer instanceof maps.DirectionsRenderer) {
             $scope.renderer.setMap(null);
+            maps.event.removeListener(routeListener);
             $scope.renderer = null;
           }
           if (startPoint.length && endPoint.length){
@@ -91,16 +98,19 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 destination: new maps.LatLng(endPoint[0],endPoint[1]),
                 travelMode: 'DRIVING'
                 },function(result){
+                  $scope.route = result
                   renderer.setDirections(result);
                   routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
-                    return [coord.lat(),coord.lng()]
-                  });
-                  bounds = new maps.LatLngBounds();
-                  renderer.getDirections().routes[0].overview_path.forEach(function(point){
-                    bounds.extend(point);
-                  });
-                  bounds = bounds.toString();
-                  bounds = new maps.LatLngBounds(bounds);
+                    return [coord.lat(),coord.lng()];
+                  bounds = map.getBounds();
+                });
+              });
+              var routeListener = maps.event.addListener(renderer,'directions_changed',function(){
+                $log.log('directions_changed');
+                routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
+                  return [coord.lat(),coord.lng()];
+                });
+                bounds = map.getBounds();
               });
             }
             else {
@@ -114,8 +124,18 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     position: new maps.LatLng(endPoint[0],endPoint[1]),
                     map: map,
                     title: 'End',
-                    draggable: true
+                    draggable: true 
               });
+              var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
+                $log.log('start marker moved');
+                startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
+                bounds = map.getBounds();
+              })
+              var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
+                $log.log('end marker moved');
+                endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
+                bounds = map.getBounds();
+              })
               var newBounds = new maps.LatLngBounds();
               newBounds.extend($scope.startMarker.getPosition())
               newBounds.extend($scope.endMarker.getPosition())
