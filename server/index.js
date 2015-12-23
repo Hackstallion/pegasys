@@ -35,18 +35,26 @@ app.post('/api/*',cookieparser(),bodyparser.json(),function(req,res){
       })
       if (!user[0] || user[0].password !== req.body.password){
         res.status(401);
-        res.end('Bad Password or Username');
+        res.end('Bad Password or Usernconsole.log(req.cookies.user);ame');
       } else {
         res.status(200);
-        res.append('Set-Cookie','username='+req.body.username);
+        res.cookie('user',req.body.username);
         res.end('Logged In Successfully');
       }
       break;
     case 'endpoints':
-      console.log(req.cookie);
+      var user = users.filter(function(storedUser){
+        return storedUser.username === req.cookies.user;
+      })[0];
+      user.startPoint = req.body.startPoint;
+      user.endPoint = req.body.endPoint;
       break;
     case 'route':
-      //should validate cookie
+      var user = users.filter(function(storedUser){
+        return storedUser.username === req.cookies.user;
+      })[0];
+      user.route = req.body.route;
+      user.bounds = req.body.bounds;
       break;
     case 'profile':
       //should validate cookie
