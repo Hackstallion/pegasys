@@ -1,8 +1,97 @@
 var browserify = require('browserify-middleware')
 var db = require('../database/config.js')
 var express = require('express');
+var bodyparser = require('body-parser');
+var cookieparser = require('cookie-parser');
 var app = express();
 
+var users = [];
+var userId = 1;
+
+app.post('/api/*',cookieparser(),bodyparser.json(),function(req,res){
+  var endpoint = req.url.substring(5);
+  switch (endpoint) {
+    case 'signup':
+      if (users.some(function(storedUser){
+        return storedUser.username === req.body.username;
+      })) {
+        res.status(400);
+        res.end('User Already Exists.');
+      } else {
+        var newUser = req.body;
+        newUser.id = userId;
+        userId++;
+        newUser.driver = newUser.driver || false;
+        newUser.mailbox = [];
+        newUser.matched = 0;
+        users.push(newUser);
+        res.status(201);
+        res.end('User Created');
+      }
+      break;
+    case 'login':
+      var user = users.filter(function(storedUser){
+        return storedUser.username === req.body.username;
+      })
+      if (!user[0] || user[0].password !== req.body.password){
+        res.status(401);
+        res.end('Bad Password or Usernconsole.log(req.cookies.user);ame');
+      } else {
+        res.status(200);
+        res.cookie('user',req.body.username);
+        res.end('Logged In Successfully');
+      }
+      break;
+    case 'endpoints':
+      var user = users.filter(function(storedUser){
+        return storedUser.username === req.cookies.user;
+      })[0];
+      user.startPoint = req.body.startPoint;
+      user.endPoint = req.body.endPoint;
+      break;
+    case 'route':
+      var user = users.filter(function(storedUser){
+        return storedUser.username === req.cookies.user;
+      })[0];
+      user.route = req.body.route;
+      user.bounds = req.body.bounds;
+      break;
+    case 'profile':
+      //should validate cookie
+      break;
+    case 'message':
+      //should validate cookie
+      break;
+    case 'match':
+      //should validate cookie
+      break;
+    default:
+      res.status(500);
+      res.end('Bad Request. Probably Daniel\'s fault');
+      break;
+  }
+})
+app.get('/api/*',cookieparser(),bodyparser.json(),function(req,res){
+  var endpoint = req.url.substring(5);
+  switch (endpoint){
+    case 'switch':
+      break;
+    case 'profile':
+      break;
+    case 'drivers':
+      res.status(200);
+      var drivers = users.filter(function(user){
+        return user.driver && !user.matched;
+      })
+      res.json(drivers);
+      break;
+    default:
+      res.status(500);
+      res.end('Bad Request. Probably Daniel\'s fault');
+      break;
+  }
+
+});
 //route to your index.html
 app.use(express.static('client/'));
 
