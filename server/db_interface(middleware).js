@@ -36,6 +36,7 @@ module.exports = function (app, express) {
 
   require('./login/loginRoutes.js')(loginRouter);
   require('./signup/signupRoutes.js')(signUpRouter);
+  require('./driver/driverRoutes.js')(driverSwitchRouter);
 };
 
 
