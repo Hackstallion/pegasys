@@ -4,9 +4,9 @@ var Q = require('q');
 module.exports = {
   switchDriver: function (req, res, next) {
     var username  = req.body.username,
-    var driver  = req.body.driver,
+        driver  = req.body.driver,
 
-    var findUser = Q.nbind(UserModel.findOne, UserModel);
+        findUser = Q.nbind(UserModel.findOne, UserModel);
 
     findUser({username: username})
       .then(function(foundUser) {
