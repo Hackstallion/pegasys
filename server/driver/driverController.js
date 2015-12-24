@@ -1,10 +1,11 @@
 var UserModel = require('../../database/config.js');
+var Users = UserModel.users;
 var Q = require('q');
 
 module.exports = {
   switchDriver: function (req, res, next) {
     var username  = req.body.username,
-        findUser = Q.nbind(UserModel.findOne, UserModel);
+        findUser = Q.nbind(Users.findOne, Users);
 
     findUser({username: username})
       .then(function(foundUser) {

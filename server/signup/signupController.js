@@ -1,4 +1,5 @@
 var UserModel = require('../../database/config.js');
+var Users = UserModel.users;
 var Q = require('q');
 
 module.exports = {
@@ -8,21 +9,23 @@ module.exports = {
         create,
         newUser;
 
-    var findOne = Q.nbind(UserModel.findOne, UserModel);
+    var findOne = Q.nbind(Users.findOne, Users);
 
     // check to see if user already exists
     findOne({username: username})
       .then(function(user) {
         if (user) {
+          console.log(user);
           next(new Error('User already exists!'));
         } else {
           // make a new user if not one
-          create = Q.nbind(UserModel.create, UserModel);
+          create = Q.nbind(Users.create, Users);
           newUser = {
             username: username,
             password: password
           };
-          return create(newUser);
+          create(newUser);
+          res.status(201).send();
         }
       })
       // .then(function (user) {
