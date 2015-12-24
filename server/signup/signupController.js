@@ -25,7 +25,7 @@ module.exports = {
             password: password
           };
           create(newUser);
-          res.status(201).send();
+          res.sendStatus(201);
         }
       })
       // .then(function (user) {

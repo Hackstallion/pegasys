@@ -2,5 +2,5 @@ var loginQueryController = require('./loginController.js');
 
 module.exports = function (app) {
 
-  app.get('/login', loginQueryController.checkUser);
+  app.post('/login', loginQueryController.checkUser);
 }

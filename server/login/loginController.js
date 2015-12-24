@@ -5,16 +5,24 @@ var Q = require('q');
 
 module.exports = {
   checkUser: function (req, res, next) {
-    Users.find(function(err, user) {
-      console.log('req.body', req.body)
-      if(req.body.username === user.username && req.body.password === user.password) {
-        res.send(200)
-      } else {
-        return next(new Error('No such user in our database'));
+    var username = req.body.username,
+        password = req.body.password;
+
+    var findUser = Q.nbind(Users.findOne, Users);
+    findUser({username: username})
+      .then(function (user) {
+        if (!user) {
+          next(new Error('User does not exist'));
+        } else if (user.password === password) {
+          //'this.password' is 'undefined'
+            res.sendStatus(200);
+        } else {
+            return next(new Error('Incorrect Password'));
         }
-    })
-    next();
+      })
+      .fail(function (error) {
+        next(error);
+      });
   }
 }
-
 //Not worrying about tokens or hashed passwords until phase 2 
