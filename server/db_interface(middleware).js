@@ -19,7 +19,7 @@ module.exports = function (app, express) {
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
-  app.use(express.static(__dirname + '/../../client'));
+  app.use(express.static(__dirname + '/../client'));
 
   app.use('/login',loginRouter);
   app.use('/signup', signUpRouter);
@@ -37,6 +37,7 @@ module.exports = function (app, express) {
   require('./login/loginRoutes.js')(loginRouter);
   require('./signup/signupRoutes.js')(signUpRouter);
   require('./driver/driverRoutes.js')(driverSwitchRouter);
+  require('./locations/locationsRoutes.js')(endPointsRouter);
 };
 
 
