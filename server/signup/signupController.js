@@ -14,7 +14,7 @@ module.exports = {
     findOne({username: username})
       .then(function(user) {
         if (user) {
-          next(new Error('User already exist!'));
+          next(new Error('User already exists!'));
         } else {
           // make a new user if not one
           create = Q.nbind(UserModel.create, UserModel);

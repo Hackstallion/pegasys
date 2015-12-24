@@ -1,10 +1,11 @@
 // var browserify = require('browserify-middleware')
-var db = require('../database/config.js')
-var express = require('express');
+var db = require('../database/config.js'),
+    express = require('express');
+
 var app = express();
 
-//route to your index.html
-app.use(express.static('client/'));
+//route to your index.html -- ALREADY CONFIGURED IN MIDDLEWARE
+// app.use(express.static('client/'));
 
 //browersify which injects all dependencies into index.html
 // var shared = ['angular'];
