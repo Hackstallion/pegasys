@@ -1,6 +1,6 @@
 
 var mongoose = require('mongoose');
-
+var Q = require('q');
 
 // if (!process.env.PORT) {mongoose.connect('mongodb://localhost:27017')}
 mongoose.connect('mongodb://hackstallion:hackstallion@ds043082.mongolab.com:43082/pegasys-ride-share')
@@ -34,3 +34,8 @@ var Users = mongoose.model('Users',usersSchema);
 //MODEL AND CONNECTION NEED TO BE EXPORTED TO CONTROLLERS AND SERVER, RESPECTIVELY
 module.exports.users = Users;
 module.exports.db = db;
+
+// See http://stackoverflow.com/questions/23692996/how-could-i-bind-save-method-using-q-with-mongoose
+Users.save = Q.nbind(Users.save, Users);
+
+

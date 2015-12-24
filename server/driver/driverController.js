@@ -6,19 +6,24 @@ module.exports = {
   switchDriver: function (req, res, next) {
     var username  = req.body.username,
         findUser = Q.nbind(Users.findOne, Users);
+// This method, used on line 21, didn't work...
+// saveUser = Q.nbind(Users.save, Users);
 
     findUser({username: username})
       .then(function(foundUser) {
+        console.log("foundUser.driver before switch => ", foundUser.driver);
         if (foundUser) {
-//NOT SURE HOW 'THIS' WILL PLAY OUT
-          if (this.driver === true) {
-            this.driver = false;
+          if (foundUser.driver === true) {
+            foundUser.driver = false;
           } else {
-            this.driver = true;
+            foundUser.driver = true;
           }
-          res.status(200).send();
+          // saveUser(foundUser);
+          foundUser.save();  //see config.js
+          console.log("foundUser.driver after switch => ", foundUser.driver);
+          res.sendStatus(200);
         } else {
-          res.status(401).send();
+          res.sendStatus(401);
         }
       })
       .fail(function (error) {

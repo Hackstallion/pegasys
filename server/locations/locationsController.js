@@ -14,13 +14,13 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-//NOT SURE HOW 'THIS' WILL PLAY OUT
-          this.startPoint = loc1;
-          this.endPoint = loc2;
-          this.driver = driverStatus;
-          res.status(200).send();
+          foundUser.startPoint = loc1;
+          foundUser.endPoint = loc2;
+          foundUser.driver = driverStatus;
+          foundUser.save();
+          res.sendStatus(200);
         } else {
-          res.status(401).send();
+          res.sendStatus(401);
         }
       })
       .fail(function (error) {
