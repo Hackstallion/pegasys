@@ -39,6 +39,7 @@ module.exports = function (app, express) {
   require('./driver/driverRoutes.js')(driverSwitchRouter);
   require('./locations/locationsRoutes.js')(endPointsRouter);
   require('./route/routeRoutes.js')(driverRouteRouter);
+  require('./drivers/driversRoutes.js')(driversRouter);
 };
 
 
