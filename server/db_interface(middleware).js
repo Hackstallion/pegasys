@@ -1,7 +1,5 @@
 var bodyParser = require('body-parser');
 var morgan = require('morgan');
-// var app = express();
-
 
 
 module.exports = function (app, express) {
@@ -28,11 +26,9 @@ module.exports = function (app, express) {
   app.use('/driver-route', driverRouteRouter);
   app.use('/show-drivers', driversRouter);
   app.use('/profile', profileRouter);
-  app.use('/matches', matchRouter);
-  app.use('/inbox', inboxRouter);
-  app.use('/sent-messages', sentRouter);
-    // app.use(helpers.errorLogger);
-    // app.use(helpers.errorHandler);
+  app.use('/matches', matchRouter);       //***
+  app.use('/inbox', inboxRouter);         //***
+  app.use('/sent-messages', sentRouter);  //***
 
   require('./login/loginRoutes.js')(loginRouter);
   require('./signup/signupRoutes.js')(signUpRouter);
@@ -40,6 +36,7 @@ module.exports = function (app, express) {
   require('./locations/locationsRoutes.js')(endPointsRouter);
   require('./route/routeRoutes.js')(driverRouteRouter);
   require('./drivers/driversRoutes.js')(driversRouter);
+  require('./profile/profileRoutes.js')(profileRouter);
 };
 
 

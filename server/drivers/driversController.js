@@ -2,29 +2,31 @@ var UserModel = require('../../database/config.js');
 var Users = UserModel.users;
 var Q = require('q');
 
-//This looks messy because I tried to implement
-//login verification based on user's username but
-//didn't get to figure out username verification
-//on a GET request, so I commented that out for now.
 
 module.exports = {
   getDrivers: function (req, res, next) {
-    var findUser = Q.nbind(Users.find, Users);
-        // username = req.body.username;
+    var findUser = Q.nbind(Users.findOne, Users),
+        findDrivers = Q.nbind(Users.find, Users),
+      //requires sending 'username' header with GET request...
+        username = req.headers['username'];
         
-    // findUser({username: username})
-    //   .then(function(foundUser) {
-    //     if (foundUser && foundUser.loggedIn === true) {
-          findUser({driver: true, matched: 0})
+    findUser({username: username})
+      .then(function(foundUser) {
+        if (foundUser && foundUser.loggedIn === true) {
+          findDrivers({driver: true, matched: 0})
             .then(function(drivers) {
-              //What do we do with them?
               if (drivers) {
+                //What do we do with them?
                 console.log("drivers", drivers);
                 res.sendStatus(200);
+              } else {
+                res.sendStatus(404);
               }
-            // })
-         else {
-          // console.log("request body", req.body);
+            })
+            .fail(function (error) {
+              next(error);
+            })
+         } else {
           res.sendStatus(401);
         }
       })
@@ -33,3 +35,5 @@ module.exports = {
       });
   }
 }
+
+
