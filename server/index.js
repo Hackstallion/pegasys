@@ -1,4 +1,4 @@
-var browserify = require('browserify-middleware')
+// var browserify = require('browserify-middleware')
 var db = require('../database/config.js')
 var express = require('express');
 var app = express();
@@ -10,13 +10,21 @@ app.use(express.static('../client/index.html'));
 // var shared = ['angular'];
 // app.get('/js/vendor-bundle.js', browserify(shared));
 // app.get('/js/app-bundle.js', browserify('../client/app.js', { external: shared }));
+<<<<<<< HEAD
 
 require('./db_interface(middleware).js')(app, express);
+=======
+>>>>>>> f37f5882b80be6c4c2aea0bcb386725e44ac645a
 
+// configure our server with all the middleware and routing
+require('./db_interface(middleware).js')(app, express);
 
 var port = process.env.PORT || 4000;
 
 app.listen(port);
 console.log("Listening on port", port);
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> f37f5882b80be6c4c2aea0bcb386725e44ac645a
