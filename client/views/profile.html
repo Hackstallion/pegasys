@@ -1,0 +1,22 @@
+<div class='jumbotron' ng-controller="ProfileController">
+  <h1>{{header}}</h1>
+  <h3>{{saved}}</h3>
+  <form ng-submit='submit()'>
+  <div class='profileInfo' align="left">
+  <span>Username: {{user.username}}</span>
+  <br>
+  <span>Password: </span>
+  <input class="profileInput" type='password' placeholder='Password' ng-model='user.password' />
+  <br>
+  <span>Driver: </span>
+  <input class="profileInput" type='checkbox' placeholder='user.driver' ng-model='user.driver' />
+  <br>
+  <span>Saved Driver Route: {{user.route ? 'Yes' : 'No'}}</span>
+  <br>
+  <span>Saved Rider Route: {{user.endpoints ? 'Yes' : 'No'}}</span>
+  <div>
+  <button class='btn' type='submit'>{{buttonText}}</a>
+  </div>
+  </form>
+  <span>{{user}}</span>
+</div>
