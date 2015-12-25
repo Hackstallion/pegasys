@@ -38,6 +38,7 @@ module.exports = function (app, express) {
   require('./signup/signupRoutes.js')(signUpRouter);
   require('./driver/driverRoutes.js')(driverSwitchRouter);
   require('./locations/locationsRoutes.js')(endPointsRouter);
+  require('./route/routeRoutes.js')(driverRouteRouter);
 };
 
 

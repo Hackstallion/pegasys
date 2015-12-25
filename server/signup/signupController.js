@@ -17,12 +17,15 @@ module.exports = {
         if (user) {
           console.log(user);
           next(new Error('User already exists!'));
+          res.status(401);
+          res.send('User already exists');
         } else {
           // make a new user if not one
           create = Q.nbind(Users.create, Users);
           newUser = {
             username: username,
-            password: password
+            password: password,
+            loggedIn: true
           };
           create(newUser);
           res.sendStatus(201);

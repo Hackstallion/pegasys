@@ -12,7 +12,7 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         console.log("foundUser.driver before switch => ", foundUser.driver);
-        if (foundUser) {
+        if (foundUser && foundUser.loggedIn === true) {
           if (foundUser.driver === true) {
             foundUser.driver = false;
           } else {

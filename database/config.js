@@ -14,6 +14,7 @@ db.once('open', function (callback) {
 var usersSchema = mongoose.Schema({
     driver: { type: Boolean, default: false },
     matched: { type: Number, default: 0 },
+    loggedIn: { type: Boolean, default: false },
     username: String,
     password: String,
     startPoint: Array,
