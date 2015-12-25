@@ -29,5 +29,8 @@
     "lodash": "~3.10.1",
     "angular-google-maps": "~2.2.1",
     "angular-simple-logger": "~0.1.5"
+  },
+  "resolutions": {
+    "angular-simple-logger": "~0.1.5"
   }
 }
