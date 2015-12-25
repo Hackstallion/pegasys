@@ -19,6 +19,7 @@ module.exports = {
         } else if (user.password === password) {
           //'this.password' is 'undefined'
             user.loggedIn = true;
+            user.save();
             res.sendStatus(200);
         } else {
             return next(new Error('Incorrect Password'));

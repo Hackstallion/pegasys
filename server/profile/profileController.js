@@ -22,8 +22,8 @@ module.exports = {
         inbox = req.body.inbox,
         sent = req.body.sent;
 //If we don't want any of these attributes to be
-//editable outside the client, we can restrict
-//this module's access to them.
+//editable, we can restrict this module's 
+//access to them.
 
     findUser({username: username})
       .then(function(foundUser) {

@@ -13,6 +13,7 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser && foundUser.loggedIn === true) {
+          
           findDrivers({driver: true, matched: 0})
             .then(function(drivers) {
               if (drivers) {
@@ -26,6 +27,7 @@ module.exports = {
             .fail(function (error) {
               next(error);
             })
+            
          } else {
           res.sendStatus(401);
         }
