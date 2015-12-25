@@ -2,13 +2,26 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="index.css">
+    <title>Pegasys Ride Sharing</title>
   </head>
 
-  <body ng-app="myApp">
+  <body> 
+  <div ng-app="myApp">
+  <h1>Pegasys Ride Sharing</h1>
+  <div class="nav">
+  <a href="#/signup">Sign Up</a>
+  <a href="#/login">Log in</a>
+  <a href="#/profile">Profile</a>
+  <a href="#/mapview">Map</a>
+  <a href="#/match">Matches</a>
+  <a href="#/mailbox">Mailbox</a>
+
     <div class="container">
       <div ng-view="">
       </div>
     </div>
+  </div>
   </body>
 
 
@@ -22,13 +35,15 @@
     <!-- // <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE&libraries=places,geometry"></script> -->
     <script src='/bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
 
-    <script src='/src/about.js'></script>
     <script src='/src/main.js'></script>
     <script src='/src/login.js'></script>
+    <script src='/src/signup.js'></script>
     <script src='/src/mapview.js'></script>
+    <script src='/src/profile.js'></script>
+    <script src='/src/match.js'></script>
+    <script src='/src/mailbox.js'></script>
     <script src='/services/services.js'></script>
     <script src='/controllers/api_controller.js'></script>
     <script src='/app.js'></script>
-    <link rel="stylesheet" type="text/css" href="index.css">
   </footer>
 </html>

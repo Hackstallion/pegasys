@@ -15,8 +15,8 @@ For reference only:
         $location.path('/links')
       });*/
   $scope.postRequest = function(apiRoute,JSONobject,callback){
-    DB.postRequest(apiRoute,JSONobject).then(function(response){
-      if (response && callback) callback();
+    DB.postRequest(apiRoute,JSONobject).then(function(){
+      if (callback) callback();
     })
   };
 

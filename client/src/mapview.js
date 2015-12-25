@@ -7,16 +7,22 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     });
   })
   .controller('MapviewController', function($log,$scope,Mapview,uiGmapGoogleMapApi,uiGmapIsReady,DB) {
+    if (!document.cookie.includes('user')) $location.path('/login');
     var startPoint = [];
     var endPoint = [];
     var routeArray = [];
     var bounds = null;
+    $scope.changed = '';
     $scope.route = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; //We'll ultimately pull this from the cookie
+    DB.getRequest('profile').then(function(response){
+      $log.log('driver: '+response.data.driver);
+      $scope.isDriver = response.data.driver;
+    });
     var startEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
@@ -52,17 +58,20 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.saveInfo = function(){
       if ($scope.isDriver && bounds && routeArray.length){
         DB.postRequest('route',{
+          username: document.cookie.substring(5),
           route: routeArray,
           bounds: bounds
         });
       }
       else if (startPoint.length && endPoint.length){
         DB.postRequest('endpoints',{
+          username: document.cookie.substring(5),
           startPoint: startPoint,
           endPoint: endPoint
         })
       }
       $log.log('post request submitted')
+      $scope.changed = 'Submitted!'
     }
 
     uiGmapGoogleMapApi.then(function(maps) { 
