@@ -21,8 +21,8 @@ var usersSchema = mongoose.Schema({
     route: Array,
     bounds: Array,
     matchRequests: Array,
-    startTime: Number,
-    endTime: Number,
+    startTime: { type: Number, default: 0 },
+    endTime: { type: Number, default: 0 },
     inbox: Array,
     sent: Array
   });
