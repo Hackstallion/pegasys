@@ -10,24 +10,20 @@ module.exports = function (app, express) {
       driversRouter = express.Router(),
       profileRouter = express.Router(),
       matchRouter = express.Router(),
-      inboxRouter = express.Router(),
-      sentRouter = express.Router();
-
+      messageRouter = express.Router();
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
   app.use(express.static(__dirname + '/../client'));
 
-  app.use('/auth', authRouter);           //***
+  app.use('/auth', authRouter);
   app.use('/driver', driverSwitchRouter);
   app.use('/locations', endPointsRouter);
   app.use('/driver-route', driverRouteRouter);
   app.use('/show-drivers', driversRouter);
   app.use('/profile', profileRouter);
-  app.use('/matches', matchRouter);       //***
-  app.use('/inbox', inboxRouter);         //***
-  app.use('/sent-messages', sentRouter);  //***
-                                          //*** signOutRouter
+  app.use('/matches', matchRouter);     //***
+  app.use('/messages', messageRouter);  //***
 
   require('./auth/authRoutes.js')(authRouter);
   require('./driver/driverRoutes.js')(driverSwitchRouter);
@@ -36,6 +32,7 @@ module.exports = function (app, express) {
   require('./drivers/driversRoutes.js')(driversRouter);
   require('./profile/profileRoutes.js')(profileRouter);
   // require('./matches/matchRoutes.js')(matchRouter);
+  require('./messages/messageRoutes.js')(messageRouter);
 };
 
 
