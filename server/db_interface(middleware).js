@@ -4,8 +4,7 @@ var bodyParser = require('body-parser'),
 
 module.exports = function (app, express) {
   var authRouter = express.Router(),
-      endPointsRouter = express.Router(),
-      driverRouteRouter = express.Router(),
+      tripRouter = express.Router(),
       usersRouter = express.Router(),
       profileRouter = express.Router(),
       matchRouter = express.Router(),
@@ -17,19 +16,14 @@ module.exports = function (app, express) {
   app.use(express.static(__dirname + '/../client'));
 
   app.use('/api/auth', authRouter);
-  
-  // app.use('/api/createtrip', tripRouter);
-  app.use('/api/locations', endPointsRouter);
-  app.use('/api/driver-route', driverRouteRouter);
-
+  app.use('/api/createtrip', tripRouter);
   app.use('/api/getusers', usersRouter);
   app.use('/api/profile', profileRouter);
   app.use('/api/matches', matchRouter);
   app.use('/api/messages', messageRouter);
 
   require('./auth/authRoutes.js')(authRouter);
-  require('./locations/locationsRoutes.js')(endPointsRouter);
-  require('./route/routeRoutes.js')(driverRouteRouter);
+  require('./locations/locationsRoutes.js')(tripRouter);
   require('./users/usersRoutes.js')(usersRouter);
   require('./profile/profileRoutes.js')(profileRouter);
   require('./matches/matchRoutes.js')(matchRouter);
