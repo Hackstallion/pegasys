@@ -1,6 +1,6 @@
 All API calls should return JSON
 
-POST /api/login => log in, redirect to signup if account doesn't exist.
+POST /api/login => log in, if account doesn't exist then notify user.
                    Redirect to route selection page. Default to rider.
                    PHASE 1: handle log in with a cookies.
 
@@ -26,17 +26,11 @@ POST /api/createTrip => set driver status, set start and end points.
                           driver : boolean,
                           startPoint : [lat,long],
                           endPoint : [lat,long]
+                          route:[[lat,long],[lat,long]...] (if driver === true)
+                          bounds: [[lat,long],[lat,long],[lat,long],[lat,long]] } (if driver === true)
                          }
 
-GET /api/switch => switch user.driver to the opposite. Requires login.
-
-POST /api/route => add route array (array of many arrays)
-                   and route bounds (array of 4 arrays). Requires user to be logged in.
-
-                   body : {route:[[lat,long],[lat,long]...]
-                           bounds: [[lat,long],[lat,long],[lat,long],[lat,long]] }
-
-GET /api/potentials => send array of all user objects where driver is of the oposite value as the user's and matched = 0.
+GET /api/users => send array of all user objects where driver is of the oposite value as the user's and matched = 0.
 Requires login
                      matched = 0
                      PHASE 2: filter drivers based on rider's start/end points
