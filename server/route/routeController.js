@@ -4,9 +4,8 @@ var Q = require('q');
 
 module.exports = {
   setRoute: function (req, res, next) {
-    var username  = req.body.username,
-        findUser = Q.nbind(Users.findOne, Users),
-        //from API_spec layout
+    var findUser = Q.nbind(Users.findOne, Users),
+        username  = req.body.username,
         route = req.body.route,
         bounds = req.body.bounds,
         driverStatus = req.body.driver;
