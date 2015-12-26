@@ -1,5 +1,5 @@
 angular.module('pegasys.profile',[])
-  .controller('ProfileController', function($scope,$http,Profile,DB) {
+  .controller('ProfileController', function($scope,$http,$location,Profile,DB) {
     if (!document.cookie.includes('user')) $location.path('/login');
     $scope.header = 'Edit Your Profile';	
     $scope.buttonText = 'Submit Your Changes';
