@@ -1,6 +1,6 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
 
 module.exports = {
@@ -16,8 +16,6 @@ module.exports = {
           next(new Error('User does not exist'));
         } else if (user.password === password) {
           //'this.password' is 'undefined'
-            user.loggedIn = true;
-            user.save();
             res.cookie('user', username);
             res.sendStatus(200);
         } else {

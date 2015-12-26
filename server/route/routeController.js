@@ -1,6 +1,6 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
 module.exports = {
   setRoute: function (req, res, next) {
@@ -12,7 +12,7 @@ module.exports = {
 
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.loggedIn === true) {
+        if (foundUser && foundUser.username === req.cookies.user) {
           foundUser.route = route;
           foundUser.bounds = bounds;
           foundUser.driver = driverStatus;
