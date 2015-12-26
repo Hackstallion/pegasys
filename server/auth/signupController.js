@@ -24,8 +24,7 @@ module.exports = {
           create = Q.nbind(Users.create, Users);
           newUser = {
             username: username,
-            password: password,
-            loggedIn: true
+            password: password
           };
           create(newUser);
           res.cookie('user', username);
