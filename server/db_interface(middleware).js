@@ -6,7 +6,7 @@ module.exports = function (app, express) {
   var authRouter = express.Router(),
       endPointsRouter = express.Router(),
       driverRouteRouter = express.Router(),
-      driversRouter = express.Router(),
+      usersRouter = express.Router(),
       profileRouter = express.Router(),
       matchRouter = express.Router(),
       messageRouter = express.Router();
@@ -17,11 +17,12 @@ module.exports = function (app, express) {
   app.use(express.static(__dirname + '/../client'));
 
   app.use('/api/auth', authRouter);
+  
   // app.use('/api/createtrip', tripRouter);
   app.use('/api/locations', endPointsRouter);
   app.use('/api/driver-route', driverRouteRouter);
-  // app.use('/api/getusers', usersRouter);
-  app.use('/api/show-drivers', driversRouter);
+
+  app.use('/api/getusers', usersRouter);
   app.use('/api/profile', profileRouter);
   app.use('/api/matches', matchRouter);
   app.use('/api/messages', messageRouter);
@@ -29,7 +30,7 @@ module.exports = function (app, express) {
   require('./auth/authRoutes.js')(authRouter);
   require('./locations/locationsRoutes.js')(endPointsRouter);
   require('./route/routeRoutes.js')(driverRouteRouter);
-  require('./drivers/driversRoutes.js')(driversRouter);
+  require('./users/usersRoutes.js')(usersRouter);
   require('./profile/profileRoutes.js')(profileRouter);
   require('./matches/matchRoutes.js')(matchRouter);
   require('./messages/messageRoutes.js')(messageRouter);
