@@ -65,7 +65,8 @@ module.exports = {
           .then(function(myProfile) {
             if (myProfile && myProfile.loggedIn === true) {
               console.log("myProfile", myProfile);
-              res.sendStatus(200);
+              res.status(200);
+              res.json(myProfile);
             } else {
               res.sendStatus(401);
             }
