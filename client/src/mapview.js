@@ -6,7 +6,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         libraries: 'places,geometry'
     });
   })
-  .controller('MapviewController', function($log,$scope,Mapview,uiGmapGoogleMapApi,uiGmapIsReady,DB) {
+  .controller('MapviewController', function($location,$log,$scope,Mapview,uiGmapGoogleMapApi,uiGmapIsReady,DB) {
     if (!document.cookie.includes('user')) $location.path('/login');
     var startPoint = [];
     var endPoint = [];
