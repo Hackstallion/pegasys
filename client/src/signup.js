@@ -4,7 +4,7 @@ angular.module('pegasys.signup',[])
     $scope.welcome = 'Sign up for Pegasys Ride Sharing';
     $scope.buttonText = 'Create New User';
     $scope.submit = function(){
-      DB.postRequest('signup',$scope.user).then(
+      DB.postRequest('auth/signup',$scope.user).then(
         function(){
           $log.log('submitted');
           $location.path('/mapview');
