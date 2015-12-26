@@ -3,19 +3,21 @@ var Users = UserModel.users;
 var Q = require('q');
 
 module.exports = {
-  switchDriver: function (req, res, next) {
+  setInitial: function (req, res, next) {
     var username  = req.body.username,
-        findUser = Q.nbind(Users.findOne, Users);
+        findUser = Q.nbind(Users.findOne, Users),
+        //from API_spec layout
+        loc1 = req.body.startPoint,
+        loc2 = req.body.endPoint,
+        driverStatus = req.body.driver;
 
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
 //NOT SURE HOW 'THIS' WILL PLAY OUT
-          if (this.driver === true) {
-            this.driver = false;
-          } else {
-            this.driver = true;
-          }
+          this.startPoint = loc1;
+          this.endPoint = loc2;
+          this.driver = driverStatus;
           res.status(200).send();
         } else {
           res.status(401).send();
