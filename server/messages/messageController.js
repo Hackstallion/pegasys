@@ -5,13 +5,14 @@ var UserModel = require('../../database/config.js'),
 module.exports = {
   showInbox: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-        username = req.headers['username'];
+        username = req.cookies.user;
 
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.loggedIn === true) {
+        if (foundUser) {
           console.log("foundUser.inbox => ", foundUser.inbox);
-          res.sendStatus(200);
+          res.json(foundUser.inbox);
+          res.status(200);
         } else {
           res.sendStatus(401);
         }
@@ -23,13 +24,14 @@ module.exports = {
 
   showSent: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-        username = req.headers['username'];
+        username = req.cookies.user;
         
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.loggedIn === true) {
+        if (foundUser) {
           console.log("foundUser.sent => ", foundUser.sent);
-          res.sendStatus(200);
+          res.json(foundUser.sent);
+          res.status(200);
         } else {
           res.sendStatus(401);
         }
@@ -47,7 +49,7 @@ module.exports = {
 
     findUser({username: sender})
       .then(function(sender) {
-        if (sender && sender.loggedIn === true) {
+        if (sender && req.cookies.user === sender.username) {
           sender.sent.push(text);
           sender.save();
           console.log("Message in sent folder");

@@ -1,6 +1,6 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
 module.exports = {
   signup: function (req, res, next) {
@@ -24,10 +24,10 @@ module.exports = {
           create = Q.nbind(Users.create, Users);
           newUser = {
             username: username,
-            password: password,
-            loggedIn: true
+            password: password
           };
           create(newUser);
+          res.cookie('user', username);
           res.sendStatus(201);
         }
       })

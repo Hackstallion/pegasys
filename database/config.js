@@ -17,7 +17,6 @@ var usersSchema = mongoose.Schema({
     matchRequests: Array,
     username: String,
     password: String,
-    loggedIn: { type: Boolean, default: false },
     startPoint: Array,
     endPoint: Array,
     route: Array,
