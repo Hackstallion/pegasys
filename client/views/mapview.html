@@ -13,7 +13,7 @@
   </div>
   <div id="driverCheckBox">
   <span>Driver</span>
-  <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" ng-default="isDriver"></input>
+  <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" ng-default="isDriver" ng-true-value='true' ng-false-value='false'></input>
   <span>{{isDriver}}</span>
   </div>
   <input type='submit' id="pointsSubmit" ng-click="saveInfo()" text='Submit'>
