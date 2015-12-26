@@ -22,8 +22,8 @@ module.exports = function (app, express) {
   app.use('/driver-route', driverRouteRouter);
   app.use('/show-drivers', driversRouter);
   app.use('/profile', profileRouter);
-  app.use('/matches', matchRouter);     //***
-  app.use('/messages', messageRouter);  //***
+  app.use('/matches', matchRouter);
+  app.use('/messages', messageRouter);
 
   require('./auth/authRoutes.js')(authRouter);
   require('./driver/driverRoutes.js')(driverSwitchRouter);
@@ -31,7 +31,7 @@ module.exports = function (app, express) {
   require('./route/routeRoutes.js')(driverRouteRouter);
   require('./drivers/driversRoutes.js')(driversRouter);
   require('./profile/profileRoutes.js')(profileRouter);
-  // require('./matches/matchRoutes.js')(matchRouter);
+  require('./matches/matchRoutes.js')(matchRouter);
   require('./messages/messageRoutes.js')(messageRouter);
 };
 
