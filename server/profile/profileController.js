@@ -59,13 +59,14 @@ module.exports = {
   getProfile: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
       //requires sending 'username' header with GET request...
-        username = req.headers['username'];
+        username = req.cookies.user;
         
         findUser({username: username})
           .then(function(myProfile) {
             if (myProfile && myProfile.loggedIn === true) {
               console.log("myProfile", myProfile);
-              res.sendStatus(200);
+              res.status(200);
+              res.json(myProfile);
             } else {
               res.sendStatus(401);
             }
