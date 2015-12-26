@@ -13,9 +13,11 @@
   </div>
   <div id="driverCheckBox">
   <span>Driver</span>
-  <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()"></input>
+  <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" ng-default="isDriver"></input>
+  <span>{{isDriver}}</span>
   </div>
   <input type='submit' id="pointsSubmit" ng-click="saveInfo()" text='Submit'>
+  <h3>{{changed}}</h3>
   <ui-gmap-google-map center="map.center" zoom="map.zoom" control="map.control">
   <ui-gmap-search-box parentdiv="'startSearchBox'" options="autocomplete" template="startSearchBox.template" events="startSearchBox.events"></ui-gmap-search-box>
   <ui-gmap-search-box parentdiv="'endSearchBox'" options="autocomplete" template="endSearchBox.template" events="endSearchBox.events"></ui-gmap-search-box>
