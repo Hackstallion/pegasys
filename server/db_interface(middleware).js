@@ -1,6 +1,6 @@
-var bodyParser = require('body-parser');
-var morgan = require('morgan');
-
+var bodyParser = require('body-parser'),
+    morgan = require('morgan'),
+    cookieParser = require('cookie-parser');
 
 module.exports = function (app, express) {
   var authRouter = express.Router(),
@@ -13,11 +13,14 @@ module.exports = function (app, express) {
 
   app.use(morgan('dev'));
   app.use(bodyParser.json());
+  app.use(cookieParser());
   app.use(express.static(__dirname + '/../client'));
 
   app.use('/api/auth', authRouter);
+  // app.use('/api/createtrip', tripRouter);
   app.use('/api/locations', endPointsRouter);
   app.use('/api/driver-route', driverRouteRouter);
+  // app.use('/api/getusers', usersRouter);
   app.use('/api/show-drivers', driversRouter);
   app.use('/api/profile', profileRouter);
   app.use('/api/matches', matchRouter);
