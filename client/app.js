@@ -7,10 +7,13 @@ angular.module('myApp', [
     // 'ngTouch',
     'pegasys.services',
     'pegasys.database',
-    'pegasys.about',
     'pegasys.login',
+    'pegasys.signup',
     'pegasys.main',
     'pegasys.mapview',
+    'pegasys.match',
+    'pegasys.profile',
+    'pegasys.mailbox'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -18,17 +21,29 @@ angular.module('myApp', [
         templateUrl: 'views/main.html',
         controller: 'MainController',
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutController',
-      })
       .when('/login', {
         templateUrl: 'views/login.html',
         controller: 'LoginController',
       })
+      .when('/signup', {
+        templateUrl: 'views/signup.html',
+        controller: 'SignupController',
+      })
       .when('/mapview', {
         templateUrl: 'views/mapview.html',
         controller: 'MapviewController',
+      })
+      .when('/match', {
+        templateUrl: 'views/match.html',
+        controller: 'MatchController',
+      })
+      .when('/profile', {
+        templateUrl: 'views/profile.html',
+        controller: 'ProfileController',
+      })
+      .when('/mailbox', {
+        templateUrl: 'views/mailbox.html',
+        controller: 'MailboxController',
       })
       .otherwise({
         redirectTo: '/login'
