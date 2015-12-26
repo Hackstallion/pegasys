@@ -1,12 +1,26 @@
-var potentials = require('../../server/potentialMatches/potentialMatchesController.js')
-
-angular.module('pegasys.matchHelpers', ['pegasys.services'])
-  .factory('matchHelpers', function (DB) {
+angular.module('pegasys.matchHelpers', [])
+  
+  .factory('matchHelpers', function ($log, DB) {
 
     var matchHelpers = {};
 
     matchHelpers.getMatches = function(user){
-      // Make a get request and hand info off to compareUsers and compareRoutes
+      DB.getRequest('/api/getusers/getusers', user.username).then(
+        function(res){
+          $log.log('successful getMatches request', res);
+          return compareUsers(user, res, compareRoutes, .004);
+        })
+    };
+
+    matchHelpers.filterTripTimes = function(driver, rider){
+      if(driver.startTime[0] > rider.startTime[1]){
+        return false;
+      }
+      if(driver.endTime[1] < rider.endTime[0]){
+        return false;
+      }
+
+      return true;
     };
 
     matchHelpers.filterDriverStatus = function(user, users){
@@ -42,6 +56,7 @@ angular.module('pegasys.matchHelpers', ['pegasys.services'])
 
       var matchedPoints = callback(driver, rider, range);
       if(matchedPoints !== false){
+        // ToDo: pass driver and rider to filterDriverStatus
         // Push an object containing the user id and the matched route points
         // optionId = option.id;
         var optionMatch = {};
