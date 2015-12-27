@@ -10,7 +10,6 @@ angular.module('pegasys.match',[])
     $scope.requestMatch = function(requestedUsername){
         DB.postRequest('matches/request', {from_id: $scope.user, to_id: requestedUsername})
           .then(function(){$log.log('sent match request')});
-      });
     };
 
     var userData;
