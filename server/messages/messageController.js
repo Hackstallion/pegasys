@@ -80,6 +80,7 @@ module.exports = {
 
     
   },
+
   delMessage: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         recipient = req.body.to_id,
@@ -95,13 +96,12 @@ module.exports = {
           console.log('message : '+message);
           console.log(req.body);
           var index = recipient.inbox.indexOf(message);
-          console.log(index);
+          console.log("recipient inbox message index before deletion:", index);
           if (index >= 0){
             recipient.inbox.splice(index,1);
           }
-          console.log(message);
           recipient.save();
-          console.log("Message in sent folder");
+          console.log("Message deleted.");
 
           findUser({username: sender})
             .then(function(sender) {
@@ -124,8 +124,7 @@ module.exports = {
         next(error);
         res.sendStatus(400);
       })
-
-    
   }
+  
 }
 
