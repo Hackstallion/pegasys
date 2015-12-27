@@ -4,12 +4,9 @@ angular.module('pegasys.matchHelpers', [])
 
     var matchHelpers = {};
 
-    matchHelpers.getMatches = function(user){
-      DB.getRequest('/api/getusers/getusers', user.username).then(
-        function(res){
-          $log.log('successful getMatches request', res);
-          return compareUsers(user, res, compareRoutes, .004);
-        })
+    matchHelpers.getMatches = function(user, users){
+          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, .004);
+          return matches;
     };
 
     matchHelpers.filterTripTimes = function(driver, rider){
@@ -42,6 +39,7 @@ angular.module('pegasys.matchHelpers', [])
     var option;
     // An array of the user's matches
     var userOptions = [];
+    $log.log('compareUsers user and users', user, users);
 
     for(var i = 0; i < users.length; i++){
       if(user.driver === true){

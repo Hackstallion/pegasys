@@ -6,13 +6,25 @@ angular.module('pegasys.match',[])
 
     $log.log('about to do DB request');
 
-    DB.getRequest('profile').then(function(result){
-      $scope.user = result.data;
-      matchHelpers.getMatches().then($log.log('successful match getting'));
-    });
+    var userData;
+    var usersData;
+    DB.getRequest('profile')
+      .then(function(response){
+        $log.log('profile request result', response);
+        userData = response.data;
+        DB.getRequest('getusers', userData.username).then(function(response){
+          usersData = response.data;
+          $log.log('userData', userData);
+          $log.log('usersData', usersData);
+          $scope.matches = matchHelpers.getMatches(userData, usersData);
+          $log.log('matches', $scope.matches);
+        })
+      });
 
-    var getMatches = matchHelpers.getMatches($scope.user).then(function(res){
-      $log.log('matches', matches);
-      $scope.matches = res;
-    })
+      // matchHelpers.getMatches(response.data);
+
+    // var getMatches = matchHelpers.getMatches($scope.user).then(function(res){
+    //   $log.log('matches', matches);
+    //   $scope.matches = res;
+    // })
   });
