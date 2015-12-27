@@ -58,7 +58,8 @@ angular.module('pegasys.matchHelpers', [])
         // Push an object containing the user id and the matched route points
         // optionId = option.id;
         var optionMatch = {};
-        optionMatch[option.id] = matchedPoints;
+        optionMatch.username = option.username;
+        optionMatch.matchedPoints = matchedPoints;
         userOptions.push(optionMatch);
       }
     }
