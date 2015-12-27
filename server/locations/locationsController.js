@@ -15,7 +15,7 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          driverStatus ? foundUser.driver = driverStatus : null;
+          driverStatus ? foundUser.driver = driverStatus : false;
           loc1 ? foundUser.startPoint = loc1 : null;
           loc2 ? foundUser.endPoint = loc2 : null;
           route ? foundUser.route = route : null;
