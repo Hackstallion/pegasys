@@ -6,6 +6,7 @@ module.exports = {
   setRoute: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         username  = req.cookies.user,
+        driverStatus = req.body.driver,
         loc1 = req.body.startPoint,
         loc2 = req.body.endPoint,
         route = req.body.route,
@@ -14,6 +15,7 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
+          driverStatus ? foundUser.driver = driverStatus : null;
           loc1 ? foundUser.startPoint = loc1 : null;
           loc2 ? foundUser.endPoint = loc2 : null;
           route ? foundUser.route = route : null;
