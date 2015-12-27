@@ -1,11 +1,17 @@
 angular.module('pegasys.match',[])
   .controller('MatchController', function($scope,$http,$log, DB, matchHelpers) {
-    $scope.header = 'Your trip matches';
+    $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
     $scope.matches = [];
     $scope.matchNames = [];
 
-    $log.log('about to do DB request');
+    $scope.tester = function(){$log.log('testing testing')};
+
+    $scope.requestMatch = function(requestedUsername){
+        DB.postRequest('matches/request', {from_id: $scope.user, to_id: requestedUsername})
+          .then(function(){$log.log('sent match request')});
+      });
+    };
 
     var userData;
     var usersData;
@@ -21,15 +27,7 @@ angular.module('pegasys.match',[])
           for(var i = 0; i < $scope.matches.length; i++){
             $scope.matchNames.push($scope.matches[i].username);
           }
-          $log.log('matches', $scope.matches);
-          $log.log('matchNames', $scope.matchNames);
         })
       });
 
-      // matchHelpers.getMatches(response.data);
-
-    // var getMatches = matchHelpers.getMatches($scope.user).then(function(res){
-    //   $log.log('matches', matches);
-    //   $scope.matches = res;
-    // })
   });
