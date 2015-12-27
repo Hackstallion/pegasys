@@ -4,19 +4,20 @@ var UserModel = require('../../database/config.js'),
 
 
 module.exports = {
-  getDrivers: function (req, res, next) {
+  getUsers: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-        findDrivers = Q.nbind(Users.find, Users),
+        findUsers = Q.nbind(Users.find, Users),
         username = req.cookies.user;
         
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          
-          findDrivers({driver: true, matched: 0})
-            .then(function(drivers) {
-              if (drivers) {
-                res.json(drivers);
+
+          //Find users with the opposite driver/rider status
+          findUsers({driver: !foundUser.driver, matched: "0"})
+            .then(function(users) {
+              if (users) {
+                res.json(users);
                 res.status(200);
               } else {
                 res.sendStatus(404);
