@@ -65,8 +65,8 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         });
       }
       else if (startPoint.length && endPoint.length){
-        DB.postRequest('createtrip',{
-          driver: false,
+        DB.postRequest('createTrip',{
+          driver: false;
           username: document.cookie.substring(5),
           startPoint: startPoint,
           endPoint: endPoint
