@@ -24,7 +24,7 @@ module.exports = {
 
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.username === username) {
+        if (foundUser) {
           
           someOtherUsername ? (res.cookie('user', someOtherUsername), foundUser.username = someOtherUsername) : null;
           password ? foundUser.password = password : null;
