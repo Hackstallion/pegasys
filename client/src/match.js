@@ -48,6 +48,7 @@ angular.module('pegasys.match',[])
     /* more map stuff, now*/
     $scope.riderStart = {};
     $scope.riderEnd = {};
+    $scope.driverLine = {};
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
@@ -110,7 +111,21 @@ angular.module('pegasys.match',[])
             var driverData = $scope.matches.filter(function(match){
               return match.username === driver;
             })[0];
-            $log.log(driverData);/*
+            $log.log(driverData);
+            if ($scope.driverLine instanceof maps.Polyline){
+              $scope.driverLine.setPath(driverData.route.map(function(pair){
+                return new maps.LatLng(pair[0],pair[1]);
+              }));
+            } else {
+              $scope.driverLine = new maps.Polyline({
+                map: map,
+                path: driverData.route.map(function(pair){
+                    return new maps.LatLng(pair[0],pair[1]);
+                })
+              })
+            }
+
+            /*
             riderData.startPoint = riderData.matchedPoints[0];
             riderData.endPoint = riderData.matchedPoints[1];
             if ($scope.riderStart instanceof maps.Marker){

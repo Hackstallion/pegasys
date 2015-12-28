@@ -5,12 +5,12 @@
   <ui-gmap-google-map class='userMap' center="map.center" zoom="map.zoom" control="map.control"> 
   </ui-gmap-google-map>
   </div>
-  	<h3>{{matchNames.length ? 'Click on a user to send them a request' : 'No Matches Found'}}</h2>
+  	<h3>{{matchNames.length ? 'These users are going your way:' : 'No Matches Found'}}</h2>
   	<div ng-repeat="name in matchNames">
    		<h3 ng-click="requestMatch(name)">{{ name }}</h3>
       <p ng-click="showOnMap(name)">Show on Map</p>
       <div class='sendNewMessage' ng-controller="MailboxController">
-        <h2>Send {{name}} a Message!</h2>
+        <span>Send {{name}} a Message!</span>
         <form ng-submit='sendMessage(name)'>
           <input type='text' placeholder='message' ng-model='newMessage.text' />
           <input type='submit' value='Send New Message'>
