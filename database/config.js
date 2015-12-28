@@ -13,11 +13,10 @@ db.once('open', function (callback) {
 
 var usersSchema = mongoose.Schema({
     driver: { type: Boolean, default: false },
-    matched: { type: Number, default: 0 },
+    matched: { type: String, default: 0 },
     matchRequests: Array,
     username: String,
     password: String,
-    loggedIn: { type: Boolean, default: false },
     startPoint: Array,
     endPoint: Array,
     route: Array,

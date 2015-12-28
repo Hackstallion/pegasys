@@ -1,13 +1,94 @@
-<div class="jumbotron" ng-controller="SignupController">
+<!-- <div class="jumbotron" ng-controller="SignupController">
   <h1>{{welcome}}</h1>
   <form ng-submit='submit()'>
   <input type='text' placeholder='username' ng-model='user.username'/>
   <input class="input" type='password' placeholder='password' ng-model='user.password' />
-  <span>Driver</span>
-  <input type="checkbox" ng-model="user.driver"></input>
   <div>
   <button class='btn' type='submit'>{{buttonText}}</a>
   </div>
   </form>
   <span>{{user}}</span>
-</div>
+</div> -->
+
+<head>
+
+	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+	<meta name="author" content="SemiColonWeb" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	 <script type="text/javascript" src="Package-HTML/HTML/js/jquery.js"></script>
+   	 <script type="text/javascript" src="Package-HTML/HTML/js/plugins.js"></script>
+
+	
+	<title>Sign Up for Pegasys</title>
+
+</head>
+
+<body class="stretched" ng-controller = 'SignupController'>
+
+
+	<div id="wrapper" class="clearfix">
+
+	
+		<section id="content">
+
+			<div class="content-wrap nopadding">
+
+				<div class="section nopadding nomargin" style="width: 100%; height: 100%; position: absolute; left: 0; top: 0; background: #444;"></div>
+
+				<div class="section nobg full-screen nopadding nomargin">
+					<div class="container vertical-middle divcenter clearfix">
+
+						
+
+						<div class="panel panel-default divcenter noradius noborder" style="max-width: 400px;">
+							<div class="panel-body" style="padding: 40px;">
+								<form id="login-form" name="login-form" class="nobottommargin" action="#" method="post" ng-submit = 'submit()'>
+									<h2 class = 'welcome'> Welcome to Pegasys</h2>
+									<h3>Sign up for an Account</h3>
+
+									<div class="col_full">
+										<label for="login-form-username">Username:</label>
+										<input type="text" id="login-form-username" name="login-form-username" value="" class="form-control not-dark" ng-model = 'user.username'/>
+									</div>
+
+									<div class="col_full">
+										<label for="login-form-password">Password:</label>
+										<input type="password" id="login-form-password" name="login-form-password" value="" class="form-control not-dark" ng-model = 'user.password'/>
+									</div>
+
+									<div class="col_full nobottommargin">
+										<button class="button button-3d button-black nomargin" id="login-form-submit" name="login-form-submit" ng-click = 'submit()' >Create</button>
+										<a href="#/login" class="fright">Already have an account?</a>
+									</div>
+								</form>
+
+								<div class="line line-sm"></div>
+
+								<div class="center">
+									<h4 style="margin-bottom: 15px;">or Login with:</h4>
+									<a href="#" class="button button-rounded si-facebook si-colored">Facebook</a>
+									<span class="hidden-xs">or</span>
+									<a href="#" class="button button-rounded si-twitter si-colored">Twitter</a>
+								</div>
+							</div>
+						</div>
+						<span>{{user}}</span>
+
+						
+
+					</div>
+				</div>
+
+			</div>
+
+		</section>
+	</div>
+
+	<footer>
+	 <script type="text/javascript" src="Package-HTML/HTML/js/functions.js"></script>
+	</footer>
+
+
+</body>
+</html>

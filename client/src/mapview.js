@@ -6,7 +6,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         libraries: 'places,geometry'
     });
   })
-  .controller('MapviewController', function($log,$scope,Mapview,uiGmapGoogleMapApi,uiGmapIsReady,DB) {
+  .controller('MapviewController', function($location,$log,$scope,Mapview,uiGmapGoogleMapApi,uiGmapIsReady,DB) {
     if (!document.cookie.includes('user')) $location.path('/login');
     var startPoint = [];
     var endPoint = [];
@@ -57,14 +57,16 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
 
     $scope.saveInfo = function(){
       if ($scope.isDriver && bounds && routeArray.length){
-        DB.postRequest('route',{
+        DB.postRequest('createtrip',{
+          driver: $scope.isDriver,
           username: document.cookie.substring(5),
           route: routeArray,
           bounds: bounds
         });
       }
       else if (startPoint.length && endPoint.length){
-        DB.postRequest('endpoints',{
+        DB.postRequest('createTrip',{
+          driver: false,
           username: document.cookie.substring(5),
           startPoint: startPoint,
           endPoint: endPoint

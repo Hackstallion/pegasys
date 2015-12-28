@@ -1,13 +1,12 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
-//Daniel, what did you mean by do it with a cookie?
 
 module.exports = {
   updateProfile: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-        username = req.body.username,
+        username = req.cookies.user,
         someOtherUsername = req.body.otherName,
         password = req.body.password,
         route = req.body.route,
@@ -21,17 +20,13 @@ module.exports = {
         endTime = req.body.endTime,
         inbox = req.body.inbox,
         sent = req.body.sent;
-//If we don't want any of these attributes to be
-//editable, we can restrict this module's 
-//access to them.
+
 
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.loggedIn === true) {
-          // testing loggedIn operator
-          // req.body.loggedIn === false ? foundUser.loggedIn = req.body.loggedIn : null;
+        if (foundUser) {
           
-          someOtherUsername ? foundUser.username = someOtherUsername : null;
+          someOtherUsername ? (res.cookie('user', someOtherUsername), foundUser.username = someOtherUsername) : null;
           password ? foundUser.password = password : null;
           route ? foundUser.route = route : null;
           bounds ? foundUser.bounds = bounds : null;
@@ -58,14 +53,14 @@ module.exports = {
 
   getProfile: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-      //requires sending 'username' header with GET request...
-        username = req.headers['username'];
+        username = req.cookies.user;
         
         findUser({username: username})
           .then(function(myProfile) {
-            if (myProfile && myProfile.loggedIn === true) {
+            if (myProfile) {
               console.log("myProfile", myProfile);
-              res.sendStatus(200);
+              res.json(myProfile);
+              res.status(200);
             } else {
               res.sendStatus(401);
             }

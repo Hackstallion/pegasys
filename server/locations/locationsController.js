@@ -1,22 +1,25 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
 module.exports = {
-  setInitial: function (req, res, next) {
-    var username  = req.body.username,
-        findUser = Q.nbind(Users.findOne, Users),
-        //from API_spec layout
+  setRoute: function (req, res, next) {
+    var findUser = Q.nbind(Users.findOne, Users),
+        username  = req.cookies.user,
+        driverStatus = req.body.driver,
         loc1 = req.body.startPoint,
         loc2 = req.body.endPoint,
-        driverStatus = req.body.driver;
+        route = req.body.route,
+        bounds = req.body.bounds;
 
     findUser({username: username})
       .then(function(foundUser) {
-        if (foundUser && foundUser.loggedIn === true) {
-          foundUser.startPoint = loc1;
-          foundUser.endPoint = loc2;
-          foundUser.driver = driverStatus;
+        if (foundUser) {
+          driverStatus ? foundUser.driver = driverStatus : null;
+          loc1 ? foundUser.startPoint = loc1 : null;
+          loc2 ? foundUser.endPoint = loc2 : null;
+          route ? foundUser.route = route : null;
+          bounds ? foundUser.bounds = bounds : null;
           foundUser.save();
           res.sendStatus(200);
         } else {
@@ -25,6 +28,7 @@ module.exports = {
       })
       .fail(function (error) {
         next(error);
+        res.sendStatus(404);
       });
   }
 }

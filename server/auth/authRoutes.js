@@ -1,6 +1,6 @@
-var signupController = require('./signupController.js');
-var loginController = require('./loginController.js');
-var signoutController = require('./signoutController.js');
+var signupController = require('./signupController.js'),
+    loginController = require('./loginController.js'),
+    signoutController = require('./signoutController.js');
 
 module.exports = function (app) {
 
