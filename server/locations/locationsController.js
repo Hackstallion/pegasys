@@ -15,11 +15,11 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          driverStatus ? foundUser.driver = driverStatus : false;
-          loc1 ? foundUser.startPoint = loc1 : null;
-          loc2 ? foundUser.endPoint = loc2 : null;
-          route ? foundUser.route = route : null;
-          bounds ? foundUser.bounds = bounds : null;
+          foundUser.driver = driverStatus || false;
+          foundUser.startPoint = loc1 || foundUser.startPoint;
+          foundUser.endPoint = loc2 || foundUser.endPoint;
+          foundUser.route = route || foundUser.route;
+          foundUser.bounds = bounds || foundUser.bounds;
           foundUser.save();
           res.sendStatus(200);
         } else {

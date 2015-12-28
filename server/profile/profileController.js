@@ -21,14 +21,14 @@ module.exports = {
       .then(function(foundUser) {
         if (foundUser) {
           
-          password ? foundUser.password = password : null;
-          route ? foundUser.route = route : null;
-          bounds ? foundUser.bounds = bounds : null;
-          driverStatus ? foundUser.driver = driverStatus : null;
-          startPoint ? foundUser.startPoint = startPoint : null;
-          endPoint ? foundUser.endPoint = endPoint : null;
-          startTime ? foundUser.startTime = startTime : null;
-          endTime ? foundUser.endTime = endTime : null;
+          foundUser.password = password || foundUser.password;
+          foundUser.route = route || foundUser.route;
+          foundUser.bounds = bounds || foundUser.bounds;
+          foundUser.driver = driverStatus || false;
+          foundUser.startPoint = startPoint || foundUser.startPoint;
+          foundUser.endPoint = endPoint || foundUser.endPoint;
+          foundUser.startTime = startTime || foundUser.startTime;
+          foundUser.endTime = endTime | foundUser.endTime;
           foundUser.save();
           res.sendStatus(200);
         } else {
