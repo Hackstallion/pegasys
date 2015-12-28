@@ -1,11 +1,11 @@
 angular.module('pegasys.match',[])  
-  .config(function(uiGmapGoogleMapApiProvider) {
+  /*.config(function(uiGmapGoogleMapApiProvider) {
       uiGmapGoogleMapApiProvider.configure({
         key: 'AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE',
         v: '3.20', //defaults to latest 3.X anyhow
         libraries: 'geometry'
     });
-  })
+  })*/
   .controller('MatchController', function($scope,$http,$log, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers) {
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
@@ -46,6 +46,8 @@ angular.module('pegasys.match',[])
         })
       });
     /* more map stuff, now*/
+    $scope.riderStart = {};
+    $scope.riderEnd = {};
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
@@ -64,6 +66,29 @@ angular.module('pegasys.match',[])
             path: driverRoute,
           });
           // make $scope.showOnMap() show riders' endpoints
+          $scope.showOnMap = function(rider){
+            var riderData = $scope.matches.filter(function(match){
+              return match.username === rider;
+            })[0];
+            $log.log(riderData);
+            riderData.startPoint = riderData.matchedPoints[0];
+            riderData.endPoint = riderData.matchedPoints[1];
+            if ($scope.riderStart instanceof maps.Marker){
+              $scope.riderStart.setPosition(new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]));
+              $scope.riderEnd.setPosition(new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]));
+            } else {
+              $scope.riderStart = new maps.Marker({
+                map: map,
+                position: new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]),
+                draggable: false
+              });
+              $scope.riderEnd = new maps.Marker({
+                map: map,
+                position: new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]),
+                draggable: false
+              });
+            }
+          }
         } else {
           //display the rider's points
           var riderStart = new maps.Marker({
@@ -76,7 +101,34 @@ angular.module('pegasys.match',[])
             position: new maps.LatLng($scope.userData.endPoint[0],$scope.userData.endPoint[1]),
             draggable: false
           });
+          var newBounds = new maps.LatLngBounds();
+          newBounds.extend(riderStart.position);
+          newBounds.extend(riderEnd.position);
+          map.fitBounds(newBounds);
           //make $scope.showOnMap() show drivers' polylines
+          $scope.showOnMap = function(driver){
+            var driverData = $scope.matches.filter(function(match){
+              return match.username === driver;
+            })[0];
+            $log.log(driverData);/*
+            riderData.startPoint = riderData.matchedPoints[0];
+            riderData.endPoint = riderData.matchedPoints[1];
+            if ($scope.riderStart instanceof maps.Marker){
+              $scope.riderStart.setPosition(new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]));
+              $scope.riderEnd.setPosition(new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]));
+            } else {
+              $scope.riderStart = new maps.Marker({
+                map: map,
+                position: new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]),
+                draggable: false
+              });
+              $scope.riderEnd = new maps.Marker({
+                map: map,
+                position: new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]),
+                draggable: false
+              });
+            }*/
+          }
         }
       });
     });
