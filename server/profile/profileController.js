@@ -5,14 +5,30 @@ var UserModel = require('../../database/config.js'),
 
 module.exports = {
   updateProfile: function (req, res, next) {
-    var findUser = Q.nbind(Users.findOne, Users);
-    var username = req.cookies.user;
+    var findUser = Q.nbind(Users.findOne, Users),
+        username = req.cookies.user,
+        password = req.body.password,
+        route = req.body.route,
+        bounds = req.body.bounds,
+        driverStatus = req.body.driver,
+        startPoint = req.body.startPoint,
+        endPoint = req.body.endPoint,
+        startTime = req.body.startTime,
+        endTime = req.body.endTime;
+
+
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          for (var key in req.body){
-            foundUser[key] = req.body[key];
-          }
+          
+          password ? foundUser.password = password : null;
+          route ? foundUser.route = route : null;
+          bounds ? foundUser.bounds = bounds : null;
+          driverStatus ? foundUser.driver = driverStatus : null;
+          startPoint ? foundUser.startPoint = startPoint : null;
+          endPoint ? foundUser.endPoint = endPoint : null;
+          startTime ? foundUser.startTime = startTime : null;
+          endTime ? foundUser.endTime = endTime : null;
           foundUser.save();
           res.sendStatus(200);
         } else {
