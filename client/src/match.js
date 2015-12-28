@@ -1,11 +1,4 @@
 angular.module('pegasys.match',[])  
-  /*.config(function(uiGmapGoogleMapApiProvider) {
-      uiGmapGoogleMapApiProvider.configure({
-        key: 'AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE',
-        v: '3.20', //defaults to latest 3.X anyhow
-        libraries: 'geometry'
-    });
-  })*/
   .controller('MatchController', function($scope,$http,$log, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers) {
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
@@ -124,25 +117,6 @@ angular.module('pegasys.match',[])
                 })
               })
             }
-
-            /*
-            riderData.startPoint = riderData.matchedPoints[0];
-            riderData.endPoint = riderData.matchedPoints[1];
-            if ($scope.riderStart instanceof maps.Marker){
-              $scope.riderStart.setPosition(new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]));
-              $scope.riderEnd.setPosition(new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]));
-            } else {
-              $scope.riderStart = new maps.Marker({
-                map: map,
-                position: new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]),
-                draggable: false
-              });
-              $scope.riderEnd = new maps.Marker({
-                map: map,
-                position: new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]),
-                draggable: false
-              });
-            }*/
           }
         }
       });
