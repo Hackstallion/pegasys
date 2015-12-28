@@ -24,10 +24,15 @@ angular.module('pegasys.main',[])
                 userTrip.driver = 'rider'
               }
 
-              if(user.matched === 0){
-                userTrip.matched = 'No Matches for this trip'
+              if(user.matched < 1){
+                var optionType = 'driver';
+                if(user.driver){
+                  optionType = 'rider';
+                }
+                userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
               }else{
-                userTrip.matched = 'You are matched with ' + user.matched;
+                $log.log(user.matched);
+                userTrip.matched = 'Your ' + optionType + ' for this trip is ' + user.matched;
               }
               $scope.trips.push(userTrip);
             })

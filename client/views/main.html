@@ -3,8 +3,8 @@
   <div class='container'>
   	<div class='trip' ng-repeat='trip in trips'>
   		<h3>{{ trip.tripName }}</h3>
-  		<p>driver: {{ trip.driver }}</p>
-  		<p>matched: {{ trip.matched }}</p>
+  		<p>You're the {{ trip.driver }} for this trip</p>
+  		<p>{{ trip.matched }}</p>
   		<p>start: {{ trip.startPoint }}</p>
   		<p>end: {{ trip.endPoint }}</p>
   	</div>
