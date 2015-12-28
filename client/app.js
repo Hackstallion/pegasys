@@ -30,6 +30,10 @@ angular.module('myApp', [
         templateUrl: 'views/signup.html',
         controller: 'SignupController',
       })
+      .when('/main', {
+        templateUrl: 'views/main.html',
+        controller: 'MainController'
+      })
       .when('/mapview', {
         templateUrl: 'views/mapview.html',
         controller: 'MapviewController',
