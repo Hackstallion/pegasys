@@ -28,7 +28,7 @@ module.exports = {
           foundUser.startPoint = startPoint || foundUser.startPoint;
           foundUser.endPoint = endPoint || foundUser.endPoint;
           foundUser.startTime = startTime || foundUser.startTime;
-          foundUser.endTime = endTime | foundUser.endTime;
+          foundUser.endTime = endTime || foundUser.endTime;
           foundUser.save();
           res.sendStatus(200);
         } else {
