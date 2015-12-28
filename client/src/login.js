@@ -7,7 +7,7 @@ angular.module('pegasys.login',[])
       DB.postRequest('auth/login',$scope.user).then(
         function(){
           $log.log('submitted');
-          $location.path('/mapview');
+          $location.path('/main');
         });
     };
   });
