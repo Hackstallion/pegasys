@@ -1,12 +1,23 @@
-var potentials = require('../../server/potentialMatches/potentialMatchesController.js')
-
-angular.module('pegasys.matchHelpers', ['pegasys.services'])
-  .factory('matchHelpers', function (DB) {
+angular.module('pegasys.matchHelpers', [])
+  
+  .factory('matchHelpers', function ($log, DB) {
 
     var matchHelpers = {};
 
-    matchHelpers.getMatches = function(user){
-      // Make a get request and hand info off to compareUsers and compareRoutes
+    matchHelpers.getMatches = function(user, users){
+          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, .004);
+          return matches;
+    };
+
+    matchHelpers.filterTripTimes = function(driver, rider){
+      if(driver.startTime[0] > rider.startTime[1]){
+        return false;
+      }
+      if(driver.endTime[1] < rider.endTime[0]){
+        return false;
+      }
+
+      return true;
     };
 
     matchHelpers.filterDriverStatus = function(user, users){
@@ -28,6 +39,7 @@ angular.module('pegasys.matchHelpers', ['pegasys.services'])
     var option;
     // An array of the user's matches
     var userOptions = [];
+    $log.log('compareUsers user and users', user, users);
 
     for(var i = 0; i < users.length; i++){
       if(user.driver === true){
@@ -42,10 +54,13 @@ angular.module('pegasys.matchHelpers', ['pegasys.services'])
 
       var matchedPoints = callback(driver, rider, range);
       if(matchedPoints !== false){
+        // ToDo: pass driver and rider to filterDriverStatus
         // Push an object containing the user id and the matched route points
         // optionId = option.id;
         var optionMatch = {};
-        optionMatch[option.id] = matchedPoints;
+        optionMatch.id = option._id;
+        optionMatch.username = option.username;
+        optionMatch.matchedPoints = matchedPoints;
         userOptions.push(optionMatch);
       }
     }
