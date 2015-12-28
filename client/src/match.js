@@ -1,9 +1,26 @@
-angular.module('pegasys.match',[])
-  .controller('MatchController', function($scope,$http,$log, DB, matchHelpers) {
+angular.module('pegasys.match',[])  
+  .config(function(uiGmapGoogleMapApiProvider) {
+      uiGmapGoogleMapApiProvider.configure({
+        key: 'AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE',
+        v: '3.20', //defaults to latest 3.X anyhow
+        libraries: 'geometry'
+    });
+  })
+  .controller('MatchController', function($scope,$http,$log, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers) {
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
+    $scope.userData = {};
     $scope.matches = [];
     $scope.matchNames = [];
+    /*Daniel's addition: a map!*/
+    $scope.map = {
+      control: {},
+      center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
+      zoom: 12
+    }
+    $scope.showOnMap = function(username){
+      $log.log('show on map: '+username)
+    }
 
     $scope.tester = function(){$log.log('testing testing')};
 
@@ -17,7 +34,7 @@ angular.module('pegasys.match',[])
     DB.getRequest('profile')
       .then(function(response){
         $log.log('profile request result', response);
-        userData = response.data;
+        $scope.userData = userData = response.data;
         DB.getRequest('getusers', userData.username).then(function(response){
           usersData = response.data;
           $log.log('userData', userData);
@@ -28,5 +45,39 @@ angular.module('pegasys.match',[])
           }
         })
       });
-
+    /* more map stuff, now*/
+    uiGmapGoogleMapApi.then(function(maps) { 
+      uiGmapIsReady.promise().then(function(instance) {
+        var map = instance[0].map;
+        if ($scope.userData.driver){
+          // display the driver's polyline
+          var driverRoute = $scope.userData.route.map(function(pair){
+            return new maps.LatLng(pair[0],pair[1]);
+          });
+          var newBounds = new maps.LatLngBounds();
+          driverRoute.forEach(function(point){
+            newBounds.extend(point);
+          });
+          map.fitBounds(newBounds);
+          var driverLine = new maps.Polyline({
+            map: map,
+            path: driverRoute,
+          });
+          // make $scope.showOnMap() show riders' endpoints
+        } else {
+          //display the rider's points
+          var riderStart = new maps.Marker({
+            map: map,
+            position: new maps.LatLng($scope.userData.startPoint[0],$scope.userData.startPoint[1]),
+            draggable: false
+          });
+          var riderEnd = new maps.Marker({
+            map: map,
+            position: new maps.LatLng($scope.userData.endPoint[0],$scope.userData.endPoint[1]),
+            draggable: false
+          });
+          //make $scope.showOnMap() show drivers' polylines
+        }
+      });
+    });
   });
