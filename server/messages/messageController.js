@@ -93,7 +93,7 @@ module.exports = {
           var message = JSON.stringify({from_id: sender,
                          to_id: recipient.username,
                          text: text});
-          console.log('message : '+message);
+          console.log('message : ' + message);
           console.log(req.body);
           var index = recipient.inbox.indexOf(message);
           console.log("recipient inbox message index before deletion:", index);
