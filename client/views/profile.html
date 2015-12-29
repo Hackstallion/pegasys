@@ -6,17 +6,13 @@
   <span>Username: {{user.username}}</span>
   <br>
   <span>Password: </span>
-  <input class="profileInput" type='password' placeholder='Password' ng-model='user.password' />
+  <input class="input profileInput" type='password' placeholder='Password' ng-model='user.password' />
   <br>
   <span>Driver: </span>
   <input class="profileInput" type='checkbox' placeholder='user.driver' ng-model='user.driver' ng-true-value='true' ng-false-value='false' />
   <br>
-  <span>Saved Driver Route: {{user.route ? 'Yes' : 'No'}}</span>
-  <br>
-  <span>Saved Rider Route: {{user.startPoint && user.endPoint ? 'Yes' : 'No'}}</span>
   <div>
-  <button class='btn' type='submit'>{{buttonText}}</a>
+  <button class='btn' type='submit'>{{buttonText}}</button>
   </div>
   </form>
-  <span>{{user}}</span>
 </div>

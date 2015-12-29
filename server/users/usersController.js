@@ -17,6 +17,13 @@ module.exports = {
           findUsers({driver: !foundUser.driver, matched: "0"})
             .then(function(users) {
               if (users) {
+                users.forEach(function(user){
+                  user.password=null;
+                  user.inbox=null;
+                  user.sent=null;
+                  user.matchRequests=null;
+                });
+                console.log(users);
                 res.json(users);
                 res.status(200);
               } else {

@@ -39,7 +39,6 @@ angular.module('pegasys.matchHelpers', [])
     var option;
     // An array of the user's matches
     var userOptions = [];
-    $log.log('compareUsers user and users', user, users);
 
     for(var i = 0; i < users.length; i++){
       if(user.driver === true){
@@ -61,6 +60,7 @@ angular.module('pegasys.matchHelpers', [])
         optionMatch.id = option._id;
         optionMatch.username = option.username;
         optionMatch.matchedPoints = matchedPoints;
+        optionMatch.route = option.route || [];
         userOptions.push(optionMatch);
       }
     }
