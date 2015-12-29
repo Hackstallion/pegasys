@@ -43,3 +43,8 @@ h1{
 .driverCheckBox {
   margin: 5px;
 }
+
+.userMap {
+  float: left;
+  margin-left: 100px;
+}

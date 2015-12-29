@@ -9,7 +9,7 @@
   <input type='submit' value='Send New Message'>
   </form>
   </div>
-  <h2> Inbox</h2>
+  <h2>{{messages.length ? 'Inbox' : ''}}</h2>
   <div class='message' ng-repeat="msg in messages">
   <span class='sender'>FROM: {{msg.from_id}}</span>
   <p class='message'>{{msg.text}}</p>
