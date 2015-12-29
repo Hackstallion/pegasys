@@ -105,3 +105,6 @@ h1 {
 .username {
   margin-bottom: 3px;
 }
+.mapLink:hover {
+  text-decoration: underline;
+}

@@ -8,7 +8,7 @@
   	<h3 class='matchTitleBar'>{{matchNames.length ? 'These users are going your way:' : 'No Matches Found'}}</h2>
   	<div class='messageDiv' ng-repeat="name in matchNames">
    		<h3 class='username' ng-click="requestMatch(name)">{{ name }}</h3>
-      <span ng-click="showOnMap(name)">(Show on Map)</span>
+      <span class='mapLink' ng-click="showOnMap(name)">(Show on Map)</span>
       <div class='sendNewMessage' ng-controller="MailboxController">
         <form ng-submit='sendMessage(name)'>
           <input class='input' type='text' placeholder='Message' ng-model='newMessage.text' />
