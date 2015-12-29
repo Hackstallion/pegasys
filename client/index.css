@@ -91,7 +91,10 @@ h1 {
   text-align: center;
 }
 .messageDiv {
-  float: center;
+  float: right;
+  margin-right: 50px;
+  margin-bottom: 5px;
+  min-width: 400px;
   background-color: white;
   padding: 5px;
   border-width: 2px;
