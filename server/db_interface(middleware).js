@@ -18,6 +18,7 @@ module.exports = function (app, express) {
   app.use('/api/auth', authRouter);
   app.use('/api/createtrip', tripRouter);
   app.use('/api/getusers', usersRouter);
+  app.use('/api/getallusers', usersRouter);
   app.use('/api/profile', profileRouter);
   app.use('/api/matches', matchRouter);
   app.use('/api/messages', messageRouter);

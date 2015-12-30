@@ -3,6 +3,7 @@
   <div class='container'>
   	<div class='trip' ng-repeat='trip in trips'>
   		<h3>{{ trip.tripName }}</h3>
+      <button class='btn' ng-click='getMatches(trip.tripName)'>Find Matches</button>
   		<p>You're the {{ trip.driver }} for this trip</p>
   		<p>{{ trip.matched }}</p>
   		<p>start: {{ trip.startPoint }}</p>
