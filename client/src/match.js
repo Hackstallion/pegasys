@@ -23,11 +23,11 @@ angular.module('pegasys.match',[])
     var userData;
     var usersData;
     $scope.getMatches = function(tripName){
-      return DB.getRequest('profile')
+      DB.getRequest('profile')
         .then(function(response){
           $log.log('profile request result', response);
           $scope.userData = userData = response.data;
-          $scope.userTrip = userTrip = JSON.parse(response.data.trips)[tripName];
+          $userTrip = userTrip = JSON.parse(response.data.trips)[tripName];
           $log.log('userTrip', userTrip);
           DB.getRequest('getallusers', userData.username).then(function(response){
             usersData = response.data;
@@ -44,13 +44,13 @@ angular.module('pegasys.match',[])
     if(!window.tripName){
       $location.path('/main');
     }else{
-    
+      $scope.getMatches(window.tripName);
+    }
     
     /* more map stuff, now*/
     $scope.riderStart = {};
     $scope.riderEnd = {};
     $scope.driverLine = {};
-    $scope.getMatches(window.tripName).then(function(){
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
@@ -130,7 +130,4 @@ angular.module('pegasys.match',[])
         }
       });
     });
-    });
-    }
-
   });
