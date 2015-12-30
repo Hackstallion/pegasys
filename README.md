@@ -17,8 +17,9 @@ See [API_spec.md](https://github.com/pegasys-rideshare/pegasys/blob/master/API_s
 
 ## Licensing
 
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>Except where otherwise noted, content from this app is licensed under a Creative Commons Attribution 4.0 International license.
+<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></br>Except where otherwise noted, content from this app is licensed under a Creative Commons Attribution 4.0 International license.
 
 ## Contacts
 
-The authors may be contacted by email: Ivan Mora ([moraivan1@gmail.com](moraivan1@gmail.com)), Daniel Sato ([dksato@gmail.com](dksato@gmail.com)), Salman Oskooi ([soskooi@gmail.com](soskooi@gmail.com)), Mac Evans ([maclean.evans@gmail.com](maclean.evans@gmail.com))
+The authors may be contacted by email: 
+Ivan Mora ([moraivan1@gmail.com](moraivan1@gmail.com)), Daniel Sato ([dksato@gmail.com](dksato@gmail.com)), Salman Oskooi ([soskooi@gmail.com](soskooi@gmail.com)), Mac Evans ([maclean.evans@gmail.com](maclean.evans@gmail.com))
