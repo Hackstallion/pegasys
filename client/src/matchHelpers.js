@@ -4,9 +4,12 @@ angular.module('pegasys.matchHelpers', [])
 
     var matchHelpers = {};
 
-    matchHelpers.getMatches = function(user, users){
-          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, 402.336);
-          return matches;
+    matchHelpers.getMatches = function(user, users, range){
+      // Convert given miles from 'range' into meters.
+      // Defualut to the equivelant of .25 miles in meters.
+      var rangeMeters = range / 0.00062137 || 402.336;
+      var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, rangeMeters);
+      return matches;
     };
 
     matchHelpers.filterTripTimes = function(driver, rider){
@@ -51,29 +54,47 @@ angular.module('pegasys.matchHelpers', [])
         option = driver;
       }
 
-      var matchedPoints = callback(driver, rider, range);
-      if(matchedPoints !== false){
-        // ToDo: pass driver and rider to filterDriverStatus
-        // Push an object containing the user id and the matched route points
-        // optionId = option.id;
-        var optionMatch = {};
-        optionMatch.id = option._id;
-        optionMatch.username = option.username;
-        optionMatch.matchedPoints = matchedPoints;
-        optionMatch.route = option.route || [];
-        userOptions.push(optionMatch);
-      }
+      // Parse JSON object representing trips
+      // Iterate over trips object
+      var optionTrips = JSON.parse(option.trips);
+        for(var trip in optionTrips){
+          if(user.driver === trip.driver) continue;
+          var matchedPoints;
+          if(option === driver){
+            matchedPoints = callback(optionTrips[trip], rider, range);
+          }else{
+            matchedPoints = callback(driver, optionTrips[trip], range);
+          }
+          if(matchedPoints !== false){
+            // ToDo: pass driver and rider to filterDriverStatus
+            // Push an object containing the user id and the matched route points
+            var optionMatch = {};
+            optionMatch.id = option._id;
+            optionMatch.username = option.username;
+            optionMatch.matchedPoints = matchedPoints;
+            optionMatch.route = trip.route || [];
+            userOptions.push(optionMatch);
+          }
+        }
+    
+
+     
     }
 
     return userOptions;
   };
 
   matchHelpers.compareRoutes = function(driver, rider, range){
+    // Make sure the driver actually has a route before preceding
+    if(!driver.route) return false;
+
     var riderStart = rider.startPoint;
     var riderEnd = rider.endPoint;
     var rSMatch = false;
     var route = driver.route;
     var matchingPoints = false;
+    $log.log('driver', driver);
+    $log.log('rider', rider);
 
     var toRad = function(number){
       return number * Math.PI / 180;

@@ -1,12 +1,13 @@
   <script type="text/ng-template" id="startSearchBox.tpl.html">
-    <input class='input' type="text" placeholder="Starting Point" size=40 ng-model='$scope.startPointString'>
+    <input class='input' type="text" placeholder="Starting Point" size=40 ng-model='startPointString'>
   </script> 
   <script type="text/ng-template" id="endSearchBox.tpl.html">
-    <input class='input' type="text" placeholder="End Point" size=40 ng-model='$scope.endPointString'>
+    <input class='input' type="text" placeholder="End Point" size=40 ng-model='endPointString'>
   </script> 
 
 <div class="jumbotron" ng-controller="MapviewController">
   <h1>{{welcome}}</h1>
+  <input class='input' type="text" placeholder="Trip Name" size=40 ng-model='tripName'>
   <div id="startSearchBox">
   </div>
   <div id="endSearchBox">
@@ -15,8 +16,9 @@
   <span>Driver</span>
   <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" placeholder='isDriver' ng-true-value='true' ng-false-value='false'></input>
   </div>
-<!--   <input type='submit' id="pointsSubmit" ng-click="saveInfo()" text='Submit'>
- -->  <button class='btn' type='submit' ng-click='saveinfo()'>Submit New Route</button>
+  <input type='submit' id="pointsSubmit" ng-click="saveInfo()" text='Submit'>
+  
+ <!-- <button class='btn' type='submit' ng-click='saveinfo()'>Submit New Route</button> -->
   <h3>{{changed}}</h3>
   <ui-gmap-google-map center="map.center" zoom="map.zoom" control="map.control">
   <ui-gmap-search-box parentdiv="'startSearchBox'" options="autocomplete" template="startSearchBox.template" events="startSearchBox.events"></ui-gmap-search-box>

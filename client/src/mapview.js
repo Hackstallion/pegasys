@@ -13,9 +13,12 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     var routeArray = [];
     var bounds = null;
     $scope.changed = '';
+    $scope.tripName = null;
     $scope.route = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
+    $scope.startPointString = null;
+    $scope.endPointString = null;
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; //We'll ultimately pull this from the cookie
@@ -56,21 +59,33 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     }
 
     $scope.saveInfo = function(){
-      if ($scope.isDriver && bounds && routeArray.length){
-        DB.postRequest('createtrip',{
+      if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
+        var newTrip = {};
+        newTrip[$scope.tripName] = {
           driver: $scope.isDriver,
-          username: document.cookie.substring(5),
-          route: routeArray,
-          bounds: bounds
-        });
-      }
-      else if (startPoint.length && endPoint.length){
-        DB.postRequest('createtrip',{
-          driver: false,
-          username: document.cookie.substring(5),
           startPoint: startPoint,
-          endPoint: endPoint
-        })
+          endPoint: endPoint,
+          // startAddress: $scope.startPointString,
+          // endAddress: $scope.endPointString,
+          route: routeArray,
+          bounds: bounds,
+          startTime: 0,
+          endTime: 0,
+          }
+        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
+      }
+      else if (startPoint.length && endPoint.length && $scope.tripName){
+        var newTrip = {};
+        newTrip[$scope.tripName] = {
+          driver: false,
+          startPoint: startPoint,
+          endPoint: endPoint,
+          // startAddress: $scope.startPointString,
+          // endAddress: $scope.endPointString,
+          startTime: 0,
+          endTime: 0,
+          }
+        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
       }
       $log.log('post request submitted')
       $scope.changed = 'Submitted!'

@@ -1,5 +1,5 @@
 angular.module('pegasys.match',[])  
-  .controller('MatchController', function($scope,$log, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers) {
+  .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers) {
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
     $scope.userData = {};
@@ -15,8 +15,6 @@ angular.module('pegasys.match',[])
       $log.log('show on map: '+username)
     }
 
-    $scope.tester = function(){$log.log('testing testing')};
-
     $scope.requestMatch = function(requestedUsername){
         DB.postRequest('matches/request', {from_id: $scope.user, to_id: requestedUsername})
           .then(function(){$log.log('sent match request')});
@@ -24,23 +22,31 @@ angular.module('pegasys.match',[])
 
     var userData;
     var usersData;
-    $scope.getMatches = function(){
+    $scope.getMatches = function(tripName){
       DB.getRequest('profile')
         .then(function(response){
           $log.log('profile request result', response);
           $scope.userData = userData = response.data;
-          DB.getRequest('getusers', userData.username).then(function(response){
+          $userTrip = userTrip = JSON.parse(response.data.trips)[tripName];
+          $log.log('userTrip', userTrip);
+          DB.getRequest('getallusers', userData.username).then(function(response){
             usersData = response.data;
             $log.log('userData', userData);
             $log.log('usersData', usersData);
-            $scope.matches = matchHelpers.getMatches(userData, usersData);
+            $scope.matches = matchHelpers.getMatches(userTrip, usersData);
             for(var i = 0; i < $scope.matches.length; i++){
               $scope.matchNames.push($scope.matches[i].username);
             }
           })
         });
     }
-    $scope.getMatches();
+
+    if(!window.tripName){
+      $location.path('/main');
+    }else{
+      $scope.getMatches(window.tripName);
+    }
+    
     /* more map stuff, now*/
     $scope.riderStart = {};
     $scope.riderEnd = {};
