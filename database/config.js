@@ -21,6 +21,7 @@ var usersSchema = mongoose.Schema({
     endPoint: Array,
     route: Array,
     bounds: Array,
+    trips: { type: String, default: '{}' },
     startTime: { type: Number, default: 0 },
     endTime: { type: Number, default: 0 },
     inbox: Array,
