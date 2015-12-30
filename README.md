@@ -22,4 +22,4 @@ See [API_spec.md](https://github.com/pegasys-rideshare/pegasys/blob/master/API_s
 ## Contacts
 
 The authors may be contacted by email:</br>
-Ivan Mora ([moraivan1@gmail.com](moraivan1@gmail.com)), Daniel Sato ([dksato@gmail.com](dksato@gmail.com)), Salman Oskooi ([soskooi@gmail.com](soskooi@gmail.com)), Mac Evans ([maclean.evans@gmail.com](maclean.evans@gmail.com))
+Ivan Mora ([moraivan1@gmail.com](moraivan1@gmail.com)), Daniel Sato ([dksato@gmail.com](mailto:dksato@gmail.com)), Salman Oskooi ([soskooi@gmail.com](mailto:soskooi@gmail.com)), Mac Evans ([maclean.evans@gmail.com](mailto:maclean.evans@gmail.com))
