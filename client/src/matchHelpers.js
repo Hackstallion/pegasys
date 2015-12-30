@@ -5,7 +5,7 @@ angular.module('pegasys.matchHelpers', [])
     var matchHelpers = {};
 
     matchHelpers.getMatches = function(user, users){
-          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, .004);
+          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, 402.336);
           return matches;
     };
 
@@ -74,6 +74,10 @@ angular.module('pegasys.matchHelpers', [])
     var route = driver.route;
     var matchingPoints = false;
 
+    var toRad = function(number){
+      return number * Math.PI / 180;
+    }
+
     for(var i = 0; i < route.length; i++){
       // Check whether the rider's start point has been matched to the route
       var riderPoint;
@@ -84,31 +88,26 @@ angular.module('pegasys.matchHelpers', [])
         riderPoint = riderEnd;
       }
 
-      // Ensure that both lat coordinates are either positive or negative
-      if(riderPoint[0] > 0 && routePoint[0] > 0){
-        if(Math.abs(riderPoint[0] - routePoint[0]) > range){
-          continue;
-        }
-      }else if(riderPoint[0] < 0 && routePoint[0] < 0){
-        if(Math.abs((riderPoint[0] * -1) - routePoint[0]) > range){
-          continue;
-        }
-      }else{
-        continue;
-      }
+      // If routePoint is not a pair of coordinates then return false
+      if(!routePoint[0]) return false;
 
-      // Ensure that both lng coordinates are either positive or negative
-      if(riderPoint[1] > 0 && routePoint[1] > 0){
-        if(Math.abs(riderPoint[1] - routePoint[1]) > range){
-          continue;
-        }
-      }else if(riderPoint[1] < 0 && routePoint[1] < 0){
-        if(Math.abs(riderPoint[1] - routePoint[1]) > range){
-          continue;
-        }
-      }else{
-        continue;
-      }
+      // The majority of this formula was provided by http://www.movable-type.co.uk/scripts/latlong.html
+      // It is a javascript form of the haversine formula
+      var R = 6371000;
+      var lat1 = toRad(routePoint[0]);
+      var lat2 = toRad(riderPoint[0]);
+      var latDiff = toRad(riderPoint[0] - routePoint[0]);
+      var lngDiff = toRad(riderPoint[1] - routePoint[1]);
+
+      var a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
+          Math.cos(lat1) * Math.cos(lat2) *
+          Math.sin(lngDiff/2) * Math.sin(lngDiff/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = R * c;
+
+      if(d > range) continue;
+
+
       // If rider start point has not yet been matched, then begin the array
       // of the driver's matched route points
       if(rSMatch === false){
