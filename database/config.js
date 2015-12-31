@@ -16,8 +16,6 @@ var usersSchema = mongoose.Schema({
     username: String,
     password: String,
     trips: { type: String, default: '{}' },
-    startTime: { type: Number, default: 0 },
-    endTime: { type: Number, default: 0 },
     inbox: Array,
     sent: Array
   });
