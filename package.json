@@ -6,8 +6,8 @@
   "engines": {
     "node": ">=0.10.0"
   },
-  "author": "Dan <dan.corman@gmail.com>",
-  "license": "MIT",
+  "author": "Salman Oskooi <soskooi@gmail.com>",
+  "license": "Creative Commons Attribution 4.0",
   "dependencies": {
     "angular": "^1.4.3",
     "angular-animate": "^1.4.3",

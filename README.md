@@ -15,6 +15,11 @@ The app is currently in beta and close to phase 1 deployment. Phase 2 and later 
 
 See [API_spec.md](https://github.com/pegasys-rideshare/pegasys/blob/master/API_spec.md) for API POST and GET routes.
 
+Pegasys relies on the Google Maps API, as well as the angular-google-maps
+project (https://angular-ui.github.io/angular-google-maps/#!/). Note that
+the angular-google-maps project is under active development, and we've 
+implemented workarounds for bugs and missing features.
+
 ## Licensing
 
 <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a></br>Except where otherwise noted, content from this app is licensed under a Creative Commons Attribution 4.0 International license.
