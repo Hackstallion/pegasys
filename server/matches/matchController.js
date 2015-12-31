@@ -2,14 +2,6 @@ var UserModel = require('../../database/config.js'),
     Users = UserModel.users,
     Q = require('q');
 
-/*
-   proposed request body: {
-                            from_id: integer,
-                            to_id: integer
-                          }
-    The code below assumes string usernames are 
-    used in place of integer id's.
-*/
 
 module.exports = {
 
@@ -47,8 +39,8 @@ module.exports = {
 
   requestMatch: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
-        requested = req.body.to_id,
-        requestor = req.body.from_id;
+        requestor = req.body.from_id,
+        requested = req.body.to_id;
 
     findUser({username: requested})
       .then(function(requested) {

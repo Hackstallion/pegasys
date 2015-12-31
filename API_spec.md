@@ -1,89 +1,113 @@
-All API calls should return JSON
+All API calls should return JSON.
 
-POST /api/login => log in as rider or driver, redirect to signup if account doesn't exist.
-                   Redirect to route selection page. Default to rider.
-                   PHASE 1: handle log in and driver vs rider with a cookies.
+POST /api/auth/signup => If username doesn't exist, adds user to the database
+                         otherwise returns 401 error and a message that the user already exists.
+                         Set cookie.
 
-
-                   body: {driver: boolean (optional),
+                   body: {
                           username: 'username',
-                          password: 'password'}
-
-POST /api/signup => if username doesn't exist, add user to the databse.
-                   else return 500 err & redirect to login.
-
-                   body: {driver: boolean(optional),
-                          username: 'username',
-                          password: 'password',
+                          password: 'password'
                          }
 
-GET /api/switch => switch user.driver to the opposite. Requires login.
+POST /api/auth/login => Log in, if account doesn't exist then notify user.
+                        Redirect to main page. Default to rider.
+                        Set cookie.
 
-POST /api/endpoints => set user obect to rider in database, and add start and end points.
-                       requires user to be logged in.
+                   body: {
+                          username: 'username',
+                          password: 'password'
+                         }
 
-                   body: {startPoint: [lat,long],
-                          endPoint: [lat,long]}
+GET /api/auth/signout => Sign out by clearing cookies 'user' attribute.
 
-POST /api/route => set user object to driver in database and add route array (array of many arrays)
-                   and route bounds (array of 4 arrays). Requires user to be logged in.
+POST /api/createtrip => Set driver status, set start and end points, route, bounds, and other
+                        trip-related info. Creates a new trip if one by given tripName doesn't yet 
+                        exist, otherwise it updates that trip in the database. 
+                        Adding a "remove" key with a truthy value will delete the trip associated 
+                        with the given tripName in the database.
+                        Requires user to be logged in.
+                   
+                   body: { 
+                          tripName: {
+                            remove: true, (FOR DELETING EXISTING TRIPS)
+                            driver : boolean,
+                            startPoint : [lat,long],
+                            endPoint : [lat,long],
+                            route:[[lat,long],[lat,long]...],
+                            bounds: [[lat,long],[lat,long],[lat,long],[lat,long]],
+                            etc.: etc.
+                            }
+                         }
 
-                   body : {route:[[lat,long],[lat,long]...]
-                           bounds: [[lat,long],[lat,long],[lat,long],[lat,long]] }
+GET /api/getusers => Send array of all user objects besides the requesting user's. Passwords, 
+                     matchRequests, and message mailboxes are set to null before being sent.
+                     Requires login.
+                     PHASE 2: Filter drivers based on rider's start/end points
+                     and driver's route/bounds if needed to save time on client side.
+                     PHASE 3: Filter based on profile matching.
 
-GET /api/drivers => send array of all user objects where driver = true and
-                     matched = 0. Omit startPoint and endPoint if set.
-                     Requires rider to be logged in.
-                     PHASE 2: filter drivers based on rider's start/end points
-                     and driver's route bounds to save time on client side.
-                     PHASE 3: filter based on profile matching.
+                   response body : [{user1},{user2}...]
 
-                     response body : [{user1},{user2}...]
+POST /api/profile => Update user's password. Requires user to be logged in.
 
-POST /api/profile => update user's profile. Requires user to be logged in,
-                     and we need to check whether they're a rider or a driver.
-                     PHASE 1: do this with a cookie.
+                   body: { password: 'password' }
 
-                     body: {profile object}
+GET /api/profile => Return user's profile object. Must be logged in.
 
-GET /api/profile => return user's profile object and whether they are a driver. Must be logged in.
+                   response body: {
+                                   username: 'username',
+                                   password: 'password',
+                                   matchRequests: [...],
+                                   trips: '{}',
+                                   inbox: [...],
+                                   sent: [...]
+                                  }
 
-                    body: {driver: boolean,
-                           profile: {},
-                           matchRequests: [int,int...],
-                           mailbox: ['string1','string2'..:]}
+POST /api/matches/request => Add the username denoted by from_id to the matchRequests array of the user
+                             denoted by to_id.
 
-POST /api/match => If user is a rider : add rider.id to driver.matchRequests.
-                   If user is a driver : remove rider.id from driver.matchRequests,
-                   set rider.matched to driver.id and driver.matched to rider.id.
-                   Either: if unmatch is set, set both users' .matched to 0.
+                   body: {
+                          from_id: 'username',
+                          to_id: 'username'
+                         }
 
-                   body: {unmatch: boolean (optional),
-                         from_id: integer,
-                         to_id: integer}
+POST /api/matches/accept => Splices the requestor's username out of the acceptor's matchRequests array.
 
-POST /api/message => Add a string to another user's mailbox. Must be logged in.
+                   body: {
+                          from_id: 'username',
+                          to_id: 'username'
+                         }
 
-                   body: {from_id: integer,
-                          to_id: integer,
-                          text: string (must not be blank)}
+GET /api/messages/getinbox => Return all messages in requesting user's inbox. 
+                              Must be logged in.
 
-user {
-  id : integer > 1,
-  driver: boolean (default 0)
-  matched: integer (default 0)
-  username: string,
-  password: string/hash,
-  startPoint : array [lat,long] (may be blank),
-  endPoint : array [lat,long] (may be blank),
-  route : array [[lat,long],[lat,long]....] (may be blank),
-  bounds : array [[lat,long],[lat,long]...],
-  matchRequests : [int,int...],
-  profile : {profile as described below},
-  mailbox : ['string1','string2'...]
-}
+                   response body: {
+                                   inbox: [...]
+                                  }
 
-profile {
-  startTime: number (may be blank),
-  endTime : number (may be blank),
-}
+GET /api/messages/getsent => Return all messages in requesting user's sent mailbox.
+                             Must be logged in.
+
+                   response body: {
+                                   sent: [...]
+                                  }
+
+POST /api/messages/send => Add a message to another user's inbox and requesting user's sent box. 
+                           Must be logged in.
+
+                   body: {
+                          from_id: 'username',
+                          to_id: 'username',
+                          text: string (must not be blank)
+                         }
+
+POST /api/messages/delete => Can be used by sender (from_id) or recipient (to_id) to remove a message 
+                             from both the sender's sent mailbox and the recipient's inbox.
+
+                   body: {
+                          from_id: 'username',
+                          to_id: 'username',
+                          text: string (must not be blank)
+                         }
+
+
