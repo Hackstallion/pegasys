@@ -4,6 +4,7 @@ var UserModel = require('../../database/config.js'),
 
 
 module.exports = {
+  
   getUsers: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         findUsers = Q.nbind(Users.find, Users),
@@ -12,11 +13,12 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-
+          var regex = new RegExp("^((?!" + foundUser.username + ").)*$");
           //Find all users but self
-          findUsers({username: !foundUser.username})
+          findUsers({username: regex})
             .then(function(users) {
               if (users) {
+                console.log("users:", users);
                 users.forEach(function(user){
                   user.password=null;
                   user.inbox=null;
