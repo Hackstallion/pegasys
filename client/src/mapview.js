@@ -22,10 +22,10 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; //We'll ultimately pull this from the cookie
-    DB.getRequest('profile').then(function(response){
-      $log.log('driver: '+response.data.driver);
-      $scope.isDriver = response.data.driver;
-    });
+    // DB.getRequest('profile').then(function(response){
+    //   // $log.log('driver: '+response.data.driver);
+    //   $scope.isDriver = response.data.driver;
+    // });
     var startEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
@@ -87,7 +87,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           }
         DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
       }
-      $log.log('post request submitted')
+      // $log.log('post request submitted')
       $scope.changed = 'Submitted!'
     }
 
@@ -132,7 +132,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 });
               });
               var routeListener = maps.event.addListener(renderer,'directions_changed',function(){
-                $log.log('directions_changed');
+                // $log.log('directions_changed');
                 routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                   return [coord.lat(),coord.lng()];
                 });
@@ -153,12 +153,12 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     draggable: true 
               });
               var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
-                $log.log('start marker moved');
+                // $log.log('start marker moved');
                 startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
                 bounds = map.getBounds();
               })
               var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
-                $log.log('end marker moved');
+                // $log.log('end marker moved');
                 endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
                 bounds = map.getBounds();
               })
