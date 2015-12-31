@@ -24,11 +24,9 @@ module.exports = {
         findUser({username: accepted})
           .then(function(accepted) {
             if (req.cookies.user === acceptor.username) {
-              //the above will only happen when both .matcheds are 0
                 var requestIndex = acceptor.matchRequests.indexOf(accepted.username);
                 acceptor.matchRequests.splice(requestIndex, 1);
                 acceptor.save();
-                accepted.save();
                 res.sendStatus(200);
             } else {
               res.sendStatus(401);
