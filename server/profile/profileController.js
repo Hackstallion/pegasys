@@ -7,14 +7,7 @@ module.exports = {
   updateProfile: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         username = req.cookies.user,
-        password = req.body.password,
-        route = req.body.route,
-        bounds = req.body.bounds,
-        driverStatus = req.body.driver,
-        startPoint = req.body.startPoint,
-        endPoint = req.body.endPoint,
-        startTime = req.body.startTime,
-        endTime = req.body.endTime;
+        password = req.body.password;
 
 
     findUser({username: username})
@@ -22,13 +15,6 @@ module.exports = {
         if (foundUser) {
           
           foundUser.password = password || foundUser.password;
-          foundUser.route = route || foundUser.route;
-          foundUser.bounds = bounds || foundUser.bounds;
-          foundUser.driver = driverStatus || false;
-          foundUser.startPoint = startPoint || foundUser.startPoint;
-          foundUser.endPoint = endPoint || foundUser.endPoint;
-          foundUser.startTime = startTime || foundUser.startTime;
-          foundUser.endTime = endTime || foundUser.endTime;
           foundUser.save();
           res.sendStatus(200);
         } else {
