@@ -12,15 +12,9 @@ db.once('open', function (callback) {
 });
 
 var usersSchema = mongoose.Schema({
-    driver: { type: Boolean, default: false },
-    matched: { type: String, default: 0 },
     matchRequests: Array,
     username: String,
     password: String,
-    startPoint: Array,
-    endPoint: Array,
-    route: Array,
-    bounds: Array,
     trips: { type: String, default: '{}' },
     startTime: { type: Number, default: 0 },
     endTime: { type: Number, default: 0 },

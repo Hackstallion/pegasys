@@ -1,25 +1,36 @@
-All API calls should return JSON
+All API calls should return JSON.
 
-POST /api/login => log in, if account doesn't exist then notify user.
-                   Redirect to route selection page. Default to rider.
-                   PHASE 1: handle log in with a cookies.
-
+POST /api/auth/signup => If username doesn't exist, add user to the database.
+                   else return 500 err & redirect to login.
 
                    body: {
                           username: 'username',
                           password: 'password'
                          }
-                          
 
-POST /api/signup => if username doesn't exist, add user to the databse.
-                   else return 500 err & redirect to login.
+POST /api/auth/login => Log in, if account doesn't exist then notify user.
+                   Redirect to main page. Default to rider.
+                   PHASE 1: handle login with a cookies.
 
                    body: {
                           username: 'username',
-                          password: 'password',
+                          password: 'password'
                          }
 
-POST /api/createTrip => set driver status, set start and end points.
+GET /api/auth/signout => Sign out by clearing cookies 'user' attribute.
+
+POST /api/createtrip/newtrip => Set driver status, set start and end points, route, bounds, and other
+                      trip-related info.
+                      Requires user to be logged in.
+                   
+                   body: {
+                          driver : Boolean,
+                          startPoint : [lat,long],  (if driver === false)
+                          endPoint : [lat,long],  (if driver === false)
+                          route:[[lat,long],[lat,long]...] (if driver === true)
+                         }
+
+POST /api/createtrip/deltrip => Set driver status, set start and end points.
                       requires user to be logged in.
                    
                    body: {
