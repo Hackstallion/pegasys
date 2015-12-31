@@ -2,6 +2,10 @@ body {
   font-family: sans-serif;
 }
 
+h3 {
+  margin: 3px;
+}
+
 h1 {
 	color: #090909;
 }

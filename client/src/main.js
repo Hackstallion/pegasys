@@ -1,5 +1,5 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, DB, Main) {
+  .controller('MainController', function($scope, $location, $log, DB, Main, Trip) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// $scope.welcome = 'Pegasys Commute Sharing';
     $scope.welcome = 'Trips';
@@ -11,7 +11,7 @@ angular.module('pegasys.main',[])
       var userTrip;
       DB.getRequest('profile')
             .then(function(response){
-              $log.log(response);
+              // $log.log(response);
               var user = response.data;
               var trips = JSON.parse(user.trips);
               for(trip in trips){
@@ -34,7 +34,7 @@ angular.module('pegasys.main',[])
                   }
                   userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
                 }else{
-                  $log.log(currTrip.matched);
+                  // $log.log(currTrip.matched);
                   userTrip.matched = '';
                   for(var i = 0; i < currTrip.matched.length; i++){
                     userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
@@ -45,8 +45,9 @@ angular.module('pegasys.main',[])
             })
     }
 
-    $scope.getMatches = function(tripName){
-      window.tripName = tripName;
+    $scope.getMatches = function(tripName,tripDriver){
+      Trip.setItem('tripName',tripName);
+      Trip.setItem('driver',tripDriver === 'driver' ? true : false);
       $location.path('/match');
     }
 

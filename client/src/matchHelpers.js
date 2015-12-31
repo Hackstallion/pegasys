@@ -37,51 +37,25 @@ angular.module('pegasys.matchHelpers', [])
   };
 
   matchHelpers.compareUsers = function(user, users, callback, range){
-    var driver;
-    var rider;
-    var option;
-    // An array of the user's matches
-    var userOptions = [];
-
-    for(var i = 0; i < users.length; i++){
-      if(user.driver === true){
-        driver = user;
-        rider = users[i];
-        option = rider;
-      }else{
-        driver = users[i];
-        rider = user;
-        option = driver;
-      }
-
-      // Parse JSON object representing trips
-      // Iterate over trips object
-      var optionTrips = JSON.parse(option.trips);
-        for(var trip in optionTrips){
-          if(user.driver === trip.driver) continue;
-          var matchedPoints;
-          if(option === driver){
-            matchedPoints = callback(optionTrips[trip], rider, range);
-          }else{
-            matchedPoints = callback(driver, optionTrips[trip], range);
-          }
-          if(matchedPoints !== false){
-            // ToDo: pass driver and rider to filterDriverStatus
-            // Push an object containing the user id and the matched route points
-            var optionMatch = {};
-            optionMatch.id = option._id;
-            optionMatch.username = option.username;
-            optionMatch.matchedPoints = matchedPoints;
-            optionMatch.route = trip.route || [];
-            userOptions.push(optionMatch);
+    var tripOptions = [];
+    var isDriver = user.driver;
+    users.filter(function(someUser){
+      return someUser.username !== user.username;
+    }).forEach(function(someUser){
+      var trips = JSON.parse(someUser.trips);
+      for (var trip in trips){
+        if (trip.driver !== isDriver){
+          trips[trip].username = someUser.username;
+          trips[trip].tripName = trip;
+          if (isDriver){
+            if (callback(user,trips[trip],range)) tripOptions.push(trips[trip]);
+          } else {
+            if (callback(trips[trip],user,range)) tripOptions.push(trips[trip]);
           }
         }
-    
-
-     
-    }
-
-    return userOptions;
+      }
+    });
+    return tripOptions;
   };
 
   matchHelpers.compareRoutes = function(driver, rider, range){
@@ -93,8 +67,6 @@ angular.module('pegasys.matchHelpers', [])
     var rSMatch = false;
     var route = driver.route;
     var matchingPoints = false;
-    $log.log('driver', driver);
-    $log.log('rider', rider);
 
     var toRad = function(number){
       return number * Math.PI / 180;

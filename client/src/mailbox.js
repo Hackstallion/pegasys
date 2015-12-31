@@ -34,6 +34,7 @@ angular.module('pegasys.mailbox',[])
       })
     }
     $scope.sendMessage = function(recipient){
+      if (!$scope.newMessage.text.length) return;
       if (recipient) $scope.newMessage.to_id = recipient;
       DB.postRequest('messages/send', $scope.newMessage).then(function(){
         $scope.newMessage = {from_id:$scope.user,to_id:'',text:''}
