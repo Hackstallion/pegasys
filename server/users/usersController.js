@@ -18,7 +18,6 @@ module.exports = {
           findUsers({username: regex})
             .then(function(users) {
               if (users) {
-                console.log("users:", users);
                 users.forEach(function(user){
                   user.password=null;
                   user.inbox=null;
