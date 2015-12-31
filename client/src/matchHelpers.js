@@ -4,9 +4,12 @@ angular.module('pegasys.matchHelpers', [])
 
     var matchHelpers = {};
 
-    matchHelpers.getMatches = function(user, users){
-          var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, .004);
-          return matches;
+    matchHelpers.getMatches = function(user, users, range){
+      // Convert given miles from 'range' into meters.
+      // Defualut to the equivelant of .25 miles in meters.
+      var rangeMeters = range / 0.00062137 || 402.336;
+      var matches = matchHelpers.compareUsers(user, users, matchHelpers.compareRoutes, rangeMeters);
+      return matches;
     };
 
     matchHelpers.filterTripTimes = function(driver, rider){
@@ -34,46 +37,40 @@ angular.module('pegasys.matchHelpers', [])
   };
 
   matchHelpers.compareUsers = function(user, users, callback, range){
-    var driver;
-    var rider;
-    var option;
-    // An array of the user's matches
-    var userOptions = [];
-
-    for(var i = 0; i < users.length; i++){
-      if(user.driver === true){
-        driver = user;
-        rider = users[i];
-        option = rider;
-      }else{
-        driver = users[i];
-        rider = user;
-        option = driver;
+    var tripOptions = [];
+    var isDriver = user.driver;
+    users.filter(function(someUser){
+      return someUser.username !== user.username;
+    }).forEach(function(someUser){
+      var trips = JSON.parse(someUser.trips);
+      for (var trip in trips){
+        if (trip.driver !== isDriver){
+          trips[trip].username = someUser.username;
+          trips[trip].tripName = trip;
+          if (isDriver){
+            if (callback(user,trips[trip],range)) tripOptions.push(trips[trip]);
+          } else {
+            if (callback(trips[trip],user,range)) tripOptions.push(trips[trip]);
+          }
+        }
       }
-
-      var matchedPoints = callback(driver, rider, range);
-      if(matchedPoints !== false){
-        // ToDo: pass driver and rider to filterDriverStatus
-        // Push an object containing the user id and the matched route points
-        // optionId = option.id;
-        var optionMatch = {};
-        optionMatch.id = option._id;
-        optionMatch.username = option.username;
-        optionMatch.matchedPoints = matchedPoints;
-        optionMatch.route = option.route || [];
-        userOptions.push(optionMatch);
-      }
-    }
-
-    return userOptions;
+    });
+    return tripOptions;
   };
 
   matchHelpers.compareRoutes = function(driver, rider, range){
+    // Make sure the driver actually has a route before preceding
+    if(!driver.route) return false;
+
     var riderStart = rider.startPoint;
     var riderEnd = rider.endPoint;
     var rSMatch = false;
     var route = driver.route;
     var matchingPoints = false;
+
+    var toRad = function(number){
+      return number * Math.PI / 180;
+    }
 
     for(var i = 0; i < route.length; i++){
       // Check whether the rider's start point has been matched to the route
@@ -85,31 +82,26 @@ angular.module('pegasys.matchHelpers', [])
         riderPoint = riderEnd;
       }
 
-      // Ensure that both lat coordinates are either positive or negative
-      if(riderPoint[0] > 0 && routePoint[0] > 0){
-        if(Math.abs(riderPoint[0] - routePoint[0]) > range){
-          continue;
-        }
-      }else if(riderPoint[0] < 0 && routePoint[0] < 0){
-        if(Math.abs((riderPoint[0] * -1) - routePoint[0]) > range){
-          continue;
-        }
-      }else{
-        continue;
-      }
+      // If routePoint is not a pair of coordinates then return false
+      if(!routePoint[0]) return false;
 
-      // Ensure that both lng coordinates are either positive or negative
-      if(riderPoint[1] > 0 && routePoint[1] > 0){
-        if(Math.abs(riderPoint[1] - routePoint[1]) > range){
-          continue;
-        }
-      }else if(riderPoint[1] < 0 && routePoint[1] < 0){
-        if(Math.abs(riderPoint[1] - routePoint[1]) > range){
-          continue;
-        }
-      }else{
-        continue;
-      }
+      // The majority of this formula was provided by http://www.movable-type.co.uk/scripts/latlong.html
+      // It is a javascript form of the haversine formula
+      var R = 6371000;
+      var lat1 = toRad(routePoint[0]);
+      var lat2 = toRad(riderPoint[0]);
+      var latDiff = toRad(riderPoint[0] - routePoint[0]);
+      var lngDiff = toRad(riderPoint[1] - routePoint[1]);
+
+      var a = Math.sin(latDiff/2) * Math.sin(latDiff/2) +
+          Math.cos(lat1) * Math.cos(lat2) *
+          Math.sin(lngDiff/2) * Math.sin(lngDiff/2);
+      var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+      var d = R * c;
+
+      if(d > range) continue;
+
+
       // If rider start point has not yet been matched, then begin the array
       // of the driver's matched route points
       if(rSMatch === false){

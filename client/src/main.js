@@ -1,9 +1,9 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, DB, Main) {
+  .controller('MainController', function($scope, $location, $log, DB, Main, Trip) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// $scope.welcome = 'Pegasys Commute Sharing';
     $scope.welcome = 'Trips';
-    $scope.trips = []; // This should eventually be an array of object literals each containing data for a unique trip
+    $scope.trips = [];
     $scope.messageCount = 0;
 
 
@@ -11,31 +11,44 @@ angular.module('pegasys.main',[])
       var userTrip;
       DB.getRequest('profile')
             .then(function(response){
-              $log.log(response);
+              // $log.log(response);
               var user = response.data;
-              userTrip = {
-                tripName: 'My Trip', // This should later be a user-assigned name
-                startPoint: user.startPoint,
-                endPoint: user.endPoint
-              };
-              if(user.driver){
-                userTrip.driver = 'driver';
-              }else{
-                userTrip.driver = 'rider'
-              }
-
-              if(user.matched < 1){
-                var optionType = 'driver';
-                if(user.driver){
-                  optionType = 'rider';
+              var trips = JSON.parse(user.trips);
+              for(trip in trips){
+                var currTrip = trips[trip];
+                userTrip = {
+                  tripName: trip,
+                  startPoint: currTrip.startPoint,
+                  endPoint: currTrip.endPoint
+                };
+                if(currTrip.driver){
+                  userTrip.driver = 'driver';
+                }else{
+                  userTrip.driver = 'rider'
                 }
-                userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
-              }else{
-                $log.log(user.matched);
-                userTrip.matched = 'Your ' + optionType + ' for this trip is ' + user.matched;
+
+                if(currTrip.matched === [] || !currTrip.matched){
+                  var optionType = 'driver';
+                  if(currTrip.driver){
+                    optionType = 'rider';
+                  }
+                  userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
+                }else{
+                  // $log.log(currTrip.matched);
+                  userTrip.matched = '';
+                  for(var i = 0; i < currTrip.matched.length; i++){
+                    userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
+                  }
+                }
+                $scope.trips.push(userTrip);
               }
-              $scope.trips.push(userTrip);
             })
+    }
+
+    $scope.getMatches = function(tripName,tripDriver){
+      Trip.setItem('tripName',tripName);
+      Trip.setItem('driver',tripDriver === 'driver' ? true : false);
+      $location.path('/match');
     }
 
     $scope.init();

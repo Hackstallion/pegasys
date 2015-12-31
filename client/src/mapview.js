@@ -13,16 +13,19 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     var routeArray = [];
     var bounds = null;
     $scope.changed = '';
+    $scope.tripName = null;
     $scope.route = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
+    $scope.startPointString = null;
+    $scope.endPointString = null;
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; //We'll ultimately pull this from the cookie
-    DB.getRequest('profile').then(function(response){
-      $log.log('driver: '+response.data.driver);
-      $scope.isDriver = response.data.driver;
-    });
+    // DB.getRequest('profile').then(function(response){
+    //   // $log.log('driver: '+response.data.driver);
+    //   $scope.isDriver = response.data.driver;
+    // });
     var startEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
@@ -56,23 +59,35 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     }
 
     $scope.saveInfo = function(){
-      if ($scope.isDriver && bounds && routeArray.length){
-        DB.postRequest('createtrip',{
+      if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
+        var newTrip = {};
+        newTrip[$scope.tripName] = {
           driver: $scope.isDriver,
-          username: document.cookie.substring(5),
-          route: routeArray,
-          bounds: bounds
-        });
-      }
-      else if (startPoint.length && endPoint.length){
-        DB.postRequest('createtrip',{
-          driver: false,
-          username: document.cookie.substring(5),
           startPoint: startPoint,
-          endPoint: endPoint
-        })
+          endPoint: endPoint,
+          // startAddress: $scope.startPointString,
+          // endAddress: $scope.endPointString,
+          route: routeArray,
+          bounds: bounds,
+          startTime: 0,
+          endTime: 0,
+          }
+        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
       }
-      $log.log('post request submitted')
+      else if (startPoint.length && endPoint.length && $scope.tripName){
+        var newTrip = {};
+        newTrip[$scope.tripName] = {
+          driver: false,
+          startPoint: startPoint,
+          endPoint: endPoint,
+          // startAddress: $scope.startPointString,
+          // endAddress: $scope.endPointString,
+          startTime: 0,
+          endTime: 0,
+          }
+        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
+      }
+      // $log.log('post request submitted')
       $scope.changed = 'Submitted!'
     }
 
@@ -117,7 +132,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 });
               });
               var routeListener = maps.event.addListener(renderer,'directions_changed',function(){
-                $log.log('directions_changed');
+                // $log.log('directions_changed');
                 routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                   return [coord.lat(),coord.lng()];
                 });
@@ -138,12 +153,12 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     draggable: true 
               });
               var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
-                $log.log('start marker moved');
+                // $log.log('start marker moved');
                 startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
                 bounds = map.getBounds();
               })
               var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
-                $log.log('end marker moved');
+                // $log.log('end marker moved');
                 endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
                 bounds = map.getBounds();
               })
