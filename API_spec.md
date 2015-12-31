@@ -81,16 +81,12 @@ POST /api/matches/accept => Splices the requestor's username out of the acceptor
 GET /api/messages/getinbox => Return all messages in requesting user's inbox. 
                               Must be logged in.
 
-                   response body: {
-                                   inbox: [...]
-                                  }
+                   response body: [{message},{message}...]
 
 GET /api/messages/getsent => Return all messages in requesting user's sent mailbox.
                              Must be logged in.
 
-                   response body: {
-                                   sent: [...]
-                                  }
+                   response body: [{message},{message}...]
 
 POST /api/messages/send => Add a message to another user's inbox and requesting user's sent box. 
                            Must be logged in.
