@@ -23,7 +23,7 @@ module.exports = {
 
         findUser({username: accepted})
           .then(function(accepted) {
-            if (acceptor.loggedIn === true 
+            if (req.cookies.user === acceptor.username 
               && acceptor.matched === accepted.matched) {
               //the above will only happen when both .matcheds are 0
                 console.log("accepted.username", accepted.username);
@@ -62,7 +62,7 @@ module.exports = {
 
         findUser({username: requestor})
           .then(function(requestor) {
-            if (requestor.loggedIn === true 
+            if (req.cookies.user === requestor.username 
                 && requestor.driver !== requested.driver 
                   && requestor.matched === "0") {
               requested.matchRequests.push(requestor.username);
@@ -96,7 +96,7 @@ module.exports = {
 
         findUser({username: unmatchee})
           .then(function(unmatchee) {
-            if (unmatcher.loggedIn === true) {
+            if (req.cookies.user === unmatcher.username) {
               unmatchee.matched = 0;
               unmatcher.matched = 0;
               unmatchee.save();

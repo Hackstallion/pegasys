@@ -1,17 +1,16 @@
-var UserModel = require('../../database/config.js');
-var Users = UserModel.users;
-var Q = require('q');
+var UserModel = require('../../database/config.js'),
+    Users = UserModel.users,
+    Q = require('q');
 
 
 module.exports = {
   signout: function (req, res, next) {
-    var username = req.body.username,
+    var username = req.cookies.user,
         findUser = Q.nbind(Users.findOne, Users);
 
     findUser({username: username})
       .then(function (user) {
-        user.loggedIn = false;
-        user.save();
+        res.cookie('user', '');
         res.sendStatus(200);
       })
       .fail(function (error) {

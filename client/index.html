@@ -2,26 +2,27 @@
 <html>
   <head>
     <meta charset="utf-8">
-    <link rel="stylesheet" type="text/css" href="index.css">
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
     <title>Pegasys Ride Sharing</title>
   </head>
 
   <body> 
   <div ng-app="myApp">
-  <h1>Pegasys Ride Sharing</h1>
+  <h1 class='topTitle'>Pegasys Ride Sharing</h1>
   <div class="nav">
   <a href="#/signup">Sign Up</a>
   <a href="#/login">Log in</a>
-  <a href="#/profile">Profile</a>
+  <a href="#/main">Main</a>
+  <a href="#/profile">Edit Profile</a>
   <a href="#/mapview">Map</a>
   <a href="#/match">Matches</a>
   <a href="#/mailbox">Mailbox</a>
-
+  </div>
     <div class="container">
       <div ng-view="">
       </div>
     </div>
-  </div>
   </body>
 
 
@@ -42,6 +43,7 @@
     <script src='/src/profile.js'></script>
     <script src='/src/match.js'></script>
     <script src='/src/mailbox.js'></script>
+    <script src='/src/matchHelpers.js'></script>
     <script src='/services/services.js'></script>
     <script src='/controllers/api_controller.js'></script>
     <script src='/app.js'></script>

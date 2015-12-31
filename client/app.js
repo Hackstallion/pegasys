@@ -13,7 +13,8 @@ angular.module('myApp', [
     'pegasys.mapview',
     'pegasys.match',
     'pegasys.profile',
-    'pegasys.mailbox'
+    'pegasys.mailbox',
+    'pegasys.matchHelpers'
   ])
   .config(function ($routeProvider) {
     $routeProvider
@@ -28,6 +29,10 @@ angular.module('myApp', [
       .when('/signup', {
         templateUrl: 'views/signup.html',
         controller: 'SignupController',
+      })
+      .when('/main', {
+        templateUrl: 'views/main.html',
+        controller: 'MainController'
       })
       .when('/mapview', {
         templateUrl: 'views/mapview.html',

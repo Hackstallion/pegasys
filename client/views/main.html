@@ -1,5 +1,12 @@
 <div class="jumbotron" ng-controller="MainController">
   <h1>{{welcome}}</h1>
-  <a class='btn' href='/#/signup'>{{signupButtonText}}</a>
-  <a class='btn' href='/#/login'>{{loginButtonText}}</a>
+  <div class='container'>
+  	<div class='trip' ng-repeat='trip in trips'>
+  		<h3>{{ trip.tripName }}</h3>
+  		<p>You're the {{ trip.driver }} for this trip</p>
+  		<p>{{ trip.matched }}</p>
+  		<p>start: {{ trip.startPoint }}</p>
+  		<p>end: {{ trip.endPoint }}</p>
+  	</div>
+  </div>
 </div>
