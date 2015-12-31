@@ -72,7 +72,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           startTime: 0,
           endTime: 0,
           }
-        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
+        DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
       else if (startPoint.length && endPoint.length && $scope.tripName){
         var newTrip = {};
@@ -85,7 +85,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           startTime: 0,
           endTime: 0,
           }
-        DB.postRequest('createtrip/newtrip', newTrip).then($location.path('/main'));
+        DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
       // $log.log('post request submitted')
       $scope.changed = 'Submitted!'
