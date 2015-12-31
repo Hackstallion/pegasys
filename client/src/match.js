@@ -29,7 +29,7 @@ angular.module('pegasys.match',[])
         .then(function(response){
           $scope.userData = userData = response.data;
           $scope.userTrip = userTrip = $.extend(JSON.parse(response.data.trips)[tripName],{username:userData.username});
-          DB.getRequest('getallusers', userData.username).then(function(response){
+          DB.getRequest('getusers', userData.username).then(function(response){
             usersData = response.data;
             $scope.matches = matchHelpers.getMatches(userTrip, usersData);
             for(var i = 0; i < $scope.matches.length; i++){
@@ -46,8 +46,9 @@ angular.module('pegasys.match',[])
       //uiGmapIsReady is broken when there is more than
       //one map instance, and the one from mapview counts.
       //We're taking it on faith that the map is loaded.
-      //This produces errors in the console but does not
-      //actually hurt anything, at least on Chrome.
+      //This produces an error in the console if 
+      //the map is not loaded, but does not crash the app,
+      //at least on Chrome.
         var map = $scope.matchMap.control.getGMap();
         if (Trip.getItem('driver')){
           // display the driver's polyline
@@ -120,8 +121,8 @@ angular.module('pegasys.match',[])
               })
             }
             var newBounds = new maps.LatLngBounds();
-            newBounds.extend($scope.driverLine.path[0])
-            newBounds.extend($scope.driverLine.path[$scope.driverLine.path.length-1]);
+            newBounds.extend(new maps.LatLng(driverData.route[0][0],driverData.route[0][1]));
+            newBounds.extend(new maps.LatLng(driverData.route[driverData.route.length-1][0],driverData.route[driverData.route.length-1][1]));
             map.fitBounds(newBounds);
           }
         }

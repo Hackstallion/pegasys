@@ -19,36 +19,28 @@ angular.module('myApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-        templateUrl: 'views/main.html',
-        controller: 'MainController',
+        templateUrl: 'views/main.html'
       })
       .when('/login', {
-        templateUrl: 'views/login.html',
-        controller: 'LoginController',
+        templateUrl: 'views/login.html'
       })
       .when('/signup', {
-        templateUrl: 'views/signup.html',
-        controller: 'SignupController',
+        templateUrl: 'views/signup.html'
       })
       .when('/main', {
-        templateUrl: 'views/main.html',
-        controller: 'MainController'
+        templateUrl: 'views/main.html'
       })
       .when('/mapview', {
-        templateUrl: 'views/mapview.html',
-        controller: 'MapviewController',
+        templateUrl: 'views/mapview.html'
       })
       .when('/match', {
-        templateUrl: 'views/match.html',
-        controller: 'MatchController',
+        templateUrl: 'views/match.html'
       })
       .when('/profile', {
-        templateUrl: 'views/profile.html',
-        controller: 'ProfileController',
+        templateUrl: 'views/profile.html'
       })
       .when('/mailbox', {
-        templateUrl: 'views/mailbox.html',
-        controller: 'MailboxController',
+        templateUrl: 'views/mailbox.html'
       })
       .otherwise({
         redirectTo: '/login'
