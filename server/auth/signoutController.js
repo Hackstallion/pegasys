@@ -10,7 +10,7 @@ module.exports = {
 
     findUser({username: username})
       .then(function (user) {
-        res.cookie('user', '');
+        res.clearCookie('user');
         res.sendStatus(200);
       })
       .fail(function (error) {
