@@ -1,7 +1,8 @@
 angular.module('pegasys.match',[])  
   .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Global) {
-    var tripName = Global.getItem('tripName');
-    if (!tripName) $location.path('/main');
+    if (!Global.getItem('currentTrip') || !Global.getItem('currentTrip').name) $location.path('/main');
+    console.log(Global.getItem('currentTrip').name)
+    var tripName = Global.getItem('currentTrip').name;
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
     $scope.userData = {};
@@ -41,6 +42,8 @@ angular.module('pegasys.match',[])
     $scope.riderStart = {};
     $scope.riderEnd = {};
     $scope.driverLine = {};
+    $scope.driverStart = {};
+    $scope.driverEnd = {};
     $scope.getMatches(tripName).then(function(){
       uiGmapGoogleMapApi.then(function(maps) { 
       //uiGmapIsReady is broken when there is more than
@@ -50,7 +53,30 @@ angular.module('pegasys.match',[])
       //the map is not loaded, but does not crash the app,
       //at least on Chrome.
         var map = $scope.matchMap.control.getGMap();
-        if (Trip.getItem('driver')){
+        var displayEndPoints = function(polyline){
+          var path = polyline.getPath().getArray();
+          var startPoint = path[0];
+          var endPoint = path[path.length-1];
+          if ($scope.driverStart instanceof maps.Marker){
+            $scope.driverStart.setPosition(startPoint);
+            $scope.driverEnd.setPosition(endPoint);
+          } else {
+            $scope.driverStart = new maps.Marker({
+              map: map,
+              position: startPoint,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+              draggable: false
+            });
+            $scope.driverEnd = new maps.Marker({
+              map: map,
+              position: endPoint,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+              draggable: false
+            });
+            console.log('where are my endpoints?')
+          }
+        }
+        if (Global.getItem('currentTrip').driver){
           // display the driver's polyline
           var driverRoute = $scope.userTrip.route.map(function(pair){
             return new maps.LatLng(pair[0],pair[1]);
@@ -62,7 +88,11 @@ angular.module('pegasys.match',[])
           var driverLine = new maps.Polyline({
             map: map,
             path: driverRoute,
+            strokeColor: '#b32400',
+            strokeWeight: 8,
+            strokeOpacity: 0.5
           });
+          displayEndPoints(driverLine);
           // make $scope.showOnMap() show riders' endpoints
           $scope.showOnMap = function(trip){
             var riderData = $scope.matches.filter(function(match){
@@ -77,11 +107,13 @@ angular.module('pegasys.match',[])
               $scope.riderStart = new maps.Marker({
                 map: map,
                 position: new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]),
+                icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                 draggable: false
               });
               $scope.riderEnd = new maps.Marker({
                 map: map,
                 position: new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]),
+                icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                 draggable: false
               });
             }
@@ -91,11 +123,13 @@ angular.module('pegasys.match',[])
           var riderStart = new maps.Marker({
             map: map,
             position: new maps.LatLng($scope.userTrip.startPoint[0],$scope.userTrip.startPoint[1]),
+            icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
             draggable: false
           });
           var riderEnd = new maps.Marker({
             map: map,
             position: new maps.LatLng($scope.userTrip.endPoint[0],$scope.userTrip.endPoint[1]),
+            icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
             draggable: false
           });
           var newBounds = new maps.LatLngBounds();
@@ -117,8 +151,12 @@ angular.module('pegasys.match',[])
                 map: map,
                 path: driverData.route.map(function(pair){
                   return new maps.LatLng(pair[0],pair[1]);
-                })
-              })
+                }),
+                strokeColor: '#b32400',
+                strokeWeight: 8,
+                strokeOpacity: 0.5
+              });
+              displayEndPoints($scope.driverLine);
             }
             var newBounds = new maps.LatLngBounds();
             newBounds.extend(new maps.LatLng(driverData.route[0][0],driverData.route[0][1]));

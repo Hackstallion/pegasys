@@ -117,7 +117,13 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
               var service = new maps.DirectionsService();
               var renderer = $scope.renderer = new maps.DirectionsRenderer({
                 draggable: true,
-                map: map
+                map: map,
+                suppressMarkers: true,
+                polylineOptions: {
+                    strokeColor: '#b32400',
+                    strokeWeight: 8,
+                    strokeOpacity: 0.5
+                },
               });
               service.route({
                 origin: new maps.LatLng(startPoint[0],startPoint[1]),
@@ -139,15 +145,17 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 bounds = map.getBounds();
               });
             }
-            else {
+            //else {
               $scope.startMarker = new maps.Marker({
                     position: new maps.LatLng(startPoint[0],startPoint[1]),
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                     map: map,
                     title: 'Start',
                     draggable: true
               });
               $scope.endMarker = new maps.Marker({
                     position: new maps.LatLng(endPoint[0],endPoint[1]),
+                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                     map: map,
                     title: 'End',
                     draggable: true 
@@ -166,7 +174,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
               newBounds.extend($scope.startMarker.getPosition())
               newBounds.extend($scope.endMarker.getPosition())
               map.fitBounds(newBounds);
-            }
+           // }
           }
         }
       });

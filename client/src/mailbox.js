@@ -12,8 +12,6 @@ angular.module('pegasys.mailbox',[])
     var getMessages = function(){
       DB.getRequest('messages/getinbox').then(function(res){
         $scope.messages = res.data.map(function(msg){return JSON.parse(msg);});
-        $log.log('res.data:');
-        $log.log(res.data);
       });
     }
     getMessages();

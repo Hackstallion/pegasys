@@ -46,8 +46,7 @@ angular.module('pegasys.main',[])
     }
 
     $scope.getMatches = function(tripName,tripDriver){
-      Global.setItem('tripName',tripName);
-      Global.setItem('driver',tripDriver === 'driver' ? true : false);
+      Global.setItem('currentTrip',{name: tripName, driver: tripDriver==='driver' ? true : false});
       $location.path('/match');
     }
 
