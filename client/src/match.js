@@ -1,6 +1,6 @@
 angular.module('pegasys.match',[])  
-  .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Trip) {
-    var tripName = Trip.getItem('tripName');
+  .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Global) {
+    var tripName = Global.getItem('tripName');
     if (!tripName) $location.path('/main');
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);

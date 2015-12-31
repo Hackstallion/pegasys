@@ -25,7 +25,7 @@ angular.module('pegasys.services', [])
           postRequest: postRequest
         };
 })
-.factory('Trip',function(){
+.factory('Global',function(){
   var data = {};
   var setItem = function(name,item){
     data[name] = item;
@@ -34,7 +34,7 @@ angular.module('pegasys.services', [])
     return data[name];
   }
   return {setItem: setItem,
-          getItem: getItem}
+          getItem: getItem};
 })
 .factory('Main', function(){return true})
 .factory('Login',function(){return true})

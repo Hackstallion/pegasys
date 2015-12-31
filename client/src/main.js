@@ -1,5 +1,5 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, DB, Main, Trip) {
+  .controller('MainController', function($scope, $location, $log, DB, Main, Global) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// $scope.welcome = 'Pegasys Commute Sharing';
     $scope.welcome = 'Trips';
@@ -46,8 +46,8 @@ angular.module('pegasys.main',[])
     }
 
     $scope.getMatches = function(tripName,tripDriver){
-      Trip.setItem('tripName',tripName);
-      Trip.setItem('driver',tripDriver === 'driver' ? true : false);
+      Global.setItem('tripName',tripName);
+      Global.setItem('driver',tripDriver === 'driver' ? true : false);
       $location.path('/match');
     }
 
