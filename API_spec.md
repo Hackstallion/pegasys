@@ -29,14 +29,14 @@ POST /api/createtrip => Set driver status, set start and end points, route, boun
                    
                    body: { 
                           tripName: {
-                            remove: true, (FOR DELETING EXISTING TRIPS)
-                            driver : boolean,
-                            startPoint : [lat,long],
-                            endPoint : [lat,long],
-                            route:[[lat,long],[lat,long]...],
-                            bounds: [[lat,long],[lat,long],[lat,long],[lat,long]],
-                            etc.: etc.
-                            }
+                                      remove: true, (FOR DELETING EXISTING TRIPS)
+                                      driver : boolean,
+                                      startPoint : [lat,long],
+                                      endPoint : [lat,long],
+                                      route:[[lat,long],[lat,long]...],
+                                      bounds: [[lat,long],[lat,long],[lat,long],[lat,long]],
+                                      etc.: etc.
+                                    }
                          }
 
 GET /api/getusers => Send array of all user objects besides the requesting user's. Passwords, 

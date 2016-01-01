@@ -14,6 +14,10 @@ module.exports = {
           var oldTrips = JSON.parse(foundUser.trips);
           if (req.body[tripName]["remove"]) {
             delete oldTrips[tripName];
+          } else if (oldTrips[tripName]) {
+            for (var key in req.body[tripName]) {
+              oldTrips[tripName][key] = req.body[tripName][key];
+            }
           } else {
             oldTrips[tripName] = req.body[tripName];
           }
