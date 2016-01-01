@@ -3,23 +3,25 @@ var UserModel = require('../../database/config.js'),
     Q = require('q');
 
 module.exports = {
-  setRoute: function (req, res, next) {
+  tripEdit: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         username  = req.cookies.user,
-        driverStatus = req.body.driver,
-        loc1 = req.body.startPoint,
-        loc2 = req.body.endPoint,
-        route = req.body.route,
-        bounds = req.body.bounds;
+        tripName = Object.keys(req.body)[0];
 
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          driverStatus ? foundUser.driver = driverStatus : null;
-          loc1 ? foundUser.startPoint = loc1 : null;
-          loc2 ? foundUser.endPoint = loc2 : null;
-          route ? foundUser.route = route : null;
-          bounds ? foundUser.bounds = bounds : null;
+          var oldTrips = JSON.parse(foundUser.trips);
+          if (req.body[tripName]["remove"]) {
+            delete oldTrips[tripName];
+          } else if (oldTrips[tripName]) {
+            for (var key in req.body[tripName]) {
+              oldTrips[tripName][key] = req.body[tripName][key];
+            }
+          } else {
+            oldTrips[tripName] = req.body[tripName];
+          }
+          foundUser.trips = JSON.stringify(oldTrips);
           foundUser.save();
           res.sendStatus(200);
         } else {
@@ -32,3 +34,6 @@ module.exports = {
       });
   }
 }
+
+
+

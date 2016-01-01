@@ -1,10 +1,22 @@
 <div class='jumbotron' ng-controller="MatchController">
   <h1>{{header}}</h1>
   <div class ="container">
-  	<h3>Click on a user to send them a request</h2>
-  	<div ng-repeat="name in matchNames">
-  		<h3 ng-click="requestMatch(name)">{{ name }}</h3>
+  <div class='userMapDiv'>
+  <ui-gmap-google-map class='userMap' center="matchMap.center" zoom="matchMap.zoom" control="matchMap.control"> 
+  </ui-gmap-google-map>
+  </div>
+  	<h3 class='matchTitleBar'>{{matches.length ? 'These users are going your way:' : 'No Matches Found'}}</h2>
+  	<div class='messageDiv' ng-repeat="match in matches">
+   		<h3 class='username' ng-click="requestMatch(match.username)">{{ match.username }}</h3>
+      <h3 class='username' ng-click="requestMatch(match.username)">{{ match.tripName }}</h3>
+      <span class='mapLink' ng-click="showOnMap(match.tripName)">(Show on Map)</span>
+      <div class='sendNewMessage' ng-controller="MailboxController">
+        <form ng-submit='sendMessage(match.username)'>
+          <input class='input' type='text' placeholder='Message' ng-model='newMessage.text' />
+          <button class='btn' type='submit'>Send New Message</button>
+        </form>
+        <span>Send {{matches.username}} a Message!</span>
+      </div>
   	</div>
-  	
   </div>
 </div>

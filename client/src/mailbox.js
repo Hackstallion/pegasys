@@ -12,8 +12,6 @@ angular.module('pegasys.mailbox',[])
     var getMessages = function(){
       DB.getRequest('messages/getinbox').then(function(res){
         $scope.messages = res.data.map(function(msg){return JSON.parse(msg);});
-        $log.log('res.data:');
-        $log.log(res.data);
       });
     }
     getMessages();
@@ -33,7 +31,9 @@ angular.module('pegasys.mailbox',[])
         getMessages();
       })
     }
-    $scope.sendMessage = function(){
+    $scope.sendMessage = function(recipient){
+      if (!$scope.newMessage.text.length) return;
+      if (recipient) $scope.newMessage.to_id = recipient;
       DB.postRequest('messages/send', $scope.newMessage).then(function(){
         $scope.newMessage = {from_id:$scope.user,to_id:'',text:''}
         getMessages();

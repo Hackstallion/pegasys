@@ -25,6 +25,17 @@ angular.module('pegasys.services', [])
           postRequest: postRequest
         };
 })
+.factory('Global',function(){
+  var data = {};
+  var setItem = function(name,item){
+    data[name] = item;
+  }
+  var getItem = function(name){
+    return data[name];
+  }
+  return {setItem: setItem,
+          getItem: getItem};
+})
 .factory('Main', function(){return true})
 .factory('Login',function(){return true})
 .factory('Signup',function(){return true})

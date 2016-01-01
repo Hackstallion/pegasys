@@ -28,7 +28,6 @@ module.exports = {
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
-          console.log("foundUser.sent => ", foundUser.sent);
           res.status(200);
           res.json(foundUser.sent);
         } else {
@@ -48,16 +47,12 @@ module.exports = {
 
     findUser({username: sender})
       .then(function(sender) {
-        console.log(req.cookies.user);
-        console.log(sender.username);
         if (sender && req.cookies.user === sender.username) {
           var message = JSON.stringify({from_id: sender.username,
                          to_id: recipient,
                          text: text});
           sender.sent.push(message);
-          console.log(message);
           sender.save();
-          console.log("Message in sent folder");
 
           findUser({username: recipient})
             .then(function(recipient) {
@@ -93,20 +88,17 @@ module.exports = {
           var message = JSON.stringify({from_id: sender,
                          to_id: recipient.username,
                          text: text});
-          console.log('message : '+message);
-          console.log(req.body);
           var index = recipient.inbox.indexOf(message);
-          console.log("recipient inbox message index before deletion:", index);
-          if (index >= 0){
-            recipient.inbox.splice(index,1);
+          if (index >= 0) {
+            recipient.inbox.splice(index, 1);
           }
           recipient.save();
           console.log("Message deleted.");
 
           findUser({username: sender})
             .then(function(sender) {
-              var index = sender.sent.indexOf(message) ;
-              if (index >= 0){
+              var index = sender.sent.indexOf(message);
+              if (index >= 0) {
                 sender.sent.splice(index,1);
               }
               sender.save();
