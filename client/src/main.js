@@ -87,10 +87,13 @@ angular.module('pegasys.main',[])
       });
 
       $scope.showMap = function(tripIndex){
-        var displayEndPoints = function(polyline){
-          var path = polyline.getPath().getArray();
-          var startPoint = path[0];
-          var endPoint = path[path.length-1];
+        var displayEndPoints = function(){
+          console.log('trip')
+          console.log($scope.trips[tripIndex]);
+          var startPoint = new maps.LatLng($scope.trips[tripIndex].startPoint[0],
+            $scope.trips[tripIndex].startPoint[1]);
+          var endPoint = new maps.LatLng($scope.trips[tripIndex].endPoint[0],
+            $scope.trips[tripIndex].endPoint[1]);
           if ($scope.driverStart instanceof maps.Marker){
             $scope.driverStart.setPosition(startPoint);
             $scope.driverEnd.setPosition(endPoint);
@@ -137,8 +140,8 @@ angular.module('pegasys.main',[])
                 strokeWeight: 8,
                 strokeOpacity: 0.5
               });
-              displayEndPoints($scope.driverLine);
             }
+            displayEndPoints();
             var newBounds = new maps.LatLngBounds();
             newBounds.extend(new maps.LatLng(driverData.route[0][0],driverData.route[0][1]));
             newBounds.extend(new maps.LatLng(driverData.route[driverData.route.length-1][0],driverData.route[driverData.route.length-1][1]));
