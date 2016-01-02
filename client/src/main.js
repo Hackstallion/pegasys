@@ -1,15 +1,26 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, DB, Main, Global) {
+  .controller('MainController', function($scope, $location, $log, DB, Main, Global,uiGmapGoogleMapApi) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// $scope.welcome = 'Pegasys Commute Sharing';
     $scope.welcome = 'Trips';
     $scope.trips = [];
     $scope.messageCount = 0;
+    $scope.currTripIndex;
+    $scope.map = {
+      control: {},
+      center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
+      zoom: 12,
+   };
+    $scope.riderStart = {};
+    $scope.riderEnd = {};
+    $scope.driverLine = {};
+    $scope.driverStart = {};
+    $scope.driverEnd = {};
 
 
     $scope.init = function(){
       var userTrip;
-      DB.getRequest('profile')
+      return DB.getRequest('profile')
             .then(function(response){
               // $log.log(response);
               var user = response.data;
@@ -19,7 +30,8 @@ angular.module('pegasys.main',[])
                 userTrip = {
                   tripName: trip,
                   startPoint: currTrip.startPoint,
-                  endPoint: currTrip.endPoint
+                  endPoint: currTrip.endPoint,
+                  route: currTrip.route
                 };
                 if(currTrip.driver){
                   userTrip.driver = 'driver';
@@ -43,11 +55,7 @@ angular.module('pegasys.main',[])
                 $scope.trips.push(userTrip);
               }
             })
-    };
-
-    // Run init
-    
-
+    }
 
     $scope.getMatches = function(tripName,tripDriver){
       Global.setItem('currentTrip',{name: tripName, driver: tripDriver==='driver' ? true : false});
@@ -164,6 +172,10 @@ angular.module('pegasys.main',[])
                 draggable: false
               });
             }
+            var newBounds = new maps.LatLngBounds();
+            newBounds.extend($scope.riderStart.position);
+            newBounds.extend($scope.riderEnd.position);
+            map.fitBounds(newBounds);
           }
           $scope.currTripIndex = tripIndex;
         }
