@@ -11,8 +11,8 @@
       <button class='btn' ng-click='getMatches(trip.tripName, trip.driver)'>Find Matches</button>
   		<p>You're the {{ trip.driver }} for this trip</p>
   		<p>{{ trip.matched }}</p>
-  		<p>start: {{ trip.startPoint }}</p>
-  		<p>end: {{ trip.endPoint }}</p>
+  		<p>start: {{ trip.startAddress || trip.startPoint }}</p>
+  		<p>end: {{ trip.endAddress || trip.endPoint }}</p>
   	</div>
   </div>
 </div>
