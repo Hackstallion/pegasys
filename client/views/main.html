@@ -1,14 +1,9 @@
 <div class="jumbotron" ng-controller="MainController">
   <h1>{{welcome}}</h1>
   <div class='container'>
-    <div class='userMapDiv'>
-  <ui-gmap-google-map class='userMap' center="map.center" zoom="map.zoom" control="map.control"> 
-  </ui-gmap-google-map>
-  </div>
-  	<div class='trip' ng-repeat='trip in trips' ng-attr-id="{{ 'trip_' + $index }}">
+  	<div class='trip' ng-repeat='trip in trips'>
   		<h3>{{ trip.tripName }}</h3>
-      <button class='btn' ng-click='showMap($index)'>Show Map</button>
-      <button class='btn' ng-click='getMatches(trip.tripName, trip.driver)'>Find Matches</button>
+      <button class='btn' ng-click='getMatches(trip.tripName,trip.driver)'>Find Matches</button>
   		<p>You're the {{ trip.driver }} for this trip</p>
   		<p>{{ trip.matched }}</p>
   		<p>start: {{ trip.startPoint }}</p>
