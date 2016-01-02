@@ -5,7 +5,6 @@ angular.module('pegasys.main',[])
     $scope.welcome = 'Trips';
     $scope.trips = [];
     $scope.messageCount = 0;
-
     $scope.currTripIndex;
     $scope.map = {
       control: {},
@@ -33,7 +32,8 @@ angular.module('pegasys.main',[])
                 userTrip = {
                   tripName: trip,
                   startPoint: currTrip.startPoint,
-                  endPoint: currTrip.endPoint
+                  endPoint: currTrip.endPoint,
+                  route: currTrip.route
                 };
                 if(currTrip.driver){
                   userTrip.driver = 'driver';
@@ -69,34 +69,51 @@ angular.module('pegasys.main',[])
       $location.path('/match');
     }
 
-    $scope.init().then(
+    $scope.init().then(function(){
     uiGmapGoogleMapApi.then(function(maps) { 
-      //uiGmapIsReady is broken when there is more than
-      //one map instance, and the one from mapview counts.
-      //We're taking it on faith that the map is loaded.
-      //This produces an error in the console if 
-      //the map is not loaded, but does not crash the app,
-      //at least on Chrome.
       $log.log('maps: ', maps);
-     
-      var map = $scope.map.control.getGMap();
-      // var map = $scope.map.events = {
-      //   tilesloaded: function (map) {
-      //           $scope.$apply(function () {
-      //               $scope.mapInstance = map;           
-      //           });
-      //       }
-      // }
       $scope.showMap = function(tripIndex){
+        var displayEndPoints = function(polyline){
+          var path = polyline.getPath().getArray();
+          var startPoint = path[0];
+          var endPoint = path[path.length-1];
+          if ($scope.driverStart instanceof maps.Marker){
+            $scope.driverStart.setPosition(startPoint);
+            $scope.driverEnd.setPosition(endPoint);
+          } else {
+            $scope.driverStart = new maps.Marker({
+              map: map,
+              position: startPoint,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+              draggable: false
+            });
+            $scope.driverEnd = new maps.Marker({
+              map: map,
+              position: endPoint,
+              icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+              draggable: false
+            });
+            console.log('where are my endpoints?')
+          }
+        }
+          var map = $scope.map.control.getGMap();
           $log.log('starting showMap with index: ', tripIndex);
-          if($scope.trips[tripIndex].driver){
+          if($scope.trips[tripIndex].driver === 'driver'){
             var driverData = $scope.trips[tripIndex];
             // $log.log(driverData);
+            if ($scope.riderStart instanceof maps.Marker){
+              $scope.riderStart.setMap(null);
+              $scope.riderStart = {};
+              $scope.riderEnd.setMap(null);
+              $scope.riderEnd = {};
+            }
             if ($scope.driverLine instanceof maps.Polyline){
               $scope.driverLine.setPath(driverData.route.map(function(pair){
                 return new maps.LatLng(pair[0],pair[1]);
               }));
             } else {
+              console.log('driverdata');
+              console.log(driverData);
               $scope.driverLine = new maps.Polyline({
                 map: map,
                 path: driverData.route.map(function(pair){
@@ -116,6 +133,14 @@ angular.module('pegasys.main',[])
             riderData = $scope.trips[tripIndex];
             riderData.startPoint = riderData.startPoint;
             riderData.endPoint = riderData.endPoint;
+            if ($scope.driverLine instanceof maps.Polyline){
+              $scope.driverLine.setMap(null);
+              $scope.driverLine = {};
+              $scope.driverStart.setMap(null);
+              $scope.driverStart = {};
+              $scope.driverEnd.setMap(null);
+              $scope.driverEnd = {};
+            }
             if ($scope.riderStart instanceof maps.Marker){
               $scope.riderStart.setPosition(new maps.LatLng(riderData.startPoint[0],riderData.startPoint[1]));
               $scope.riderEnd.setPosition(new maps.LatLng(riderData.endPoint[0],riderData.endPoint[1]));
@@ -134,33 +159,7 @@ angular.module('pegasys.main',[])
               });
             }
           }
-          // Append map to appropriate DOM element
-          if($scope.currTripIndex !== undefined){
-            angular.element(document).find('.userMap').remove();
-          }
-          angular.element(document).find('trip_' + tripIndex).append("<ui-gmap-google-map class='userMap' center='center' zoom='trip.tripMap.zoom' control='trip.tripMap.control'> </ui-gmap-google-map>");
-          // // Keep track of last index used
           $scope.currTripIndex = tripIndex;
         }
-    }));
-      // End of uimap call
-
-        
-
-        
-
-    
-
-    $scope.addMap = function(tripName){
-      var userTrip = $scope.trips[tripName];
-      userTrip = new Map(userTrip);
-      $scope.currentMap = tripName;
-      $log.log('$scope.trips[tripName]', $scope.trips[tripName]);
-    }
-
-    $scope.tester = function(){
-      $log.log('test, test');
-    }
-    $scope.tester();
-
+    })});
   });
