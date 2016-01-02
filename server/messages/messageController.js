@@ -84,7 +84,7 @@ module.exports = {
 
     findUser({username: recipient})
       .then(function(recipient) {
-        if (recipient && req.cookies.user === recipient.username) {
+        if (recipient && (req.cookies.user === recipient.username || req.cookies.user === sender)) {
           var message = JSON.stringify({from_id: sender,
                          to_id: recipient.username,
                          text: text});
@@ -99,7 +99,7 @@ module.exports = {
             .then(function(sender) {
               var index = sender.sent.indexOf(message);
               if (index >= 0) {
-                sender.sent.splice(index,1);
+                sender.sent.splice(index, 1);
               }
               sender.save();
               res.sendStatus(200);
