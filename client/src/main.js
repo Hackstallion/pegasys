@@ -1,28 +1,15 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, $timeout, uiGmapGoogleMapApi, uiGmapIsReady, DB, Main, Global) {
+  .controller('MainController', function($scope, $location, $log, DB, Main, Global) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// $scope.welcome = 'Pegasys Commute Sharing';
     $scope.welcome = 'Trips';
     $scope.trips = [];
     $scope.messageCount = 0;
-    $scope.currTripIndex;
-    $scope.map = {
-      control: {},
-      center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
-      zoom: 12,
-    };
-    $scope.riderStart = {};
-    $scope.riderEnd = {};
-    $scope.driverLine = {};
-    $scope.driverStart = {};
-    $scope.driverEnd = {};
 
-    $scope.showMap = function(){$log.log('first showMap')};
-    //this will get overwritten
 
     $scope.init = function(){
       var userTrip;
-      return DB.getRequest('profile')
+      DB.getRequest('profile')
             .then(function(response){
               // $log.log(response);
               var user = response.data;
@@ -32,8 +19,7 @@ angular.module('pegasys.main',[])
                 userTrip = {
                   tripName: trip,
                   startPoint: currTrip.startPoint,
-                  endPoint: currTrip.endPoint,
-                  route: currTrip.route
+                  endPoint: currTrip.endPoint
                 };
                 if(currTrip.driver){
                   userTrip.driver = 'driver';
@@ -48,21 +34,16 @@ angular.module('pegasys.main',[])
                   }
                   userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
                 }else{
+                  // $log.log(currTrip.matched);
                   userTrip.matched = '';
                   for(var i = 0; i < currTrip.matched.length; i++){
                     userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
                   }
                 }
                 $scope.trips.push(userTrip);
-               
               }
-
             })
-    };
-
-    // Run init
-    
-
+    }
 
     $scope.getMatches = function(tripName,tripDriver){
       Global.setItem('currentTrip',{name: tripName, driver: tripDriver==='driver' ? true : false});
