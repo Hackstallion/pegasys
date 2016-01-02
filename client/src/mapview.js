@@ -17,20 +17,15 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.route = null;
     $scope.startMarker = null;
     $scope.endMarker = null;
-    $scope.startPointString = null;
-    $scope.endPointString = null;
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
-    $scope.isDriver = false; //We'll ultimately pull this from the cookie
-    // DB.getRequest('profile').then(function(response){
-    //   // $log.log('driver: '+response.data.driver);
-    //   $scope.isDriver = response.data.driver;
-    // });
+    $scope.isDriver = false; 
     var startEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
         startPoint = [loc.lat(),loc.lng()];
         $scope.submitPoints();
+        $scope.startPointString = searchbox.
         searchBox.setBounds($scope.getBounds());
       }
     }
@@ -65,8 +60,6 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           driver: $scope.isDriver,
           startPoint: startPoint,
           endPoint: endPoint,
-          // startAddress: $scope.startPointString,
-          // endAddress: $scope.endPointString,
           route: routeArray,
           bounds: bounds,
           startTime: 0,
@@ -80,14 +73,11 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           driver: false,
           startPoint: startPoint,
           endPoint: endPoint,
-          // startAddress: $scope.startPointString,
-          // endAddress: $scope.endPointString,
           startTime: 0,
           endTime: 0,
           }
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
-      // $log.log('post request submitted')
       $scope.changed = 'Submitted!'
     }
 
@@ -138,43 +128,38 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 });
               });
               var routeListener = maps.event.addListener(renderer,'directions_changed',function(){
-                // $log.log('directions_changed');
                 routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                   return [coord.lat(),coord.lng()];
                 });
                 bounds = map.getBounds();
               });
             }
-            //else {
-              $scope.startMarker = new maps.Marker({
-                    position: new maps.LatLng(startPoint[0],startPoint[1]),
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
-                    map: map,
-                    title: 'Start',
-                    draggable: true
-              });
-              $scope.endMarker = new maps.Marker({
-                    position: new maps.LatLng(endPoint[0],endPoint[1]),
-                    icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
-                    map: map,
-                    title: 'End',
-                    draggable: true 
-              });
-              var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
-                // $log.log('start marker moved');
-                startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
-                bounds = map.getBounds();
-              })
-              var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
-                // $log.log('end marker moved');
-                endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
-                bounds = map.getBounds();
-              })
-              var newBounds = new maps.LatLngBounds();
-              newBounds.extend($scope.startMarker.getPosition())
-              newBounds.extend($scope.endMarker.getPosition())
-              map.fitBounds(newBounds);
-           // }
+            $scope.startMarker = new maps.Marker({
+                  position: new maps.LatLng(startPoint[0],startPoint[1]),
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
+                  map: map,
+                  title: 'Start',
+                  draggable: true
+            });
+            $scope.endMarker = new maps.Marker({
+                  position: new maps.LatLng(endPoint[0],endPoint[1]),
+                  icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
+                  map: map,
+                  title: 'End',
+                  draggable: true 
+            });
+            var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
+              startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
+              bounds = map.getBounds();
+            })
+            var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
+              endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
+              bounds = map.getBounds();
+            })
+            var newBounds = new maps.LatLngBounds();
+            newBounds.extend($scope.startMarker.getPosition())
+            newBounds.extend($scope.endMarker.getPosition())
+            map.fitBounds(newBounds);
           }
         }
       });
