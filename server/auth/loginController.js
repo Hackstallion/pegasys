@@ -21,7 +21,7 @@ module.exports = {
             } else {
               res.cookie('user', username);
             }
-            res.sendStatus(201);
+            res.sendStatus(200);
         } else {
             return next(new Error('Incorrect Password'));
         }
