@@ -1,7 +1,7 @@
 angular.module('pegasys.match',[])  
   .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Global) {
     if (!Global.getItem('currentTrip') || !Global.getItem('currentTrip').name) $location.path('/main');
-    console.log(Global.getItem('currentTrip').name)
+    console.log(Global.getItem('currentTrip').name);
     var tripName = Global.getItem('currentTrip').name;
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
@@ -13,14 +13,14 @@ angular.module('pegasys.match',[])
       control: {},
       center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
       zoom: 12
-    }
+    };
 
     $scope.showOnMap = function(){};
     //this will get overwritten
 
     $scope.requestMatch = function(requestedUsername){
         DB.postRequest('matches/request', {from_id: $scope.user, to_id: requestedUsername})
-          .then(function(){$log.log('sent match request')});
+          .then(function(){$log.log('sent match request');});
     };
 
     var userData;
@@ -35,10 +35,10 @@ angular.module('pegasys.match',[])
             $scope.matches = matchHelpers.getMatches(userTrip, usersData);
             for(var i = 0; i < $scope.matches.length; i++){
               $scope.matchNames.push($scope.matches[i].username);
-            };
+            }
           });
         });
-    }
+    };
     $scope.riderStart = {};
     $scope.riderEnd = {};
     $scope.driverLine = {};
@@ -73,9 +73,9 @@ angular.module('pegasys.match',[])
               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               draggable: false
             });
-            console.log('where are my endpoints?')
+            console.log('where are my endpoints?');
           }
-        }
+        };
         if (Global.getItem('currentTrip').driver){
           // display the driver's polyline
           var driverRoute = $scope.userTrip.route.map(function(pair){
@@ -117,7 +117,7 @@ angular.module('pegasys.match',[])
                 draggable: false
               });
             }
-          }
+          };
         } else {
           //display the rider's points
           var riderStart = new maps.Marker({
@@ -132,7 +132,7 @@ angular.module('pegasys.match',[])
             icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
             draggable: false
           });
-          var newBounds = new maps.LatLngBounds();
+          newBounds = new maps.LatLngBounds();
           newBounds.extend(riderStart.position);
           newBounds.extend(riderEnd.position);
           map.fitBounds(newBounds);
