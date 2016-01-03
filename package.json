@@ -19,6 +19,7 @@
     "babel-runtime": "^5.8.20",
     "bluebird": "^2.9.34",
     "body-parser": "^1.13.3",
+    "bower": "^1.7.2",
     "browserify-middleware": "^6.0.0",
     "chai": "^3.4.1",
     "composable-middleware": "^0.3.0",
