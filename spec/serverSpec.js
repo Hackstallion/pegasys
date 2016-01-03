@@ -69,7 +69,7 @@ describe('User Management',function(){
         'Content-Type': 'application/json'
       }
     },function(response){
-      if (response.statusCode === 201) done();
+      if (response.statusCode === 200) done();
     });
     req.end(JSON.stringify({username:testUser,password:testPass,deleteUser:true}))
   });
