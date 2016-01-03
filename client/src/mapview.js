@@ -25,7 +25,6 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         var loc = searchBox.getPlaces()[0].geometry.location;
         startPoint = [loc.lat(),loc.lng()];
         $scope.submitPoints();
-        $scope.startPointString = searchbox.
         searchBox.setBounds($scope.getBounds());
       }
     };
