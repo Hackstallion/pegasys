@@ -3,4 +3,4 @@ bower_components/
 .DS_Store
 *.swp
 ~*
-
+dist/

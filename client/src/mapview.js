@@ -54,8 +54,9 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     }
 
     $scope.saveInfo = function(){
+      var newTrip = {};
       if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
-        var newTrip = {};
+        newTrip = {};
         newTrip[$scope.tripName] = {
           driver: $scope.isDriver,
           startPoint: startPoint,
@@ -68,7 +69,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
       else if (startPoint.length && endPoint.length && $scope.tripName){
-        var newTrip = {};
+        newTrip = {};
         newTrip[$scope.tripName] = {
           driver: false,
           startPoint: startPoint,
