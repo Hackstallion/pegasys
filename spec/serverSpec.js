@@ -18,9 +18,10 @@ describe('Server runs', function(){
   });
 });
 describe('User Management',function(){
+  this.timeout(0);
   beforeEach(function(done){
     setTimeout(function(){done();},1000);
-  })
+  });
   it ('Should create a user',function(done){
     var req = http.request({
       method: 'POST',
@@ -69,7 +70,7 @@ describe('User Management',function(){
         'Content-Type': 'application/json'
       }
     },function(response){
-      if (response.statusCode === 201) done();
+      if (response.statusCode === 200) done();
     });
     req.end(JSON.stringify({username:testUser,password:testPass,deleteUser:true}))
   });
