@@ -6,7 +6,6 @@ angular.module('myApp', [
     // 'ngSanitize',
     // 'ngTouch',
     'pegasys.services',
-    'pegasys.database',
     'pegasys.login',
     'pegasys.signup',
     'pegasys.main',

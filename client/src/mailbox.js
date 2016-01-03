@@ -8,19 +8,19 @@ angular.module('pegasys.mailbox',[])
       from_id: $scope.user,
       to_id: '',
       text: ''
-    }
+    };
     var getMessages = function(){
       DB.getRequest('messages/getinbox').then(function(res){
         $scope.messages = res.data.map(function(msg){return JSON.parse(msg);});
       });
-    }
+    };
     getMessages();
     $scope.delMessage = function(message){
       DB.postRequest('messages/delete', message).then(function(){
         getMessages();
-      })
+      });
       $log.log('deleted'+message);
-    }
+    };
     $scope.reply = function(message){
       var messageObj = {
         from_id: $scope.user,
@@ -29,14 +29,14 @@ angular.module('pegasys.mailbox',[])
       };
       DB.postRequest('messages/send', messageObj).then(function(){
         getMessages();
-      })
-    }
+      });
+    };
     $scope.sendMessage = function(recipient){
       if (!$scope.newMessage.text.length) return;
       if (recipient) $scope.newMessage.to_id = recipient;
       DB.postRequest('messages/send', $scope.newMessage).then(function(){
-        $scope.newMessage = {from_id:$scope.user,to_id:'',text:''}
+        $scope.newMessage = {from_id:$scope.user,to_id:'',text:''};
         getMessages();
-      })
-    }
+      });
+    };
   });

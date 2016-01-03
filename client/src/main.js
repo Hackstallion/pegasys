@@ -5,7 +5,6 @@ angular.module('pegasys.main',[])
     $scope.welcome = 'Trips';
     $scope.trips = [];
     $scope.messageCount = 0;
-    $scope.currTripIndex;
     $scope.map = {
       control: {},
       center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
@@ -25,7 +24,7 @@ angular.module('pegasys.main',[])
               // $log.log(response);
               var user = response.data;
               var trips = JSON.parse(user.trips);
-              for(trip in trips){
+              for(var trip in trips){
                 var currTrip = trips[trip];
                 userTrip = {
                   tripName: trip,
@@ -38,19 +37,14 @@ angular.module('pegasys.main',[])
                 }else{
                   userTrip.driver = 'rider'
                 }
-
+                var optionType = 'driver';
                 if(currTrip.matched === [] || !currTrip.matched){
-                  var optionType = 'driver';
                   if(currTrip.driver){
                     optionType = 'rider';
                   }
                   userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
                 }else{
-                  // $log.log(currTrip.matched);
-                  userTrip.matched = '';
-                  for(var i = 0; i < currTrip.matched.length; i++){
-                    userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
-                  }
+                  userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
                 }
                 $scope.trips.push(userTrip);
               }
@@ -115,6 +109,7 @@ angular.module('pegasys.main',[])
         }
           var map = $scope.map.control.getGMap();
           $log.log('starting showMap with index: ', tripIndex);
+          var newBounds = new maps.LatLngBounds();
           if($scope.trips[tripIndex].driver === 'driver'){
             var driverData = $scope.trips[tripIndex];
             // $log.log(driverData);
@@ -142,7 +137,7 @@ angular.module('pegasys.main',[])
               });
             }
             displayEndPoints();
-            var newBounds = new maps.LatLngBounds();
+            newBounds = new maps.LatLngBounds();
             newBounds.extend(new maps.LatLng(driverData.route[0][0],driverData.route[0][1]));
             newBounds.extend(new maps.LatLng(driverData.route[driverData.route.length-1][0],driverData.route[driverData.route.length-1][1]));
             map.fitBounds(newBounds);
@@ -175,7 +170,7 @@ angular.module('pegasys.main',[])
                 draggable: false
               });
             }
-            var newBounds = new maps.LatLngBounds();
+            newBounds = new maps.LatLngBounds();
             newBounds.extend($scope.riderStart.position);
             newBounds.extend($scope.riderEnd.position);
             map.fitBounds(newBounds);

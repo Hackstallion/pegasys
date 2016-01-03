@@ -6,7 +6,8 @@ module.exports = function(grunt){
         force: true
       },
       client: {
-        src: ['client/services/*.js','client/src/*.js','client/app.js']
+        src: ['client/services/*.js','client/src/*.js','client/app.js',
+              'server/index.js','server/*/*.js']
       }
     },
     mochaTest: {

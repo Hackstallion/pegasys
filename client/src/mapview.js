@@ -28,7 +28,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         $scope.startPointString = searchbox.
         searchBox.setBounds($scope.getBounds());
       }
-    }
+    };
     var endEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
@@ -36,26 +36,27 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
         $scope.submitPoints();
         searchBox.setBounds($scope.getBounds());
       }
-    }
+    };
     $scope.map = {
       control: {},
       center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
       zoom: 12
-    }
+    };
     $scope.startSearchBox = {
       events:startEvents,
       template:'startSearchBox.tpl.html',
       options: {}
-    }
+    };
     $scope.endSearchBox = {
       events:endEvents,
       template:'endSearchBox.tpl.html',
       control: {}
-    }
+    };
 
     $scope.saveInfo = function(){
+      var newTrip = {};
       if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
-        var newTrip = {};
+        newTrip = {};
         newTrip[$scope.tripName] = {
           driver: $scope.isDriver,
           startPoint: startPoint,
@@ -64,29 +65,28 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           bounds: bounds,
           startTime: 0,
           endTime: 0,
-          }
+          };
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
-      }
-      else if (startPoint.length && endPoint.length && $scope.tripName){
-        var newTrip = {};
+      } else if (startPoint.length && endPoint.length && $scope.tripName){
+        newTrip = {};
         newTrip[$scope.tripName] = {
           driver: false,
           startPoint: startPoint,
           endPoint: endPoint,
           startTime: 0,
           endTime: 0,
-          }
+          };
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
-      $scope.changed = 'Submitted!'
-    }
+      $scope.changed = 'Submitted!';
+    };
 
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
         $scope.getBounds = function(){
           return map.getBounds();
-        }
+        };
         $scope.submitPoints = function (){
           if ($scope.startMarker instanceof maps.Marker && $scope.startMarker instanceof maps.Marker){
             $scope.startMarker.setMap(null);
@@ -120,13 +120,13 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                 destination: new maps.LatLng(endPoint[0],endPoint[1]),
                 travelMode: 'DRIVING'
                 },function(result){
-                  $scope.route = result
+                  $scope.route = result;
                   renderer.setDirections(result);
                   routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                     return [coord.lat(),coord.lng()];
+                  });
                   bounds = map.getBounds();
                 });
-              });
               var routeListener = maps.event.addListener(renderer,'directions_changed',function(){
                 routeArray = renderer.getDirections().routes[0].overview_path.map(function(coord){
                   return [coord.lat(),coord.lng()];
@@ -149,19 +149,19 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                   draggable: true 
             });
             var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
-              startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()]
+              startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()];
               bounds = map.getBounds();
-            })
+            });
             var endListener = maps.event.addListener($scope.endMarker,'dragend',function(){
-              endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()]
+              endPoint = [$scope.endMarker.position.lat(),$scope.endMarker.position.lng()];
               bounds = map.getBounds();
-            })
+            });
             var newBounds = new maps.LatLngBounds();
-            newBounds.extend($scope.startMarker.getPosition())
-            newBounds.extend($scope.endMarker.getPosition())
+            newBounds.extend($scope.startMarker.getPosition());
+            newBounds.extend($scope.endMarker.getPosition());
             map.fitBounds(newBounds);
           }
-        }
+        };
       });
-    })
+    });
   });

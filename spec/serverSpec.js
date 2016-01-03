@@ -18,6 +18,9 @@ describe('Server runs', function(){
   });
 });
 describe('User Management',function(){
+  beforeEach(function(done){
+    setTimeout(function(){done();},1000);
+  })
   it ('Should create a user',function(done){
     var req = http.request({
       method: 'POST',
