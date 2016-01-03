@@ -35,26 +35,26 @@ angular.module('pegasys.main',[])
                 if(currTrip.driver){
                   userTrip.driver = 'driver';
                 }else{
-                  userTrip.driver = 'rider'
+                  userTrip.driver = 'rider';
                 }
                 var optionType = 'driver';
                 if(currTrip.matched === [] || !currTrip.matched){
                   if(currTrip.driver){
                     optionType = 'rider';
                   }
-                  userTrip.matched = 'You do not have a ' + optionType + ' for this trip'
+                  userTrip.matched = 'You do not have a ' + optionType + ' for this trip';
                 }else{
                   userTrip.matched += userTrip.matched = 'Your ' + optionType + ' for this trip is ' + currTrip.matched + '\n';
                 }
                 $scope.trips.push(userTrip);
               }
-            })
+            });
     }
 
     $scope.getMatches = function(tripName,tripDriver){
       Global.setItem('currentTrip',{name: tripName, driver: tripDriver==='driver' ? true : false});
       $location.path('/match');
-    }
+    };
 
     $scope.init().then(function(){
     uiGmapGoogleMapApi.then(function(maps) { 
@@ -70,7 +70,7 @@ angular.module('pegasys.main',[])
               trip.startAddress = results[0].formatted_address;
             }
           }
-        })
+        });
         geocoder.geocode({'location': new maps.LatLng(trip.endPoint[0],trip.endPoint[1])},function(results,status){
           if(status === maps.GeocoderStatus.OK){
             if (results[0]){ 
@@ -104,7 +104,7 @@ angular.module('pegasys.main',[])
               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               draggable: false
             });
-            console.log('where are my endpoints?')
+            console.log('where are my endpoints?');
           }
         }
           var map = $scope.map.control.getGMap();
@@ -177,5 +177,5 @@ angular.module('pegasys.main',[])
           }
           $scope.currTripIndex = tripIndex;
         }
-    })});
+    });});
   });
