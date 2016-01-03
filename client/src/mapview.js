@@ -20,12 +20,16 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; 
+    $scope.startTimes = [null, null, null, null];
+    $scope.endTimes = [null, null, null, null];
+    $scope.fields = [true, false];
+
     var startEvents = {
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
         startPoint = [loc.lat(),loc.lng()];
         $scope.submitPoints();
-        $scope.startPointString = searchbox.
+        $scope.startPointString = searchBox
         searchBox.setBounds($scope.getBounds());
       }
     };
@@ -53,6 +57,25 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       control: {}
     };
 
+    $scope.changeFields = function(direction){
+      $log.log('changing fields');
+      $log.log(direction);
+      if(direction === 'next'){
+        $log.log('next');
+        $scope.fields[0] = false;
+        $scope.fields[1] = true;
+      }else if(direction === 'prev'){
+        $scope.fields[0] = true;
+        $scope.fields[1] = false;
+        $log.log('prev');
+      }
+      $log.log('fields', $scope.fields);
+    };
+
+    $scope.timeConvert = function(){
+
+    };
+
     $scope.saveInfo = function(){
       var newTrip = {};
       if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
@@ -63,8 +86,8 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           endPoint: endPoint,
           route: routeArray,
           bounds: bounds,
-          startTime: 0,
-          endTime: 0,
+          startTimes: $scope.startTimes,
+          endTimes: $scope.endTimes
           };
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       } else if (startPoint.length && endPoint.length && $scope.tripName){
@@ -73,12 +96,13 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
           driver: false,
           startPoint: startPoint,
           endPoint: endPoint,
-          startTime: 0,
-          endTime: 0,
+          startTimes: $scope.startTimes,
+          endTimes: $scope.endTimes
           };
         DB.postRequest('createtrip', newTrip).then($location.path('/main'));
       }
       $scope.changed = 'Submitted!';
+      $log.log(newTrip);
     };
 
     uiGmapGoogleMapApi.then(function(maps) { 
