@@ -11,9 +11,10 @@ POST /api/auth/signup => If username doesn't exist, adds user to the database
 
 POST /api/auth/login => Log in, if account doesn't exist then notify user.
                         Redirect to main page. Default to rider.
-                        Set cookie.
+                        Set cookie. Deletes user if deleteUser = true.
 
                    body: {
+                          deleteUser: boolean, optional,
                           username: 'username',
                           password: 'password'
                          }
