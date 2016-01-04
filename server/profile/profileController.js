@@ -7,14 +7,17 @@ module.exports = {
   updateProfile: function (req, res, next) {
     var findUser = Q.nbind(Users.findOne, Users),
         username = req.cookies.user,
-        password = req.body.password;
+        password = req.body.password,
+        newPassword = req.body.newPassword;
 
 
     findUser({username: username})
       .then(function(foundUser) {
         if (foundUser) {
           
-          foundUser.password = password || foundUser.password;
+          if (foundUser.password === password){
+            foundUser.password = newPassword;
+          }
           foundUser.save();
           res.sendStatus(200);
         } else {
@@ -33,6 +36,7 @@ module.exports = {
         findUser({username: username})
           .then(function(myProfile) {
             if (myProfile) {
+              myProfile.password = '';
               res.json(myProfile);
               res.status(200);
             } else {

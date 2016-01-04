@@ -11,6 +11,6 @@ angular.module('pegasys.profile',[])
     $scope.submit = function(){
       DB.postRequest('profile',$scope.user).then(function(){
         $scope.saved = 'Changes Saved!'
-      })
+      });
     }
   });
