@@ -7,16 +7,46 @@
 
 <div class="jumbotron" ng-controller="MapviewController">
   <h1>{{welcome}}</h1>
-  <input class='input' type="text" placeholder="Trip Name" size=40 ng-model='tripName'>
-  <div id="startSearchBox">
+  <input class='input' type="text" ng-show='fields[0]' placeholder="Trip Name" size=40 ng-model='tripName'>
+  <div id="startSearchBox"  ng-show='fields[0]'>
   </div>
-  <div id="endSearchBox">
+  <div id="endSearchBox"  ng-show='fields[0]'>
   </div>
-  <div id="driverCheckBox">
+  <div id="driverCheckBox" ng-show='fields[0]'>
   <span>Driver</span>
   <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" placeholder='isDriver' ng-true-value='true' ng-false-value='false'></input>
   </div>
-  <input type='submit' id="pointsSubmit" ng-click="saveInfo()" text='Submit'>
+  <input class='input' type="text" ng-show='fields[1]' placeholder="Earliest Start Time" size=40 ng-model='startTimes[0]'>
+  <select ng-show='fields[1]' ng-model='startTimes[1]' placeholder="TOD">
+    <option value="" disabled selected>TOD</option>
+    <option value='am'>am</option>
+    <option value='pm'>pm</option>
+  </select>
+  <input class='input' type="text" ng-show='fields[1]' placeholder="Latest Start Time" size=40 ng-model='startTimes[2]'>
+  <select ng-show='fields[1]' ng-model='startTimes[3]' placeholder="TOD">
+    <option value="" disabled selected>TOD</option>
+    <option value='am'>am</option>
+    <option value='pm'>pm</option>
+  </select>
+  <input class='input' type="text" ng-show='fields[1]' placeholder="Earliest End Time" size=40 ng-model='endTimes[0]'>
+  <select ng-show='fields[1]' ng-model='endTimes[1]' placeholder="TOD">
+    <option value="" disabled selected>TOD</option>
+    <option value='am'>am</option>
+    <option value='pm'>pm</option>
+  </select>
+  <input class='input' type="text" ng-show='fields[1]' placeholder="Latest End Time" size=40 ng-model='endTimes[2]'>
+  <select ng-show='fields[1]' ng-model='endTimes[3]' placeholder="TOD">
+    <option value="" disabled selected>TOD</option>
+    <option class='am'>am</option>
+    <option class='pm'>pm</option>
+  </select>
+  <button id="next" ng-show='fields[0]' ng-click="changeFields('next')" text='Submit'>next</button>
+  <button id="previous" ng-show='fields[1]' ng-click="changeFields('prev')" text='Submit'>previous</button>
+  <input type='submit' id="pointsSubmit" ng-show='fields[1]' ng-click="saveInfo()" text='Submit'>
+  <h2 ng-show='fields[2]'>Your Trip Has Been Submitted!</h2>
+  <button id="main" ng-show='fields[2]' ng-click="seeTrips()" text='Submit'>See Trips</button>
+  <!-- <button id="newTrip" ng-show='fields[2]' ng-click="newTrip()" text='Submit'>New Trip</button> -->
+
   
  <!-- <button class='btn' type='submit' ng-click='saveinfo()'>Submit New Route</button> -->
   <h3>{{changed}}</h3>

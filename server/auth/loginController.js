@@ -16,7 +16,11 @@ module.exports = {
           next(new Error('User does not exist'));
         } else if (user.password === password) {
           //'this.password' is 'undefined'
-            res.cookie('user', username);
+            if (req.body.deleteUser){
+              user.remove();
+            } else {
+              res.cookie('user', username);
+            }
             res.sendStatus(200);
         } else {
             return next(new Error('Incorrect Password'));

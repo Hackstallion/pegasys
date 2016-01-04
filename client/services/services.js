@@ -10,7 +10,7 @@ angular.module('pegasys.services', [])
     }).then(function (resp){
       return resp;
     });
-  }
+  };
 
   var getRequest = function(apiRoute){
     return $http({
@@ -18,7 +18,7 @@ angular.module('pegasys.services', [])
       url: '/api/'+apiRoute,
     }).then(function(resp){
       return resp;
-    })
+    });
   };
 
   return {getRequest: getRequest,
@@ -29,17 +29,17 @@ angular.module('pegasys.services', [])
   var data = {};
   var setItem = function(name,item){
     data[name] = item;
-  }
+  };
   var getItem = function(name){
     return data[name];
-  }
+  };
   return {setItem: setItem,
           getItem: getItem};
 })
-.factory('Main', function(){return true})
-.factory('Login',function(){return true})
-.factory('Signup',function(){return true})
-.factory('Match',function(){return true})
-.factory('Profile',function(){return true})
-.factory('Mailbox',function(){return true})
-.factory('Mapview',function($http,$location,$window){return true})
+.factory('Main', function(){return true;})
+.factory('Login',function(){return true;})
+.factory('Signup',function(){return true;})
+.factory('Match',function(){return true;})
+.factory('Profile',function(){return true;})
+.factory('Mailbox',function(){return true;})
+.factory('Mapview',function($http,$location,$window){return true;});

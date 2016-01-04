@@ -7,11 +7,27 @@
   <button class='btn' type='submit'>{{buttonText}}</button>
   </div>
   </form>
-<<<<<<< HEAD
-  <span>{{user}}</span>
 </div> -->
 
-<head>
+<div class="form" ng-controller ='SignupController'>
+<div class="header"><h2>Sign Up</h2></div>
+<div class="login">
+<form action="" ng-submit='submit()'>
+<ul>
+<li>
+<span class="un"><i class="fa fa-user"></i></span><input ng-model='user.username'type="text" required class="text" placeholder="User Name Or Email"/></li>
+<li>
+<span class="un"><i class="fa fa-lock"></i></span><input ng-model='user.password' type="password" required class="text" placeholder="User Password"/></li>
+<li>
+<input type="submit" value="LOGIN" class="btn" ng-sumbit = 'submit()'>
+</li>
+<li><div class="span"><span class="ch"><input type="checkbox" id="r"> <label for="r">Remember Me</label> </span> <span class="ch"></span></div></li>
+</ul>
+</form>
+</div><br/>
+</div>
+
+<!-- <head>
 
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<meta name="author" content="SemiColonWeb" />
@@ -93,6 +109,5 @@
 
 </body>
 </html>
-=======
-</div>
->>>>>>> d5514de1de59b94f42dce9638734850f1f7ea619
+
+ -->

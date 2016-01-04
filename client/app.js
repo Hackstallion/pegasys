@@ -6,7 +6,6 @@ angular.module('myApp', [
     // 'ngSanitize',
     // 'ngTouch',
     'pegasys.services',
-    'pegasys.database',
     'pegasys.login',
     'pegasys.signup',
     'pegasys.main',
@@ -19,12 +18,7 @@ angular.module('myApp', [
   .config(function ($routeProvider) {
     $routeProvider
       .when('/', {
-<<<<<<< HEAD
-        templateUrl: 'views/login.html',
-        controller: 'LoginController',
-=======
         templateUrl: 'views/main.html'
->>>>>>> d5514de1de59b94f42dce9638734850f1f7ea619
       })
       .when('/login', {
         templateUrl: 'views/login.html'

@@ -11,9 +11,10 @@ POST /api/auth/signup => If username doesn't exist, adds user to the database
 
 POST /api/auth/login => Log in, if account doesn't exist then notify user.
                         Redirect to main page. Default to rider.
-                        Set cookie.
+                        Set cookie. Deletes user if deleteUser = true.
 
                    body: {
+                          deleteUser: boolean, optional,
                           username: 'username',
                           password: 'password'
                          }
@@ -64,7 +65,7 @@ GET /api/profile => Return user's profile object. Must be logged in.
                                   }
 
 POST /api/matches/request => Add the username denoted by from_id to the matchRequests array of the user
-                             denoted by to_id.
+                             denoted by to_id. The former must be logged in.
 
                    body: {
                           from_id: 'username',
@@ -72,7 +73,7 @@ POST /api/matches/request => Add the username denoted by from_id to the matchReq
                          }
 
 POST /api/matches/accept => Splices the requestor's username out of the acceptor's matchRequests array.
-
+                            The latter must be logged in.
                    body: {
                           from_id: 'username',
                           to_id: 'username'
@@ -98,7 +99,7 @@ POST /api/messages/send => Add a message to another user's inbox and requesting 
                          }
 
 POST /api/messages/delete => Can be used by sender (from_id) or recipient (to_id) to remove a message 
-                             from both the sender's sent mailbox and the recipient's inbox.
+                             from both the sender's sent mailbox and the recipient's inbox. Either sender or recipient must be logged in.
 
                    body: {
                           from_id: 'username',
