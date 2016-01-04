@@ -30,8 +30,8 @@
       <h2>{{messages.length ? 'Sent Mailbox' : ''}}</h2>
         <button class='btn' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
         <div class='trip' ng-repeat="msg in sentMessages">
-          <span class='recipient'>TO: {{msg.to_id}}</span>
-            <p class='message'>{{msg.text}}</p>
+          <span class='recipient'>To: {{msg.to_id}}</span>
+            <p class='message'>Message: {{msg.text}}</p>
     <!-- <input type='submit' value="Delete" ng-click='delMessage(msg)'/> -->
             <button class='btn' type='submit' ng-click='delMessage(msg)'>Delete</button>
         </div>
