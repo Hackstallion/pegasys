@@ -120,6 +120,7 @@ h1 {
 
 #cssmenu {
   background: #2C75FF;
+
   width: auto;
   /*margin-bottom: 13%;*/
 }
@@ -251,7 +252,7 @@ h1 {
 }
 
 body {
-  background:#294072; font-family: 'Source Sans Pro', sans-serif
+  background:#BAB9B9; font-family: 'Source Sans Pro', sans-serif
 } 
 
 .form { 
@@ -259,11 +260,11 @@ body {
 }
 
 .header { 
-  height:44px; background:#17233B; margin-top:25%;
+  height:60px; background:#17233B; margin-top:25%;
 }
 
 .header h2 { 
-  height:44px; line-height:44px; color:#fff; text-align:center
+  height:44px; line-height:60px; color:#fff; text-align:center
 }
 
 .login { 
@@ -369,5 +370,41 @@ ul li {
     float: right;
     margin-left: 10px;
     margin-right: 10%;
-    margin-top:7%;
+    margin-top:9%;
+}
+
+.spantag {
+  padding-top:5px;
+  margin-top: 10px;
+}
+
+
+.maptrip {
+    float: right;
+  margin-right: 50px;
+  margin-bottom: 05px;
+  width: 400px;
+  background-color: white;
+  padding: 5px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: #090909;
+  box-shadow: 0px 5px 5px #9999b9;
+  margin-left:80px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.mapbtn{
+  margin-top: 3px;
+  background: #639FDE
+;  border-radius: 3px;
+  font-family: sans-serif;
+  color: #ffffff;
+  font-size: 20px;
+  padding: 3px;
+  text-decoration: none;
+  text-align: center;
+  margin-top:10px;
+  margin-bottom: 10px
 }
