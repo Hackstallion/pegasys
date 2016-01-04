@@ -1,23 +1,30 @@
 <div class='jumbotron' ng-controller="MailboxController">
   <h1>{{header}}</h1>
-  <div class='mailbox'>
-  <div class='sendNewMessage'>
-  <h2>Send a new Message!</h2>
-  <form ng-submit='sendMessage()'>
-  <input class='input' type='text' placeholder='recipient' ng-model='newMessage.to_id'/>
-  <input class='input' type='text' placeholder='message' ng-model='newMessage.text' />
+  <div class ='Content'>
+    <div class = "Wrapper">
+      <div class = "RightContent">
+        <div class = 'trip'>
+      <h2>Send a new Message!</h2>
+        <form ng-submit='sendMessage()'>
+          <input class='input' type='text' placeholder='recipient' ng-model='newMessage.to_id'/></br>
+          <input class='input' type='text' placeholder='message' ng-model='newMessage.text' /></br>
   <!-- <input class='input' type='submit' value='Send New Message'> -->
-  <button class='btn' type='submit' >Send New Message</button>
-  </form>
-  </div>
-  <h2>{{messages.length ? 'Inbox' : ''}}</h2>
-  <div class='message' ng-repeat="msg in messages">
-  <span class='sender'>FROM: {{msg.from_id}}</span>
-  <p class='message'>{{msg.text}}</p>
-  <input class='input' type='text' placeholder='Type your reply here' ng-model="msg.replytext"/>
-  <!-- <input type='submit' value='Reply' ng-click='reply(msg)'/> -->
-  <button class='btn' type='submit' ng-click='reply(msg)'>Reply</button>
-  <!-- <input type='submit' value="Delete" ng-click='delMessage(msg)'/> -->
-  <button class='btn' type='submit' ng-click='delMessage(msg)'>Delete</button>
+          <button class='btn' type='submit'>Send New Message</button>
+        </form>
+        </div>
+      </div>
+    <div class = 'LeftContent'>
+      <h2>{{messages.length ? 'Inbox' : ''}}</h2>
+        <div class='trip' ng-repeat="msg in messages">
+          <span class='sender'>FROM: {{msg.from_id}}</span>
+            <p class='message'>{{msg.text}}</p>
+            <input class='input' type='text' placeholder='Type your reply here' ng-model="msg.replytext"/>
+    <!-- <input type='submit' value='Reply' ng-click='reply(msg)'/> -->
+            <button class='btn' type='submit' ng-click='reply(msg)'>Reply</button>
+    <!-- <input type='submit' value="Delete" ng-click='delMessage(msg)'/> -->
+            <button class='btn' type='submit' ng-click='delMessage(msg)'>Delete</button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
