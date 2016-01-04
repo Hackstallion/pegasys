@@ -1,7 +1,6 @@
 angular.module('pegasys.match',[])  
   .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Global) {
     if (!Global.getItem('currentTrip') || !Global.getItem('currentTrip').name) $location.path('/main');
-    console.log(Global.getItem('currentTrip').name);
     var tripName = Global.getItem('currentTrip').name;
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
@@ -76,7 +75,6 @@ angular.module('pegasys.match',[])
               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               draggable: false
             });
-            console.log('where are my endpoints?');
           }
         };
         if (Global.getItem('currentTrip').driver){
@@ -99,7 +97,7 @@ angular.module('pegasys.match',[])
           // make $scope.showOnMap() show riders' endpoints
           $scope.showOnMap = function(trip){
             //this function shows a given match on the map. We set it here
-            // if the user is a rdriver for this trip.
+            // if the user is a driver for this trip.
             var riderData = $scope.matches.filter(function(match){
               return match.tripName === trip;
             })[0];
