@@ -30,6 +30,7 @@ angular.module('pegasys.mailbox',[])
     $scope.switchMailbox = function(){
       $scope.mailbox = !$scope.mailbox;
     };
+
     $scope.delMessage = function(message){
       //deletes a single message. Takes the whole message as its parameter.
       DB.postRequest('messages/delete', message).then(function(){
