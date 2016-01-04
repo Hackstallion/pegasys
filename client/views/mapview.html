@@ -7,13 +7,14 @@
 
 <div class="jumbotron" ng-controller="MapviewController">
   <h1>{{welcome}}</h1>
+
   <input class='input' type="text" ng-show='fields[0]' placeholder="Trip Name" size=40 ng-model='tripName'>
   <div id="startSearchBox"  ng-show='fields[0]'>
   </div>
   <div id="endSearchBox"  ng-show='fields[0]'>
   </div>
   <div id="driverCheckBox" ng-show='fields[0]'>
-  <span>Driver</span>
+  <span class 'driver'>Driver</span>
   <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" placeholder='isDriver' ng-true-value='true' ng-false-value='false'></input>
   </div>
  <div class= 'maptrip' ng-show='fields[1]'>
