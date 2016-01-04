@@ -54,6 +54,7 @@ module.exports = function(grunt){
   grunt.loadNpmTasks('grunt-contrib-concat');
 
   grunt.registerTask('default', ['jshint','mochaTest','concat','uglify']);
+  grunt.registerTask('devbuild', ['concat','uglify']);
   grunt.registerTask('lint', ['jshint']);
 
 

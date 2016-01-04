@@ -1,4 +1,82 @@
-<!doctype html>
+<!-- <!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+<<<<<<< HEAD
+  
+   <link href="http://fonts.googleapis.com/css?family=Lato:300,400,400italic,600,700|Raleway:300,400,500,600,700|Crete+Round:400italic" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/bootstrap.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/style.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/dark.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/font-icons.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/animate.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/magnific-popup.css" type="text/css" />
+  <link rel="stylesheet" href="Package-HTML/HTML/css/responsive.css" type="text/css" />
+  
+=======
+    <link rel="stylesheet" type="text/css" href="index.css"/>
+    <link rel="icon" type="image/png" href="favicon.png"/>
+    <title>Pegasys Ride Sharing</title>
+>>>>>>> d5514de1de59b94f42dce9638734850f1f7ea619
+  </head>
+
+  <body class = 'streched'> 
+  <div ng-app="myApp">
+<<<<<<< HEAD
+  <h1>Pegasys Ride Sharing</h1>
+=======
+  <h1 class='topTitle'>Pegasys Ride Sharing</h1>
+>>>>>>> d5514de1de59b94f42dce9638734850f1f7ea619
+  <div class="nav">
+  <a href="#/signup">Sign Up</a>
+  <a href="#/login">Log in</a>
+  <a href="#/main">Main</a>
+  <a href="#/profile">Edit Profile</a>
+  <a href="#/mapview">Map</a>
+<<<<<<< HEAD
+  <a href="#/match">Matches</a>
+  <a href="#/mailbox">Mailbox</a>
+
+=======
+  <!-- <a href="#/match">Matches</a> -->
+<!--   <a href="#/mailbox">Mailbox</a>
+  </div>
+>>>>>>> d5514de1de59b94f42dce9638734850f1f7ea619
+    <div class="container">
+      <div ng-view="">
+      </div>
+    </div>
+  </body>
+
+
+
+  <footer>
+    <script src='/bower_components/lodash/lodash.min.js'></script>
+    <script src='/bower_components/jquery/dist/jquery.min.js'></script>
+    <script src='/bower_components/angular/angular.min.js'></script>
+    <script src='/bower_components/angular-route/angular-route.min.js'></script>
+    <script src='/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js'></script>
+<<<<<<< HEAD
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4Xcj1Zmxjur-7JjJP5imFXy6z7B53rHE&libraries=places,geometry"></script>
+=======
+>>>>>>> 010264ef1881c7712ec66a860407395bf655d812
+    <script src='/bower_components/angular-google-maps/dist/angular-google-maps.min.js'></script>
+    <script src='/src/main.js'></script>
+    <script src='/src/login.js'></script>
+    <script src='/src/signup.js'></script>
+    <script src='/src/mapview.js'></script>
+    <script src='/src/profile.js'></script>
+    <script src='/src/match.js'></script>
+    <script src='/src/mailbox.js'></script>
+    <script src='/src/matchHelpers.js'></script>
+    <script src='/services/services.js'></script>
+    <script src='/app.js'></script>
+    <script src='/dist/pegasys.min.js'></script>
+  </footer>
+</html> 
+ --> 
+
+ <!doctype html>
 <html>
   <head>
     <meta charset="utf-8">
@@ -9,21 +87,35 @@
 
   <body> 
   <div ng-app="myApp">
-  <h1 class='topTitle'>Pegasys Ride Sharing</h1>
-  <div class="nav">
+ <!--  <h1 class='topTitle'>Pegasys Ride Sharing</h1> -->
+  <!-- <div class="nav">
   <a href="#/signup">Sign Up</a>
   <a href="#/login">Log in</a>
   <a href="#/main">Main</a>
   <a href="#/profile">Edit Profile</a>
   <a href="#/mapview">Map</a>
   <!-- <a href="#/match">Matches</a> -->
-  <a href="#/mailbox">Mailbox</a>
-  </div>
+  <!-- <a href="#/mailbox">Mailbox</a>
+  </div> -->
+   <div id='cssmenu'>
+<ul>
+   <li><a><span>Pegasys Ride Sharing</span></a></li>
+   <li><a href='#/signup'><span class ='signup'>Sign Up</span></a></li>
+   <li><a href='#/login'><span>Login</span></a></li>
+   <li><a href='#/main'><span>My Trips</span></a></li>
+   <li><a href='#/mapview'><span>Create Trip</span></a></li>
+   <li><a href='#/mailbox'><span>Mailbox</span></a></li>
+   <li><a href='#/profile'><span>Edit Profile</span></a></li>
+   <li class = 'last'><a><span>Log Out</span></a></li>
+</ul>
+</div>
     <div class="container">
       <div ng-view="">
       </div>
     </div>
   </body>
+
+ 
 
 
 
@@ -47,3 +139,7 @@
     <script src='/dist/pegasys.min.js'></script>
   </footer>
 </html>
+
+
+
+

@@ -93,41 +93,58 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       $location.path('/createtrip');
     };
 
-    $scope.saveInfo = function(){
-      var newTrip = {};
-      if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
-        newTrip = {};
-        newTrip[$scope.tripName] = {
-          driver: $scope.isDriver,
-          startPoint: startPoint,
-          endPoint: endPoint,
-          route: routeArray,
-          bounds: bounds,
-          startTimes: $scope.startTimes,
-          endTimes: $scope.endTimes
-          };
-        DB.postRequest('createtrip', newTrip);
-      } else if (startPoint.length && endPoint.length && $scope.tripName){
-        newTrip = {};
-        newTrip[$scope.tripName] = {
-          driver: false,
-          startPoint: startPoint,
-          endPoint: endPoint,
-          startTimes: $scope.startTimes,
-          endTimes: $scope.endTimes
-          };
-        DB.postRequest('createtrip', newTrip);
-      }
-      // $scope.changed = 'Submitted!';
-      $scope.showSuccess();
-      $log.log(newTrip);
-    };
 
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
         var map = instance[0].map;
         $scope.getBounds = function(){
           return map.getBounds();
+        };
+        $scope.saveInfo = function(){
+          var newTrip = {};
+          if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
+            newTrip = {};
+            newTrip[$scope.tripName] = {
+              driver: $scope.isDriver,
+              startPoint: startPoint,
+              endPoint: endPoint,
+              route: routeArray,
+              bounds: bounds,
+              startTimes: $scope.startTimes,
+              endTimes: $scope.endTimes
+              };
+          } else if (startPoint.length && endPoint.length && $scope.tripName){
+            newTrip = {};
+            newTrip[$scope.tripName] = {
+              driver: false,
+              startPoint: startPoint,
+              endPoint: endPoint,
+              startTimes: $scope.startTimes,
+              endTimes: $scope.endTimes
+              };
+          }
+          var geocoder = new maps.Geocoder;
+          var trip = newTrip[$scope.tripName];
+          trip.startAddress = null;
+          trip.endAddress = null;
+          geocoder.geocode({location: new maps.LatLng(trip.startPoint[0],trip.startPoint[1])},function(results,status){
+            if(status === maps.GeocoderStatus.OK){
+              if (results[0]){ 
+                trip.startAddress = results[0].formatted_address;
+              }
+            }
+          });
+          geocoder.geocode({'location': new maps.LatLng(trip.endPoint[0],trip.endPoint[1])},function(results,status){
+            if(status === maps.GeocoderStatus.OK){
+              if (results[0]){ 
+                trip.endAddress = results[0].formatted_address;
+              }
+            }
+          });
+          DB.postRequest('createtrip', newTrip);
+          // $scope.changed = 'Submitted!';
+          $scope.showSuccess();
+          $log.log(newTrip);
         };
         $scope.submitPoints = function (){
           if ($scope.startMarker instanceof maps.Marker && $scope.startMarker instanceof maps.Marker){
