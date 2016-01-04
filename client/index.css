@@ -10,6 +10,8 @@ h1 {
 	color: #090909;
 }
 
+
+
 .topTitle {
   margin: 20px;
 }
@@ -119,6 +121,7 @@ h1 {
 #cssmenu {
   background: #2C75FF;
   width: auto;
+  /*margin-bottom: 13%;*/
 }
 #cssmenu ul {
   list-style: none;
@@ -239,33 +242,132 @@ h1 {
 /*styling for login*/
 
 
-*{margin:0; padding:0}
-.add1{margin:0 auto; width:720px}
-body{background:#294072; font-family: 'Source Sans Pro', sans-serif}
-.form{width:400px; margin:0 auto; background:#1C2B4A}
-.header{height:44px; background:#17233B}
-.header h2{height:44px; line-height:44px; color:#fff; text-align:center}
-.login{padding:0 20px}
-.login span.un{width:10%; text-align:center; color:#0C6; border-radius:3px 0 0 3px}
-.text{background:#12192C; width:90%; border-radius:0 3px 3px 0; border:none; outline:none; color:#999; font-family: 'Source Sans Pro', sans-serif} 
-.text,.login span.un{display:inline-block; vertical-align:top; height:40px; line-height:40px; background:#12192C;}
+* { 
+  margin:0; padding:0
+}
 
-.btn{height:40px; border:none; background:#0C6; width:100%; outline:none; font-family: 'Source Sans Pro', sans-serif; font-size:20px; font-weight:bold; color:#eee; border-bottom:solid 3px #093; border-radius:3px; cursor:pointer}
-ul li{height:40px; margin:15px 0; list-style:none}
-.span{display:table; width:100%; font-size:14px;}
-.ch{display:inline-block; width:50%; color:#CCC}
-.ch a{color:#CCC; text-decoration:none}
-.ch:nth-child(2){text-align:right}
-/*social*/
-.social{height:30px; line-height:30px; display:table; width:100%}
-.social div{display:inline-block; width:42%; color:#eee; font-size:12px; text-align:center; border-radius:3px}
-.social div i.fa{font-size:16px; line-height:30px}
-.fb{background:#3B5A9A; border-bottom:solid 3px #036} .tw{background:#2CA8D2; margin-left:16%; border-bottom:solid 3px #3399CC}
+.add1 {
+  margin:0 auto; width:720px
+}
+
+body {
+  background:#294072; font-family: 'Source Sans Pro', sans-serif
+} 
+
+.form { 
+  width:400px; margin:0 auto; background:#1C2B4A
+}
+
+.header { 
+  height:44px; background:#17233B; margin-top:25%;
+}
+
+.header h2 { 
+  height:44px; line-height:44px; color:#fff; text-align:center
+}
+
+.login { 
+  padding:0 20px
+}
+
+.login span.un {
+  width:10%; text-align:center; color:#0C6; border-radius:3px 0 0 3px
+}
+
+.text {
+  background:#12192C; width:90%; border-radius:0 3px 3px 0; border:none; outline:none; color:#999; font-family: 'Source Sans Pro', sans-serif
+} 
+
+.text,.login span.un {
+  display:inline-block; vertical-align:top; height:40px; line-height:40px; background:#12192C;
+}
+
+.entrybtn {
+  height:40px; border:none; background:#0C6; width:100%; outline:none; font-family: 'Source Sans Pro', sans-serif; font-size:20px; font-weight:bold; color:#eee; border-bottom:solid 3px #093; border-radius:3px; cursor:pointer
+}
+
+ul li {
+  height:40px; margin:15px 0; list-style:none
+}
+
+.span {
+  display:table; width:100%; font-size:14px;
+}
+
+.ch {
+  display:inline-block; width:50%; color:#CCC
+}
+
+.ch a {
+  color:#CCC; text-decoration:none
+}
+
+.ch:nth-child(2) {
+  text-align:right
+}
+
 /*bottom*/
-.sign{width:90%; padding:0 5%; height:50px; display:table; background:#17233B}
-.sign div{display:inline-block; width:50%; line-height:50px; color:#ccc; font-size:14px}
-.up{text-align:right}
-.up a{display:block; background:#096; text-align:center; height:35px; line-height:35px; width:50%; font-size:16px; text-decoration:none; color:#eee; border-bottom:solid 3px #006633; border-radius:3px; font-weight:bold; margin-left:50%}
+.sign {
+  width:90%; padding:0 5%; height:50px; display:table; background:#17233B
+}
+
+.sign div{
+  display:inline-block; width:50%; line-height:50px; color:#ccc; font-size:14px
+}
+
+.up {
+  text-align:right
+}
+
+.up a {
+  display:block; background:#096; text-align:center; height:35px; line-height:35px; width:50%; font-size:16px; text-decoration:none; color:#eee; border-bottom:solid 3px #006633; border-radius:3px; font-weight:bold; margin-left:50%
+}
+
 @media(max-width:480px){ .form{width:100%}}
-.links{width:400px; margin:0 auto; height:50px}
-.links a{display:block; float:left; height:40px; line-height:40px; padding:0 20px; background:#fff; text-decoration:none; margin-left:5px; font-size:16px; font-weight:bold; color:#09F}
+
+.links {
+  width:400px; margin:0 auto; height:50px
+}
+
+.links a {
+  display:block; float:left; height:40px; line-height:40px; padding:0 20px; background:#fff; text-decoration:none; margin-left:5px; font-size:16px; font-weight:bold; color:#09F}
+
+
+/*Styling for main*/
+
+
+
+
+}
+.Content
+{
+    position: relative;
+    z-index: 1;
+}
+   
+
+.Wrapper
+{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+    .Wrapper > div
+    {
+        height: 100%;
+    }
+
+.LeftContent
+{
+        overflow: auto;
+        margin-top: 7%;
+}
+
+.RightContent
+{
+    
+    float: right;
+    margin-left: 10px;
+    margin-right: 10%;
+    margin-top:7%;
+}
