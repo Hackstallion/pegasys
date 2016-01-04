@@ -131,17 +131,17 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
             if(status === maps.GeocoderStatus.OK){
               if (results[0]){ 
                 trip.startAddress = results[0].formatted_address;
+                geocoder.geocode({'location': new maps.LatLng(trip.endPoint[0],trip.endPoint[1])},function(results,status){
+                  if(status === maps.GeocoderStatus.OK){
+                    if (results[0]){ 
+                      trip.endAddress = results[0].formatted_address;
+                      DB.postRequest('createtrip', newTrip);
+                    }
+                  }
+                });
               }
             }
           });
-          geocoder.geocode({'location': new maps.LatLng(trip.endPoint[0],trip.endPoint[1])},function(results,status){
-            if(status === maps.GeocoderStatus.OK){
-              if (results[0]){ 
-                trip.endAddress = results[0].formatted_address;
-              }
-            }
-          });
-          DB.postRequest('createtrip', newTrip);
           // $scope.changed = 'Submitted!';
           $scope.showSuccess();
           $log.log(newTrip);
