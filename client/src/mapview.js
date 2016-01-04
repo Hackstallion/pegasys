@@ -59,7 +59,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       template:'endSearchBox.tpl.html',
       control: {}
     };
-//time matching stuff
+
     $scope.changeFields = function(direction){
       $log.log('changing fields');
       $log.log(direction);
@@ -80,7 +80,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
 
     };
 
-//time matching stuff
+
     $scope.showSuccess = function(){
       $log.log('showSuccess');
       $scope.fields[0] = false;
@@ -92,12 +92,6 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       $location.path('/main');
     };
 
-    $scope.newTrip = function(){
-      //not used
-      // $scope.fields[0] = true;
-      // $scope.fields[1] = false;
-      // $scope.fields[2] = false;
-    };
 
 
     uiGmapGoogleMapApi.then(function(maps) { 
