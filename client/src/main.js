@@ -4,6 +4,7 @@ angular.module('pegasys.main',[])
   	// if the user cookie isn't set, redirect them to the login
     $scope.welcome = 'Trips';
     $scope.trips = [];
+    $scope.emptyTripsMessage = false;
     $scope.messageCount = 0;
     $scope.map = {
       control: {},
@@ -51,13 +52,21 @@ angular.module('pegasys.main',[])
                 }
                 $scope.trips.push(userTrip);
               }
-            });
+              // Display 'empty trips message' if there are not trips for user
+              if($scope.trips[0] === undefined){
+                $scope.emptyTripsMessage = true;
+              }
+            })
     }
 
     $scope.getMatches = function(tripName,tripDriver){
       //redirects to the match page for a given trip.
       Global.setItem('currentTrip',{name: tripName, driver: tripDriver==='driver' ? true : false});
       $location.path('/match');
+    };
+
+    $scope.createTrip = function(){
+      $location.path('/mapview');
     };
 
     $scope.init().then(function(){
