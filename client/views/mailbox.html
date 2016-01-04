@@ -13,7 +13,8 @@
         </form>
         </div>
       </div>
-    <div class = 'LeftContent'>
+    <div class = 'LeftContent' ng-show='mailbox'>
+      <button class='btn' type='submit' ng-click='switchMailbox()'>Show Sent</button>
       <h2>{{messages.length ? 'Inbox' : ''}}</h2>
         <div class='trip' ng-repeat="msg in messages">
           <span class='sender'>FROM: {{msg.from_id}}</span>
@@ -21,6 +22,16 @@
             <input class='input' type='text' placeholder='Type your reply here' ng-model="msg.replytext"/>
     <!-- <input type='submit' value='Reply' ng-click='reply(msg)'/> -->
             <button class='btn' type='submit' ng-click='reply(msg)'>Reply</button>
+    <!-- <input type='submit' value="Delete" ng-click='delMessage(msg)'/> -->
+            <button class='btn' type='submit' ng-click='delMessage(msg)'>Delete</button>
+        </div>
+      </div>
+      <div class = 'LeftContent' ng-hide='mailbox'>
+      <h2>{{messages.length ? 'Sent Mailbox' : ''}}</h2>
+        <button class='btn' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
+        <div class='trip' ng-repeat="msg in sentMessages">
+          <span class='recipient'>TO: {{msg.to_id}}</span>
+            <p class='message'>{{msg.text}}</p>
     <!-- <input type='submit' value="Delete" ng-click='delMessage(msg)'/> -->
             <button class='btn' type='submit' ng-click='delMessage(msg)'>Delete</button>
         </div>
