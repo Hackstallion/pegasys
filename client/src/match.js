@@ -8,6 +8,7 @@ angular.module('pegasys.match',[])
     $scope.userTrip = {};
     $scope.matches = [];
     $scope.matchNames = [];
+    $scope.matchTimesBools = [];
     $scope.matchMap = {
       control: {},
       center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
