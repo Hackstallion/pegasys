@@ -11,6 +11,10 @@
       </div>
       </div>
       <div class = "LeftContent">
+       <div ng-show='emptyTripsMessage'>
+         <h2>You do not have any trips</h2>
+         <button class='entrybtn' ng-click='createTrip()'>Create Trip</button>
+       </div>
        <div class='trip' ng-repeat='trip in trips'>
           <h3>{{ trip.tripName }}</h3>
           <button class='entrybtn' ng-click='getMatches(trip.tripName,trip.driver)'>Find Matches</button>
@@ -23,5 +27,3 @@
     </div>
   </div>
 </div>
-
-
