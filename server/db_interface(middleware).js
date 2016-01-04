@@ -1,6 +1,9 @@
+
+
 var bodyParser = require('body-parser'),
     morgan = require('morgan'),
     cookieParser = require('cookie-parser');
+
 
 module.exports = function (app, express) {
   var authRouter = express.Router(),
@@ -21,6 +24,7 @@ module.exports = function (app, express) {
   app.use('/api/profile', profileRouter);
   app.use('/api/matches', matchRouter);
   app.use('/api/messages', messageRouter);
+
 
   require('./auth/authRoutes.js')(authRouter);
   require('./locations/locationsRoutes.js')(tripRouter);
