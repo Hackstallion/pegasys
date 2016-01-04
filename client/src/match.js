@@ -1,7 +1,6 @@
 angular.module('pegasys.match',[])  
   .controller('MatchController', function($scope,$log, $location, DB, uiGmapGoogleMapApi,uiGmapIsReady,matchHelpers,Global) {
     if (!Global.getItem('currentTrip') || !Global.getItem('currentTrip').name) $location.path('/main');
-    console.log(Global.getItem('currentTrip').name);
     var tripName = Global.getItem('currentTrip').name;
     $scope.header = 'My Matches';
     $scope.user = document.cookie.substr(5);
@@ -19,6 +18,7 @@ angular.module('pegasys.match',[])
     //this will get overwritten
 
     $scope.requestMatch = function(requestedUsername){
+      //we're not really doing anything with this yet.
         DB.postRequest('matches/request', {from_id: $scope.user, to_id: requestedUsername})
           .then(function(){$log.log('sent match request');});
     };
@@ -26,6 +26,7 @@ angular.module('pegasys.match',[])
     var userData;
     var usersData;
     $scope.getMatches = function(tripName){
+      //get all matching trips.
       return DB.getRequest('profile')
         .then(function(response){
           $scope.userData = userData = response.data;
@@ -54,6 +55,7 @@ angular.module('pegasys.match',[])
       //at least on Chrome.
         var map = $scope.matchMap.control.getGMap();
         var displayEndPoints = function(polyline){
+          //displays the route's endpoints.
           var path = polyline.getPath().getArray();
           var startPoint = path[0];
           var endPoint = path[path.length-1];
@@ -73,7 +75,6 @@ angular.module('pegasys.match',[])
               icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
               draggable: false
             });
-            console.log('where are my endpoints?');
           }
         };
         if (Global.getItem('currentTrip').driver){
@@ -95,6 +96,8 @@ angular.module('pegasys.match',[])
           displayEndPoints(driverLine);
           // make $scope.showOnMap() show riders' endpoints
           $scope.showOnMap = function(trip){
+            //this function shows a given match on the map. We set it here
+            // if the user is a driver for this trip.
             var riderData = $scope.matches.filter(function(match){
               return match.tripName === trip;
             })[0];
@@ -138,6 +141,7 @@ angular.module('pegasys.match',[])
           map.fitBounds(newBounds);
           //make $scope.showOnMap() show drivers' polylines
           $scope.showOnMap = function(trip){
+            //showOnMap behaves differently for a rider than a driver
             var driverData = $scope.matches.filter(function(match){
               return match.tripName === trip;
             })[0];

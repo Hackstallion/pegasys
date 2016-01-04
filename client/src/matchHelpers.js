@@ -37,6 +37,8 @@ angular.module('pegasys.matchHelpers', [])
   };
 
   matchHelpers.compareUsers = function(user, users, callback, range){
+    //compare user to users based on callback, depending on whether
+    //user is a driver or a rider.
     var tripOptions = [];
     var isDriver = user.driver;
     users.filter(function(someUser){
