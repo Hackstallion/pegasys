@@ -5,6 +5,8 @@ angular.module('pegasys.mailbox',[])
     //get the current user from the cookie, redirect them if there's no cookie
     $scope.header = 'Mailbox';	
     $scope.messages = [];
+    $scope.sentMessages = [];
+    $scope.mailbox = true;
     $scope.newMessage = {
       from_id: $scope.user,
       to_id: '',
@@ -17,6 +19,17 @@ angular.module('pegasys.mailbox',[])
       });
     };
     getMessages();
+    var getSentMessages = function(){
+      $log.log("trying to get sent messages");
+      DB.getRequest('messages/getsent').then(function(res){
+        $log.log("Response:", res);
+        $scope.sentMessages = res.data.map(function(msg){return JSON.parse(msg);});
+      });
+    };
+    getSentMessages();
+    $scope.switchMailbox = function(){
+      $scope.mailbox = !$scope.mailbox;
+    };
     $scope.delMessage = function(message){
       //deletes a single message. Takes the whole message as its parameter.
       DB.postRequest('messages/delete', message).then(function(){
