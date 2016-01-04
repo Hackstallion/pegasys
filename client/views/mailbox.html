@@ -1,5 +1,10 @@
 <div class='jumbotron' ng-controller="MailboxController">
   <h1>{{header}}</h1>
+  <div>
+  <button class='btn' type='submit' ng-click='switchMailbox()'>Show Sent</button>
+  <button class='btn' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
+  </div>
+
   <div class ='Content'>
     <div class = "Wrapper">
       <div class = "RightContent">
@@ -14,7 +19,7 @@
         </div>
       </div>
     <div class = 'LeftContent' ng-show='mailbox'>
-      <button class='btn' type='submit' ng-click='switchMailbox()'>Show Sent</button>
+     <!--  <button class='btn' type='submit' ng-click='switchMailbox()'>Show Sent</button> -->
       <h2>{{messages.length ? 'Inbox' : ''}}</h2>
         <div class='trip' ng-repeat="msg in messages">
           <span class='sender'>From: {{msg.from_id}}</span>
@@ -28,7 +33,6 @@
       </div>
       <div class = 'LeftContent' ng-hide='mailbox'>
       <h2>{{messages.length ? 'Sent Mailbox' : ''}}</h2>
-        <button class='btn' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
         <div class='trip' ng-repeat="msg in sentMessages">
           <span class='recipient'>To: {{msg.to_id}}</span>
             <p class='message'>Message: {{msg.text}}</p>
