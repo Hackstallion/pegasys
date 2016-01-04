@@ -5,11 +5,13 @@
   <div class='profileInfo' align="left">
   <span>Username: {{user.username}}</span>
   <br>
-  <span>Password: </span>
-  <input class="editinput" type='password' placeholder='Password' ng-model='user.password' />
   <br>
-  <div>
-  <button class='btn' type='submit'>{{buttonText}}</button>
-  </div>
+
+  <span>Old Password: </span>
+  <input class="editinput" type='password' placeholder='Password' ng-model='user.password' />
+  <span>New Password: </span>
+  <input class="editinput" type='password' placeholder='Password' ng-model='user.password' />
+
+  <button class='btn' id = 'passwordbutton' type='submit'>{{buttonText}}</button>
   </form>
 </div>

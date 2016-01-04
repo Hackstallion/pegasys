@@ -16,8 +16,8 @@
     <div class = 'LeftContent'>
       <h2>{{messages.length ? 'Inbox' : ''}}</h2>
         <div class='trip' ng-repeat="msg in messages">
-          <span class='sender'>FROM: {{msg.from_id}}</span>
-            <p class='message'>{{msg.text}}</p>
+          <span class='sender'>From: {{msg.from_id}}</span>
+            <p class='message'>Message:  {{msg.text}}</p>
             <input class='input' type='text' placeholder='Type your reply here' ng-model="msg.replytext"/>
     <!-- <input type='submit' value='Reply' ng-click='reply(msg)'/> -->
             <button class='btn' type='submit' ng-click='reply(msg)'>Reply</button>
