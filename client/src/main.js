@@ -52,11 +52,13 @@ angular.module('pegasys.main',[])
                 }
                 $scope.trips.push(userTrip);
               }
+              
+            }).finally(function(){
               // Display 'empty trips message' if there are not trips for user
               if($scope.trips[0] === undefined){
                 $scope.emptyTripsMessage = true;
               }
-            })
+            });
     }
 
     $scope.getMatches = function(tripName,tripDriver){
