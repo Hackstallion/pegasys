@@ -3,11 +3,15 @@ angular.module('pegasys.login',[])
     $scope.user = {};
     $scope.welcome = 'Login to Pegasys Ride Sharing';
     $scope.buttonText = 'Login';
+    $scope.success = '';
     $scope.submit = function(){
       DB.postRequest('auth/login',$scope.user).then(
-        function(){
-          $log.log('submitted');
-          $location.path('/main');
+        function(resp){
+          if (resp.status === 404){
+            $scope.success = 'Sorry, your username or password is incorrect.';
+          } else {
+            $location.path('/main');
+          };
         });
     };
   });
