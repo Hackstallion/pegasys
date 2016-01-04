@@ -45,4 +45,5 @@ angular.module('pegasys.services', [])
 .factory('Match',function(){return true;})
 .factory('Profile',function(){return true;})
 .factory('Mailbox',function(){return true;})
+.factory('Signout',function(){return true;})
 .factory('Mapview',function($http,$location,$window){return true;});

@@ -13,6 +13,7 @@ angular.module('myApp', [
     'pegasys.match',
     'pegasys.profile',
     'pegasys.mailbox',
+    'pegasys.signout',
     'pegasys.matchHelpers'
   ])
   .config(function ($routeProvider) {
@@ -40,6 +41,9 @@ angular.module('myApp', [
       })
       .when('/mailbox', {
         templateUrl: 'views/mailbox.html'
+      })
+      .when('/signout', {
+        templateUrl: 'views/signout.html'
       })
       .otherwise({
         redirectTo: '/login'
