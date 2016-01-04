@@ -1,7 +1,7 @@
 angular.module('pegasys.services', [])
 
 .factory('DB', function ($http, $location, $window) {
-
+  //used just about everywhere
   var postRequest = function(apiRoute,JSONobject){
     return $http({
       method: 'POST',
@@ -28,6 +28,7 @@ angular.module('pegasys.services', [])
         };
 })
 .factory('Global',function(){
+  //used for passing data from one controller to another
   var data = {};
   var setItem = function(name,item){
     data[name] = item;
@@ -44,4 +45,5 @@ angular.module('pegasys.services', [])
 .factory('Match',function(){return true;})
 .factory('Profile',function(){return true;})
 .factory('Mailbox',function(){return true;})
+.factory('Signout',function(){return true;})
 .factory('Mapview',function($http,$location,$window){return true;});

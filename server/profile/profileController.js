@@ -33,7 +33,6 @@ module.exports = {
         findUser({username: username})
           .then(function(myProfile) {
             if (myProfile) {
-              console.log("myProfile", myProfile);
               res.json(myProfile);
               res.status(200);
             } else {

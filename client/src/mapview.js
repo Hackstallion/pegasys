@@ -25,6 +25,10 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.fields = [true, false, false];
 
     var startEvents = {
+      /* Another idiosyncracy of the angular-google-maps
+      library is that we can't get control of the searchbox objects
+      until they trigger an event. We will set the bounds 
+      for future requests, but they start out global*/
       places_changed: function (searchBox) {
         var loc = searchBox.getPlaces()[0].geometry.location;
         startPoint = [loc.lat(),loc.lng()];
@@ -55,7 +59,7 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       template:'endSearchBox.tpl.html',
       control: {}
     };
-
+//time matching stuff
     $scope.changeFields = function(direction){
       $log.log('changing fields');
       $log.log(direction);
@@ -71,10 +75,12 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
       $log.log('fields', $scope.fields);
     };
 
+//time matching stuff
     $scope.timeConvert = function(){
 
     };
 
+//time matching stuff
     $scope.showSuccess = function(){
       $log.log('showSuccess');
       $scope.fields[0] = false;
@@ -87,47 +93,40 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     };
 
     $scope.newTrip = function(){
+      //not used
       // $scope.fields[0] = true;
       // $scope.fields[1] = false;
       // $scope.fields[2] = false;
-      $location.path('/createtrip');
     };
 
 
     uiGmapGoogleMapApi.then(function(maps) { 
       uiGmapIsReady.promise().then(function(instance) {
+        //uiGmapIsReady works here, but not anywhere else.
         var map = instance[0].map;
         $scope.getBounds = function(){
           return map.getBounds();
         };
         $scope.saveInfo = function(){
           var newTrip = {};
-          if ($scope.isDriver && bounds && routeArray.length && $scope.tripName){
-            newTrip = {};
-            newTrip[$scope.tripName] = {
-              driver: $scope.isDriver,
-              startPoint: startPoint,
-              endPoint: endPoint,
-              route: routeArray,
-              bounds: bounds,
-              startTimes: $scope.startTimes,
-              endTimes: $scope.endTimes
-              };
-          } else if (startPoint.length && endPoint.length && $scope.tripName){
-            newTrip = {};
-            newTrip[$scope.tripName] = {
-              driver: false,
-              startPoint: startPoint,
-              endPoint: endPoint,
-              startTimes: $scope.startTimes,
-              endTimes: $scope.endTimes
-              };
-          }
+          newTrip[$scope.tripName] = {
+            driver: $scope.isDriver,
+            startPoint: startPoint,
+            endPoint: endPoint,
+            route: routeArray,
+            bounds: bounds,
+            startTimes: $scope.startTimes,
+            startAddress: null,
+            endAddress: null,
+            endTimes: $scope.endTimes
+          };
           var geocoder = new maps.Geocoder;
           var trip = newTrip[$scope.tripName];
-          trip.startAddress = null;
-          trip.endAddress = null;
+          //geocoding will resolve the endpoints to addresses (as strings). 
           geocoder.geocode({location: new maps.LatLng(trip.startPoint[0],trip.startPoint[1])},function(results,status){
+            //geocoding is async. If it fails at any step in the process,
+            //submit the route anyway. Addresses are nice to have but we can
+            //live without them.
             if(status === maps.GeocoderStatus.OK){
               if (results[0]){ 
                 trip.startAddress = results[0].formatted_address;
@@ -136,17 +135,26 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                     if (results[0]){ 
                       trip.endAddress = results[0].formatted_address;
                       DB.postRequest('createtrip', newTrip);
+                    } else {
+                    DB.postRequest('createtrip', newTrip);
                     }
+                  } else {
+                    DB.postRequest('createtrip', newTrip);
                   }
                 });
+              } else {
+                DB.postRequest('createtrip', newTrip);
               }
+            } else {
+              DB.postRequest('createtrip', newTrip);
             }
           });
           // $scope.changed = 'Submitted!';
           $scope.showSuccess();
-          $log.log(newTrip);
         };
         $scope.submitPoints = function (){
+          //every time the startpoint, endpoint, or route changes,
+          // update the controller's variables.
           if ($scope.startMarker instanceof maps.Marker && $scope.startMarker instanceof maps.Marker){
             $scope.startMarker.setMap(null);
             maps.event.removeListener(startListener);
