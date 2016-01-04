@@ -48,6 +48,7 @@ angular.module('pegasys.mailbox',[])
       DB.postRequest('messages/send', messageObj).then(function(){
         getMessages();
       });
+      $scope.message.text = '';
     };
     $scope.sendMessage = function(recipient){
       //quietly do nothing if there's no message text.
@@ -56,5 +57,6 @@ angular.module('pegasys.mailbox',[])
       DB.postRequest('messages/send', $scope.newMessage).then(function(){
         getMessages();
       });
+      $scope.newMessage.text = '';
     };
   });

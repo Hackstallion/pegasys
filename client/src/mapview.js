@@ -206,14 +206,14 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
                   icon: 'http://maps.google.com/mapfiles/ms/icons/green-dot.png',
                   map: map,
                   title: 'Start',
-                  draggable: true
+                  draggable: $scope.isDriver ? false : true
             });
             $scope.endMarker = new maps.Marker({
                   position: new maps.LatLng(endPoint[0],endPoint[1]),
                   icon: 'http://maps.google.com/mapfiles/ms/icons/red-dot.png',
                   map: map,
                   title: 'End',
-                  draggable: true 
+                  draggable: $scope.isDriver ? false : true
             });
             var startListener = maps.event.addListener($scope.startMarker,'dragend',function(){
               startPoint = [$scope.startMarker.position.lat(),$scope.startMarker.position.lng()];
