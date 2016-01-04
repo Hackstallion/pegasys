@@ -1,12 +1,12 @@
 {
-  "name": "node-catapult-angular",
+  "name": "Pegasys",
   "private": true,
   "main": "server/index.js",
-  "description": "A quick project starter for node, angular, and browserify.",
+  "description": "A carpool-finding app",
   "engines": {
     "node": ">=0.10.0"
   },
-  "author": "Salman Oskooi <soskooi@gmail.com>",
+  "author": "Salman Oskooi <soskooi@gmail.com>, Daniel Sato <dksato@gmail.com>, Ivan Mora <>, Mac Evans <>",
   "license": "Creative Commons Attribution 4.0",
   "dependencies": {
     "angular": "^1.4.3",
