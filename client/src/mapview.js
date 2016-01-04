@@ -20,8 +20,8 @@ angular.module('pegasys.mapview',['uiGmapgoogle-maps'])
     $scope.renderer = null;
     $scope.welcome = 'Enter Your Route';
     $scope.isDriver = false; 
-    $scope.startTimes = [null, null, null, null];
-    $scope.endTimes = [null, null, null, null];
+    $scope.startTimes = [null, null, null];
+    $scope.endTimes = [null, null, null];
     $scope.fields = [true, false, false];
 
     var startEvents = {

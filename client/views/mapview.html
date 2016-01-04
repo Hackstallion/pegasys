@@ -18,8 +18,8 @@
   <input type="checkbox" ng-model="isDriver" ng-change="submitPoints()" placeholder='isDriver' ng-true-value='true' ng-false-value='false'></input>
   </div>
  <div class= 'maptrip' ng-show='fields[1]'>
-  <h3>Return time</h3>
-  <select ng-show='fields[1]' ng-model='startTimes[1][0]' placeholder="TOD">
+  <h3>Arrival Time</h3>
+  <select ng-show='fields[1]' ng-model='endTimes[0]' placeholder="TOD">
     <option value="" disabled selected>Hour</option>
     <option value='1'>1</option>
     <option value='2'>2</option>
@@ -35,7 +35,7 @@
     <option value='12'>12</option>
   </select>
 
-  <select ng-show='fields[1]' ng-model='startTimes[1][1]' placeholder="TOD">
+  <select ng-show='fields[1]' ng-model='endTimes[1]' placeholder="TOD">
     <option value="" disabled selected>Minutes</option>
     <option value='0'>:00</option>
     <option value='15'>:15</option>
@@ -43,7 +43,7 @@
     <option value='45'>:45</option>
   </select>
 
-  <select ng-show='fields[1]' ng-model='startTimes[1][2]' placeholder="TOD">
+  <select ng-show='fields[1]' ng-model='endTimes[2]' placeholder="TOD">
     <option value="" disabled selected>AM/PM</option>
     <option value='am'>am</option>
     <option value='pm'>pm</option>
@@ -51,8 +51,9 @@
   </div>
  <div class= 'maptrip' ng-show='fields[1]'>
   <h3>Starting time</h3>
+ 
 
-  <select ng-show='fields[1]' ng-model='startTimes[0][0]' placeholder="TOD">
+  <select ng-show='fields[1]' ng-model='startTimes[0]' placeholder="TOD">
     <option value="" disabled selected>Hour</option>
     <option value='1'>1</option>
     <option value='2'>2</option>
@@ -68,15 +69,15 @@
     <option value='12'>12</option>
   </select>
 
-  <select ng-show='fields[1]' ng-model='startTimes[0][1]' placeholder="TOD">
+  <select ng-show='fields[1]' ng-model='startTimes[1]' placeholder="TOD">
     <option value="" disabled selected>Minutes</option>
-    <option value='0'>:00</option>
+    <option value='00'>:00</option>
     <option value='15'>:15</option>
     <option value='30'>:30</option>
     <option value='45'>:45</option>
   </select>
 
-  <select ng-show='fields[1]' ng-model='startTimes[0][2]' placeholder="TOD">
+  <select ng-show='fields[1]' ng-model='startTimes[2]' placeholder="TOD">
     <option value="" disabled selected>AM/PM</option>
     <option value='am'>am</option>
     <option value='pm'>pm</option>
