@@ -19,6 +19,7 @@
           <h3>{{ trip.tripName }}</h3>
           <button class='entrybtn' ng-click='getMatches(trip.tripName,trip.driver)'>Find Matches</button>
           <button class='entrybtn' ng-click='showMap($index)'>Show on Map</button>
+          <button class='entrybtn' ng-click='deleteTrip($index)'>Delete Trip</button>
           <p>You're the {{ trip.driver }} for this trip</p>
            <p>{{ trip.matched }}</p>
            <p>start: {{ trip.startAddress || trip.startPoint }}</p>
