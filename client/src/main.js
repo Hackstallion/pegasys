@@ -65,6 +65,16 @@ angular.module('pegasys.main',[])
       $location.path('/match');
     };
 
+    $scope.deleteTrip = function(tripIndex){
+      var toDelete = {};
+      toDelete[$scope.trips[tripIndex].tripName] = {remove: true};
+      DB.postRequest('createtrip', toDelete)
+      .then(function(){
+        $scope.trips = [];
+        $scope.init();
+      })
+    };
+
     $scope.createTrip = function(){
       $location.path('/mapview');
     };
