@@ -25,6 +25,7 @@ module.exports = function(grunt){
         'client/src/main.js',
         'client/src/login.js',
         'client/src/signup.js',
+        'client/src/signout.js',
         'client/src/mapview.js',
         'client/src/profile.js',
         'client/src/match.js',
