@@ -13,6 +13,10 @@
   	     <div class='messageDiv' ng-repeat="match in matches">
    		   <h3 class='username' ng-click="requestMatch(match.username)">{{ match.username }}</h3>
          <!--  <h3 class='username' ng-click="requestMatch(match.username)">{{ match.tripName }}</h3> -->
+         <p1 ng-if='matches[$index].startTimes[0] || matches[$index].endTimes[0]'>Ideal Times:</p1>
+         <p1 ng-if='matches[$index].startTimes[0]'>Start - {{matches[$index].startTimes[0]}}:{{matches[$index].startTimes[1]}} {{matches[$index].startTimes[2]}}</p1>
+         <p1 ng-if='matches[$index].endTimes[0]'>Arrival - {{matches[$index].endTimes[0]}}:{{matches[$index].endTimes[1]}} {{matches[$index].endTimes[2]}}</p1>
+         <br ng-if='matches[$index].startTimes[0] || matches[$index].endTimes[0]'>
         <span class='mapLink' ng-click="showOnMap(match.tripName)">(Show on Map)</span>
       <div class='sendNewMessage' ng-controller="MailboxController">
         <form ng-submit='sendMessage(match.username)'>
