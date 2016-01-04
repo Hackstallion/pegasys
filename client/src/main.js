@@ -30,6 +30,8 @@ angular.module('pegasys.main',[])
                   tripName: trip,
                   startPoint: currTrip.startPoint,
                   endPoint: currTrip.endPoint,
+                  startAddress: currTrip.startAddress,
+                  endAddress: currTrip.endAddress,
                   route: currTrip.route
                 };
                 if(currTrip.driver){
