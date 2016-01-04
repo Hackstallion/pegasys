@@ -9,10 +9,10 @@
     </div>
       </div>
       <div class ="LeftContent">
-  	   <h3 class='matchTitleBar'>{{matches.length ? 'These users are going your way:' : 'No Matches Found'}}</h2>
+  	   <h2 class='matchTitleBar'>{{matches.length ? 'These users are going your way:' : 'No Matches Found'}}</h2>
   	     <div class='messageDiv' ng-repeat="match in matches">
    		   <h3 class='username' ng-click="requestMatch(match.username)">{{ match.username }}</h3>
-          <h3 class='username' ng-click="requestMatch(match.username)">{{ match.tripName }}</h3>
+         <!--  <h3 class='username' ng-click="requestMatch(match.username)">{{ match.tripName }}</h3> -->
         <span class='mapLink' ng-click="showOnMap(match.tripName)">(Show on Map)</span>
       <div class='sendNewMessage' ng-controller="MailboxController">
         <form ng-submit='sendMessage(match.username)'>
