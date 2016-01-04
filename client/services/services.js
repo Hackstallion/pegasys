@@ -9,6 +9,8 @@ angular.module('pegasys.services', [])
       data: JSONobject
     }).then(function (resp){
       return resp;
+    }).catch(function(err){
+      return err;
     });
   };
 

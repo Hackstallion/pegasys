@@ -58,28 +58,6 @@ angular.module('pegasys.main',[])
 
     $scope.init().then(function(){
     uiGmapGoogleMapApi.then(function(maps) { 
-      $log.log('maps: ', maps);
-      var geocoder = new maps.Geocoder;
-      $scope.trips.forEach(function(trip){
-        console.log(trip);
-        trip.startAddress = null;
-        trip.endAddress = null;
-        geocoder.geocode({location: new maps.LatLng(trip.startPoint[0],trip.startPoint[1])},function(results,status){
-          if(status === maps.GeocoderStatus.OK){
-            if (results[0]){ 
-              trip.startAddress = results[0].formatted_address;
-            }
-          }
-        });
-        geocoder.geocode({'location': new maps.LatLng(trip.endPoint[0],trip.endPoint[1])},function(results,status){
-          if(status === maps.GeocoderStatus.OK){
-            if (results[0]){ 
-              trip.endAddress = results[0].formatted_address;
-            }
-          }
-        })
-      });
-
       $scope.showMap = function(tripIndex){
         var displayEndPoints = function(){
           console.log('trip')
@@ -112,7 +90,6 @@ angular.module('pegasys.main',[])
           var newBounds = new maps.LatLngBounds();
           if($scope.trips[tripIndex].driver === 'driver'){
             var driverData = $scope.trips[tripIndex];
-            // $log.log(driverData);
             if ($scope.riderStart instanceof maps.Marker){
               $scope.riderStart.setMap(null);
               $scope.riderStart = {};
