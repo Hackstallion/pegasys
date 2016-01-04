@@ -17,19 +17,23 @@ angular.module('pegasys.mailbox',[])
       DB.getRequest('messages/getinbox').then(function(res){
         $scope.messages = res.data.map(function(msg){return JSON.parse(msg);});
       });
-    };
-    getMessages();
-    var getSentMessages = function(){
-      $log.log("trying to get sent messages");
       DB.getRequest('messages/getsent').then(function(res){
-        $log.log("Response:", res);
         $scope.sentMessages = res.data.map(function(msg){return JSON.parse(msg);});
       });
     };
-    getSentMessages();
+    getMessages();
+    // var getSentMessages = function(){
+    //   $log.log("trying to get sent messages");
+    //   DB.getRequest('messages/getsent').then(function(res){
+    //     $log.log("Response:", res);
+    //     $scope.sentMessages = res.data.map(function(msg){return JSON.parse(msg);});
+    //   });
+    // };
+    //getSentMessages();
     $scope.switchMailbox = function(){
       $scope.mailbox = !$scope.mailbox;
     };
+
     $scope.delMessage = function(message){
       //deletes a single message. Takes the whole message as its parameter.
       DB.postRequest('messages/delete', message).then(function(){
@@ -47,6 +51,7 @@ angular.module('pegasys.mailbox',[])
       };
       DB.postRequest('messages/send', messageObj).then(function(){
         getMessages();
+        $scope.message.text = '';
       });
     };
     $scope.sendMessage = function(recipient){
@@ -55,6 +60,7 @@ angular.module('pegasys.mailbox',[])
       if (recipient) $scope.newMessage.to_id = recipient;
       DB.postRequest('messages/send', $scope.newMessage).then(function(){
         getMessages();
+        $scope.newMessage.text = '';
       });
     };
   });

@@ -1,8 +1,8 @@
 <div class='jumbotron' ng-controller="MailboxController">
   <h1>{{header}}</h1>
   <div>
-  <button class='btn' type='submit' ng-click='switchMailbox()'>Show Sent</button>
-  <button class='btn' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
+  <button class='btn' type='submit' ng-show = 'mailbox' ng-click='switchMailbox()'>Show Sent</button>
+  <button class='btn' ng-hide = 'mailbox' type='submit' ng-click='switchMailbox()'>Show Inbox</button>
   </div>
 
   <div class ='Content'>
