@@ -404,8 +404,8 @@ ul li {
 
 .mapbtn{
   margin-top: 3px;
-  background: #639FDE
-;  border-radius: 3px;
+  background: #639FDE;  
+  border-radius: 3px;
   font-family: sans-serif;
   color: #ffffff;
   font-size: 20px;
@@ -424,4 +424,18 @@ ul li {
 
 #endSearchBox {
   margin-bottom: 10px;
+}
+
+.editinput {
+  height: 25px;
+  width: 20%;
+  border-radius: 3px;
+  border: 1px solid transparent;
+  border-top: none;
+  border-bottom: 1px solid #DDD;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,.39), 0 -1px 1px #FFF, 0 1px 0 #FFF;
+  text-align: center;
+  margin-top: 10px;
+  font-size:12px;
+  margin-bottom: 10px
 }
