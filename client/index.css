@@ -439,3 +439,9 @@ ul li {
   font-size:12px;
   margin-bottom: 10px
 }
+
+#logged {
+  text-align: center;
+  font-size: 20px;
+  font-style: bold;
+}
