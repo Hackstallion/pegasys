@@ -13,7 +13,7 @@ The app is ready for phase 1 deployment. Phase 2 and later deployments may add a
 
 ## Documentation
 
-After cloning down the repo, run "npm install" from the parent directory and "bower install" from the "client" directory in the command line to install project dependencies. To start the server, run "grunt" command from the app's directory in order to concatenate and minify source files or the app will not work on the client side. Then run "nodemon" command in another command line window from the app's parent directory. To use the Google Maps API, you must have your own API key (available for free from Google). Input your API key in ./client/src/APIKey.example.js and change the filename as indicated in the comments of that file.
+After cloning down the repo, run "npm install" from the parent directory and "bower install" from the ./client directory in the command line to install project dependencies. To start the server, run "grunt" command from the parent directory in order to concatenate and minify source files or the app will not work on the client side. Then run "nodemon" command in another command line window from the parent directory. To use the Google Maps API, you must have your own API key (available for free from Google). Input your API key in ./client/src/APIKey.example.js and change the filename as indicated in the comments of that file.
 
 See [API_spec.md](https://github.com/pegasys-rideshare/pegasys/blob/master/API_spec.md) for API POST and GET routes.
 
