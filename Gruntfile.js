@@ -22,6 +22,7 @@ module.exports = function(grunt){
         'client/bower_components/angular-route/angular-route.min.js',
         'client/bower_components/angular-simple-logger/dist/angular-simple-logger.min.js',
         'client/bower_components/angular-google-maps/dist/angular-google-maps.min.js',
+        'client/src/APIKey.js',
         'client/src/main.js',
         'client/src/login.js',
         'client/src/signup.js',
