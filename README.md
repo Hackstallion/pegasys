@@ -4,6 +4,7 @@ A carpool-facilitating rideshare app:
 
 * Allows users to find other people to share car rides with as a driver and/or a rider depending on which one they prefer to be on a given trip.
 * Google Maps integrated for the most reliable route-matching.
+* Distance calculations between driver and rider coordinates are made using the haversine formula. 
 * Built-in messaging functionality for coordination among users.
 * User profile and trip details saved in password-protected database for optimal matching with other users (profile and trip details may be edited or deleted).
 
