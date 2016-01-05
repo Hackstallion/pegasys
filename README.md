@@ -9,7 +9,7 @@ A carpool-facilitating rideshare app:
 
 ## Latest Version
 
-The app is currently in beta and close to phase 1 deployment. Phase 2 and later deployments (expected to continue as part of MakerSquare's Legacy sprint) may add additional security layers, testing suite, design upgrades, and/or UX features not implemented in the first release candidate.
+The app is ready for phase 1 deployment. Phase 2 and later deployments may add additional security layers, expanded testing suite, design upgrades, and/or UX features not implemented in the first release candidate.
 
 ## Documentation
 
