@@ -10,11 +10,11 @@ POST /api/auth/signup => If username doesn't exist, adds user to the database
                          }
 
 POST /api/auth/login => Log in, if account doesn't exist then notify user.
-                        Redirect to main page. Default to rider.
+                        Redirect to main page.
                         Set cookie. Deletes user if deleteUser = true.
 
                    body: {
-                          deleteUser: boolean, optional,
+                          deleteUser: Boolean, (optional)
                           username: 'username',
                           password: 'password'
                          }
@@ -30,10 +30,12 @@ POST /api/createtrip => Set driver status, set start and end points, route, boun
                    
                    body: { 
                           tripName: {
-                                      remove: true, (FOR DELETING EXISTING TRIPS)
-                                      driver : boolean,
+                                      remove: Boolean, (optional)
+                                      driver : Boolean,
                                       startPoint : [lat,long],
                                       endPoint : [lat,long],
+                                      startAddress: (Google Maps geocoded address, or null),
+                                      endAddress: (Google Maps geocoded address, or null),
                                       route:[[lat,long],[lat,long]...],
                                       bounds: [[lat,long],[lat,long],[lat,long],[lat,long]],
                                       etc.: etc.
@@ -43,9 +45,7 @@ POST /api/createtrip => Set driver status, set start and end points, route, boun
 GET /api/getusers => Send array of all user objects besides the requesting user's. Passwords, 
                      matchRequests, and message mailboxes are set to null before being sent.
                      Requires login.
-                     PHASE 2: Filter drivers based on rider's start/end points
-                     and driver's route/bounds if needed to save time on client side.
-                     PHASE 3: Filter based on profile matching.
+                     PHASE 2 proposition: Filter by trip time matching.
 
                    response body : [{user1},{user2}...]
 
@@ -53,11 +53,10 @@ POST /api/profile => Update user's password. Requires user to be logged in.
 
                    body: { password: 'password' }
 
-GET /api/profile => Return user's profile object. Must be logged in.
+GET /api/profile => Return user's profile object except for password. Must be logged in.
 
                    response body: {
                                    username: 'username',
-                                   password: 'password',
                                    matchRequests: [...],
                                    trips: '{}',
                                    inbox: [...],
@@ -65,7 +64,7 @@ GET /api/profile => Return user's profile object. Must be logged in.
                                   }
 
 POST /api/matches/request => Add the username denoted by from_id to the matchRequests array of the user
-                             denoted by to_id. The former must be logged in.
+                             denoted by to_id. The former must be logged in. (Not currently used by client.)
 
                    body: {
                           from_id: 'username',
@@ -73,7 +72,7 @@ POST /api/matches/request => Add the username denoted by from_id to the matchReq
                          }
 
 POST /api/matches/accept => Splices the requestor's username out of the acceptor's matchRequests array.
-                            The latter must be logged in.
+                            The latter must be logged in. (Not currently used by client.)
                    body: {
                           from_id: 'username',
                           to_id: 'username'
