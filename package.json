@@ -55,7 +55,8 @@
     "serve-favicon": "^2.3.0"
   },
   "scripts": {
-    "start": "./node_modules/.bin/nodemon server/index.js --ignore client/ --ignore node_modules/"
+    "start": "./node_modules/.bin/nodemon server/index.js --ignore client/ --ignore node_modules/",
+    "postinstall": "./node_modules/.bin/bower install; grunt; cat postInstallCheck.js"
   },
   "repository": {
     "type": "git",
