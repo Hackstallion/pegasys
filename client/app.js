@@ -50,6 +50,8 @@ angular.module('myApp', [
       });
   });
 
+
+
 //define the application module
 /*var app = require('angular').module('myApp');
 

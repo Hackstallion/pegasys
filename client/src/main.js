@@ -1,5 +1,5 @@
 angular.module('pegasys.main',[])
-  .controller('MainController', function($scope, $location, $log, DB, Main, Global,uiGmapGoogleMapApi) {
+  .controller('MainController', function($scope, $rootScope, $location, $log, DB, Main, Global,uiGmapGoogleMapApi) {
     if (!document.cookie.includes('user')) $location.path('/login');
   	// if the user cookie isn't set, redirect them to the login
     $scope.welcome = 'Trips';
@@ -11,11 +11,16 @@ angular.module('pegasys.main',[])
       center: {latitude: 30.268995, longitude: -97.740679}, //MakerSquare :)
       zoom: 12,
    };
+
     $scope.riderStart = {};
     $scope.riderEnd = {};
     $scope.driverLine = {};
     $scope.driverStart = {};
     $scope.driverEnd = {};
+
+    $rootScope.LoggedInTopBar = true;
+
+
 
 
     $scope.init = function(){

@@ -1,3 +1,4 @@
+
 angular.module('pegasys.login',[])
   .controller('LoginController', function($log,$location,$scope,Login,DB,Global) {
     $scope.user = {};
@@ -14,6 +15,7 @@ angular.module('pegasys.login',[])
           } else {
             $scope.failure = false;
             Global.setItem('logout', false);
+            $rootScope.LoggedInTopBar = true;
             $location.path('/main');
           };
         });
