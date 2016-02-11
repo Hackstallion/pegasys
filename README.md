@@ -18,10 +18,7 @@ The app is live on Heroku here: [https://pegasys-rideshare.herokuapp.com](https:
 
 See [API_spec.md](https://github.com/pegasys-rideshare/pegasys/blob/master/API_spec.md) for API POST and GET routes.
 
-Pegasys relies on the Google Maps API, as well as the [angular-google-maps
-project](https://angular-ui.github.io/angular-google-maps/#!/). Note that
-the angular-google-maps project is under active development, and we've 
-implemented workarounds for bugs and missing features.
+Pegasys utilizes the MEAN stack and relies on the Google Maps API, as well as the [angular-google-maps project](https://angular-ui.github.io/angular-google-maps/#!/). Note that the angular-google-maps project is under active development, and we've implemented workarounds for bugs and missing features.
 
 ## Installation
 
