@@ -1,4 +1,3 @@
-All API calls should return JSON.
 
 POST /api/auth/signup => If username doesn't exist, adds user to the database
                          otherwise returns 401 error and a message that the user already exists.
