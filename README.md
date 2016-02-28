@@ -22,7 +22,7 @@ Pegasys utilizes the MEAN stack and relies on the Google Maps API, as well as th
 
 ## Installation
 
-From the master branch: after cloning down the repo, run "npm install" from the parent directory and "bower install" from the ./client directory in the command line to install project dependencies. Before starting the server, run "grunt" command from the parent directory in order to concatenate and minify source files or the app will not work on the client side. Then run "nodemon" command in another command line window from the parent directory to start the server. To use the Google Maps API, you must have your own API key (available for free from Google). Input your API key in ./client/src/APIKey.example.js and change the filename as indicated in the comments of that file.
+From the master branch: after cloning down the repo, run "npm install" from the parent directory in the command line to install project dependencies. Then run "npm start" to start the server. To use the Google Maps API, you must have your own API key (available for free from Google). Input your API key in ./client/src/APIKey.example.js and change the filename as indicated in the comments of that file.
 
 ## Licensing
 
